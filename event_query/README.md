@@ -8,11 +8,11 @@ npm run query <networkName> <contractPath> <contractAddress> <eventName> [batchS
 ```
 
 Arguments:
-`networkName`: E.g. "mainnet", "ropsten", etc.
-`contractPath`: Full path to the `.json` compiled contract artifacts of the contract that triggers the target event.
-`contractAddress`: Deployed contract address for the selected network.
-`eventName`: Target event name, e.g. "Transfer".
-`batchSize`: Events are queried in batches of N blocks. Higher batch sizes will make the script less responsive. Default: `1000`;
+- `networkName`: E.g. "mainnet", "ropsten", etc.
+- `contractPath`: Full path to the `.json` compiled contract artifacts of the contract that triggers the target event.
+- `contractAddress`: Deployed contract address for the selected network.
+- `eventName`: Target event name, e.g. "Transfer".
+- `batchSize`: Events are queried in batches of N blocks. Higher batch sizes will make the script less responsive. Default: `1000`;
 
 Sample usage:
 ```
