@@ -5,5 +5,5 @@ A curated list of tools for analysing smart contracts. The list not only contain
 
 These tools query the blockchain for information.
 
-**[event_query](https://github.com/ajsantander/awesome-eth-tools/tree/master/event_query)**
+**[event_query](https://github.com/ajsantander/awesome-eth-tools/tree/master/event_query)**:
 Simple tool that queries events of a given contract, in a given network.

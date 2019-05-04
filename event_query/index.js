@@ -8,7 +8,7 @@ program
   .action(async (networkName, contractPath, contractAddress, eventName, batchSize) => {
 
     // Validate input.
-    batchSize = batchSize ? parseInt(batchSize, 10) : 1000;
+    batchSize = batchSize ? parseInt(batchSize, 10) : 100;
     // TODO
 
     // Display info.
