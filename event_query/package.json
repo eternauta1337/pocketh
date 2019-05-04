@@ -1,0 +1,15 @@
+{
+  "name": "event_query",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "query": "truffle exec ./index.js --network $1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "web3": "^1.0.0-beta.54"
+  }
+}
