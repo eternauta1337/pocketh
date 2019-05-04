@@ -1,6 +1,5 @@
 const program = require('commander');
 const Web3 = require('web3');
-const path = require('path');
 const fs = require('fs');
 
 program
@@ -30,13 +29,8 @@ program
     console.log(`  latest block:`, latestBlock);
 
     // Retrieve contract artifacts.
-    const contractsFolderPath = path.dirname(contractPath);
-    const artifactsFolderPath = path.resolve(contractsFolderPath, '..') + '/build/contracts/';
-    const contractFileName = path.basename(contractPath);
-    const contractName = path.parse(contractFileName).name;
-    const contractArtifactsPath = artifactsFolderPath + contractName + '.json';
-    if(!fs.existsSync(contractArtifactsPath)) throw new Error(`Cannot find ${contractsFolderPath}.`);
-    const contractArtifacts = JSON.parse(fs.readFileSync(contractArtifactsPath, 'utf8'));
+    if(!fs.existsSync(contractPath)) throw new Error(`Cannot find ${contractPath}.`);
+    const contractArtifacts = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
 
     // Retrieve contract instance.
     const instance = await web3.eth.Contract(contractArtifacts.abi, contractAddress);
@@ -62,8 +56,9 @@ program
     let currentBlock = latestBlock;
     async function logNextBatch() {
       if(currentBlock === 0) {
-        console.log(`Query finished! Total found ${foundEvents.length}:`);
+        console.log(`Query finished!`);
         console.log(foundEvents);
+        console.log(`Total found: ${foundEvents.length}`);
         return;
       }
       const fromBlock = Math.max(currentBlock - batchSize, 0);

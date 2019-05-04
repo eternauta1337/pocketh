@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "query": "truffle exec ./index.js --network $1"
+    "query": "node index.js query"
   },
   "keywords": [],
   "author": "",
