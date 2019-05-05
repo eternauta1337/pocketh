@@ -25,3 +25,8 @@ Simple tool to disassemble bytecode to EVM opcodes.
 
 **[solmap](https://github.com/ajsantander/solmap)**:
 Browser app for side by side bytecode to EVM opcode conversion.
+
+## Solidity compilers
+
+**[solz](https://github.com/ajsantander/solz)**:
+Simple compiler that uses solcjs or solc if in PATH.
