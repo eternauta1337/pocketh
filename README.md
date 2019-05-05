@@ -24,7 +24,7 @@ Simple tool that prints function selectors.
 Simple tool to disassemble bytecode to EVM opcodes.
 
 **[solmap](https://github.com/ajsantander/solmap)**:
-Browser app for side by side bytecode to EVM opcode conversion.
+Browser app for side by side bytecode to EVM opcode conversion which uses source maps to highlight selections both ways.
 
 ## Solidity compilers
 
