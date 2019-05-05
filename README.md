@@ -12,3 +12,8 @@ Simple tool that queries events of a given contract, in a given network.
 
 **[calldata_reader](https://github.com/ajsantander/audit-tools/tree/master/calldata_reader)**:
 Simple tool that parses calldata.
+
+## ABI parsing
+
+**[selector_list](https://github.com/ajsantander/audit-tools/tree/master/selector_list)**:
+Simple tool that prints function selectors.

@@ -1,0 +1,16 @@
+{
+  "name": "signature_list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "list": "node index.js list"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.20.0",
+    "web3": "^1.0.0-beta.54"
+  }
+}

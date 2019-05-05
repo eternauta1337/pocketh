@@ -2,7 +2,7 @@ const program = require('commander');
 
 program
   .version('0.1.0')
-  .command('read [calldata]')
+  .command('read <calldata>')
   .action((calldata) => {
 
     // Validate input.
