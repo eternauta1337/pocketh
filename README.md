@@ -22,3 +22,6 @@ Simple tool that prints function selectors.
 
 **[disassembler](https://github.com/ajsantander/audit-tools/tree/master/disassembler)**:
 Simple tool to disassemble bytecode to EVM opcodes.
+
+**[solmap](https://github.com/ajsantander/solmap)**:
+Browser app for side by side bytecode to EVM opcode conversion.
