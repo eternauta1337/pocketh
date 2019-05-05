@@ -27,3 +27,4 @@ npm run query mainnet ~/cryptokitties/build/contracts/KittyCore.json 0x06012c8cf
 - Would be nice to be able to stop the search interactively to display the results found so far.
 - Options for parsing events.
 - Would be nice to be able to enter info in interactive mode.
+- Option to output to a file.
