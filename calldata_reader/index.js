@@ -5,9 +5,6 @@ program
   .command('read [calldata]')
   .action((calldata) => {
 
-    // Display input.
-    console.log(`calldata:`, calldata);
-
     // Validate input.
     // TODO
 
