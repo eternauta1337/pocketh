@@ -17,3 +17,8 @@ Simple tool that parses calldata.
 
 **[selector_list](https://github.com/ajsantander/audit-tools/tree/master/selector_list)**:
 Simple tool that prints function selectors.
+
+## Bytecode disassemblers
+
+**[disassembler](https://github.com/ajsantander/audit-tools/tree/master/disassembler)**:
+Simple tool to disassemble bytecode to EVM opcodes.

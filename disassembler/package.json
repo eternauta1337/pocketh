@@ -1,0 +1,15 @@
+{
+  "name": "disassembler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "disassemble": "node index.js disassemble"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.20.0"
+  }
+}
