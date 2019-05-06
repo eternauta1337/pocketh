@@ -1,0 +1,16 @@
+{
+  "name": "query_tx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "query": "node index.js query"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.20.0",
+    "web3": "^1.0.0-beta.54"
+  }
+}
