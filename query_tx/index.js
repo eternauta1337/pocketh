@@ -1,6 +1,7 @@
 const program = require('commander');
 const Web3 = require('web3');
 const fs = require('fs');
+require('dotenv').config();
 
 program
   .version('0.1.0')
@@ -18,8 +19,22 @@ program
     console.log(`  functionSelector:`, functionSelector);
 
     // Connect to network.
-    const infuraKey = `ac987ae2aa3c436c958e050a82a5c8da`;
-    const provider = `https://${networkName}.infura.io/v3/${infuraKey}`;
+
+    const hostKey = `${networkName.toUpperCase()}_ETHEREUM_HOST_URL`;
+    const portKey = `${networkName.toUpperCase()}_ETHEREUM_HOST_PORT`;
+
+    if (!(hostKey in process.env) || !(portKey in process.env)) {
+      throw new Error(`Unknown network: '${networkName}'`);
+    }
+
+    let provider;
+    if (networkName.toUpperCase().indexOf('INFURA') !== -1) {
+      provider = `https://${process.env[hostKey]}`;
+    } else {
+      provider = `http://${process.env[hostKey]}:${process.env[portKey]}`;
+    }
+
+    console.log(`Provider: ${provider}`);
     const web3 = new Web3(provider);
 
     // Query a transaction.
@@ -33,7 +48,7 @@ program
         }
       }
     }
-    
+
     // Query a block.
     async function queryBlock(blockNumber) {
       // console.log(`Searching for transactions in block #${blockNumber}...`);
@@ -43,11 +58,11 @@ program
         await queryTransaction(txHash);
       });
     }
-    
+
     // Look for transactions in one block.
     // await queryBlock(7708749);
     // return;
-    
+
     // Sweep blocks backward.
     let currentBlock = await web3.eth.getBlockNumber();
     while(currentBlock >= 0) {
