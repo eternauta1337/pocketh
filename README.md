@@ -1,7 +1,7 @@
 # audit-tools
 A curated list of tools for analysing smart contracts. The list not only contains external well known tools, but also contains experiments, ideas, and scripts that are useful for a very specific thing. Such experiments could eventually become separate projects.
 
-## Chain readers
+## Scanners
 
 These tools query the blockchain for information.
 
@@ -14,17 +14,15 @@ Simple tool that queries events of a given contract, in a given network.
 **[account_scanner](https://github.com/ajsantander/audit-tools/tree/master/account_scanner)**:
 (WIP) As query_tx but a bit more advanced, querying multiple blocks in parallel. Based on Ross Perkins' gist: https://gist.github.com/ross-p/bd5d4258ac23319f363dc75c2b722dd9
 
-## Calldata parsing
-
-**[calldata_reader](https://github.com/ajsantander/audit-tools/tree/master/calldata_reader)**:
-Simple tool that parses calldata.
-
-## ABI parsing
+## ABI
 
 **[selector_list](https://github.com/ajsantander/audit-tools/tree/master/selector_list)**:
 Simple tool that prints function selectors.
 
-## Bytecode disassemblers
+**[calldata_reader](https://github.com/ajsantander/audit-tools/tree/master/calldata_reader)**:
+Simple tool that parses calldata.
+
+## Disassemblers
 
 **[disassembler](https://github.com/ajsantander/audit-tools/tree/master/disassembler)**:
 Simple tool to disassemble bytecode to EVM opcodes.
@@ -32,7 +30,7 @@ Simple tool to disassemble bytecode to EVM opcodes.
 **[solmap](https://github.com/ajsantander/solmap)**:
 Browser app for side by side bytecode to EVM opcode conversion which uses source maps to highlight selections both ways.
 
-## Solidity compilers
+## Compiler tools
 
 **[solz](https://github.com/ajsantander/solz)**:
 Simple compiler that uses solcjs or solc to watch and compile Solidity files.
