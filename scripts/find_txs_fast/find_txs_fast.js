@@ -6,17 +6,18 @@
 const Web3 = require('web3');
 const program = require('commander');
 
-let maxThreads = 200;
+const get_web3 = require('../../common/get_web3.js');
 
 program
   .version('0.1.0')
-  .command('run <networkName> <contractAddress> <functionSelector> <startBlock> [maxThreads]')
-  .action(async (networkName, contractAddress, functionSelector, startBlock) => {
+  .command('run <networkName> <contractAddress> <functionSelector> <fromBlock> [toBlock] [maxThreads]')
+  .action(async (networkName, contractAddress, functionSelector, fromBlock, toBlock, maxThreads) => {
 
     // Validate input.
     contractAddress = contractAddress.toLowerCase();
-    maxThreads = maxThreads ? parseInt(maxThreads, 10) : 200;
-    startBlock = startBlock ? parseInt(startBlock, 10) : 0;
+    maxThreads = maxThreads ? parseInt(maxThreads, 10) : 10;
+    fromBlock = fromBlock ? parseInt(fromBlock, 10) : 0;
+    toBlock = toBlock ? toBlock : 'latest';
     // TODO
 
     // Display info.
@@ -24,19 +25,18 @@ program
     console.log(`  networkName:`, networkName);
     console.log(`  contractAddress:`, contractAddress);
     console.log(`  functionSelector:`, functionSelector);
-    console.log(`  startBlock:`, startBlock);
+    console.log(`  fromBlock:`, fromBlock);
+    console.log(`  toBlock:`, toBlock);
     console.log(`  maxThreads:`, maxThreads);
 
     // Connect to network.
-    const infuraKey = `ac987ae2aa3c436c958e050a82a5c8da`;
-    const provider = `https://${networkName}.infura.io/v3/${infuraKey}`;
-    const web3 = new Web3(provider);
+    const web3 = await get_web3(networkName);
 
     function scanTransactionCallback(tx, block) {
       if(tx.to && tx.to.toLowerCase() === contractAddress.toLowerCase()) {
         // console.log(`found transaction to contract:`, tx.hash);
         if(tx.input.substring(0, 10) === functionSelector) {
-          console.log(`selector match:`, tx);
+          console.log(`\n`, tx);
         }
       }
     }
@@ -116,8 +116,8 @@ program
     }
     
     // Start scan.
-    let latestBlock = await web3.eth.getBlockNumber();
-    scanBlockRange(startBlock, latestBlock);
+    if(toBlock === 'latest') toBlock = await web3.eth.getBlockNumber();
+    scanBlockRange(fromBlock, toBlock);
   });
 
 if(!process.argv.slice(3).length) program.help();
