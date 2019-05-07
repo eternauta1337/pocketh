@@ -1,15 +1,17 @@
 const program = require('commander');
 const fs = require('fs');
 
-const get_web3 = require('../common/get_web3.js');
+const get_web3 = require('../../common/get_web3.js');
 
 program
   .version('0.1.0')
-  .command('run <networkName> <contractPath> <contractAddress> <eventName> [batchSize]')
-  .action(async (networkName, contractPath, contractAddress, eventName, batchSize) => {
+  .command('run <networkName> <contractPath> <contractAddress> <eventName> <fromBlock> [toBlock] [batchSize]')
+  .action(async (networkName, contractPath, contractAddress, eventName, fromBlock, toBlock, batchSize) => {
 
     // Validate input.
     batchSize = batchSize ? parseInt(batchSize, 10) : 100;
+    fromBlock = parseInt(fromBlock, 10);
+    toBlock = toBlock ? toBlock : 'latest';
     // TODO
 
     // Display info.
@@ -18,14 +20,12 @@ program
     console.log(`  contractPath:`, contractPath);
     console.log(`  contractAddress:`, contractAddress);
     console.log(`  eventName:`, eventName);
+    console.log(`  fromBlock:`, fromBlock);
+    console.log(`  toBlock:`, toBlock);
     console.log(`  batchSize:`, batchSize);
 
     // Connect to network.
     const web3 = await get_web3(networkName);
-
-    // Retrieve block data.
-    const latestBlock = await web3.eth.getBlockNumber();
-    console.log(`  latest block:`, latestBlock);
 
     // Retrieve contract artifacts.
     if(!fs.existsSync(contractPath)) throw new Error(`Cannot find ${contractPath}.`);
@@ -35,34 +35,38 @@ program
     const instance = await web3.eth.Contract(contractArtifacts.abi, contractAddress);
     
     // Find events in a given block range.
-    const foundEvents = [];
-    async function logEventsInBatch(fromBlock, toBlock) {
-      console.log(`Querying for event "${eventName}" in block range: [${fromBlock}, ${toBlock}]`);
+    let count = 0;
+    async function logEventsInBatch(from, to) {
       await instance.getPastEvents(
         eventName,
-        {fromBlock, toBlock},
+        {fromBlock: from, toBlock: to},
         (err, events) => {
           if(err) console.log(err);
           else if(events && events.length > 0) {
-            foundEvents.push(...events);
-            console.log(events);
+            events.map((event) => {
+              console.log(`\n`, event);
+            });
+            count += events.length;
           }
         }
       );
     }
     
     // Find events by batches.
-    let currentBlock = latestBlock;
+    if(toBlock === 'latest') toBlock = await web3.eth.getBlockNumber();
+    let currentBlock = fromBlock;
+    const numBlocks = toBlock - fromBlock;
     async function logNextBatch() {
-      if(currentBlock === 0) {
+      if(currentBlock == toBlock) {
         console.log(`Query finished!`);
-        console.log(foundEvents);
-        console.log(`Total found: ${foundEvents.length}`);
+        console.log(`Total found: ${count}`);
         return;
       }
-      const fromBlock = Math.max(currentBlock - batchSize, 0);
-      const events = await logEventsInBatch(fromBlock, currentBlock);
-      currentBlock = fromBlock;
+      const to = Math.min(currentBlock + batchSize, toBlock);
+      const percentage = Math.floor(( currentBlock - fromBlock ) / numBlocks * 100, 2);
+      process.stdout.write(`\rQuerying for event "${eventName}" in block range: [${currentBlock}, ${to}] - ${percentage}%`);
+      await logEventsInBatch(currentBlock, to);
+      currentBlock = to;
       await logNextBatch();
     }
     await logNextBatch();
