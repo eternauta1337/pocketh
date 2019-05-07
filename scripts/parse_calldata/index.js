@@ -30,4 +30,5 @@ program
     }
   });
 
-program.parse(process.argv);
+if(!process.argv.slice(3).length) program.help();
+else program.parse(process.argv);

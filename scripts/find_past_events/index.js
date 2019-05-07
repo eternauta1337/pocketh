@@ -1,10 +1,11 @@
 const program = require('commander');
-const Web3 = require('web3');
 const fs = require('fs');
+
+const get_web3 = require('../common/get_web3.js');
 
 program
   .version('0.1.0')
-  .command('query <networkName> <contractPath> <contractAddress> <eventName> [batchSize]')
+  .command('run <networkName> <contractPath> <contractAddress> <eventName> [batchSize]')
   .action(async (networkName, contractPath, contractAddress, eventName, batchSize) => {
 
     // Validate input.
@@ -20,9 +21,7 @@ program
     console.log(`  batchSize:`, batchSize);
 
     // Connect to network.
-    const infuraKey = `ac987ae2aa3c436c958e050a82a5c8da`;
-    const provider = `https://${networkName}.infura.io/v3/${infuraKey}`;
-    const web3 = new Web3(provider);
+    const web3 = await get_web3(networkName);
 
     // Retrieve block data.
     const latestBlock = await web3.eth.getBlockNumber();
@@ -69,4 +68,5 @@ program
     await logNextBatch();
   });
 
-program.parse(process.argv);
+if(!process.argv.slice(3).length) program.help();
+else program.parse(process.argv);

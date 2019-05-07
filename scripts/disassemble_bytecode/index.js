@@ -3,7 +3,7 @@ const fs = require('fs');
 
 program
   .version('0.1.0')
-  .command('disassemble <contractPath>')
+  .command('run <contractPath>')
   .action((contractPath) => {
 
     // Validate input.
@@ -195,4 +195,5 @@ function buildOpcodes() {
   return opcodes;
 }
 
-program.parse(process.argv);
+if(!process.argv.slice(3).length) program.help();
+else program.parse(process.argv);

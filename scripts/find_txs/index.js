@@ -1,11 +1,11 @@
 const program = require('commander');
-const Web3 = require('web3');
 const fs = require('fs');
-require('dotenv').config();
+
+const get_web3 = require('../common/get_web3.js');
 
 program
   .version('0.1.0')
-  .command('query <networkName> <contractAddress> <functionSelector>')
+  .command('run <networkName> <contractAddress> <functionSelector>')
   .action(async (networkName, contractAddress, functionSelector) => {
 
     // Validate input.
@@ -19,23 +19,7 @@ program
     console.log(`  functionSelector:`, functionSelector);
 
     // Connect to network.
-
-    const hostKey = `${networkName.toUpperCase()}_ETHEREUM_HOST_URL`;
-    const portKey = `${networkName.toUpperCase()}_ETHEREUM_HOST_PORT`;
-
-    if (!(hostKey in process.env) || !(portKey in process.env)) {
-      throw new Error(`Unknown network: '${networkName}'`);
-    }
-
-    let provider;
-    if (networkName.toUpperCase().indexOf('INFURA') !== -1) {
-      provider = `https://${process.env[hostKey]}`;
-    } else {
-      provider = `http://${process.env[hostKey]}:${process.env[portKey]}`;
-    }
-
-    console.log(`Provider: ${provider}`);
-    const web3 = new Web3(provider);
+    const web3 = await get_web3(networkName);
 
     // Query a transaction.
     async function queryTransaction(txHash) {
@@ -73,4 +57,5 @@ program
     console.log(`Finished block sweep.`);
   });
 
-program.parse(process.argv);
+if(!process.argv.slice(3).length) program.help();
+else program.parse(process.argv);

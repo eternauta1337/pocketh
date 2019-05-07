@@ -1,0 +1,29 @@
+{
+  "name": "audit-tools",
+  "version": "1.0.0",
+  "description": "A curated list of tools for analysing smart contracts. The list not only contains external well known tools, but also contains experiments, ideas, and scripts that are useful for a very specific thing. Such experiments could eventually become separate projects.",
+  "main": "index.js",
+  "scripts": {
+    "disassemble_bytecode": "node ./scripts/disassemble_bytecode/index.js run",
+    "find_past_events": "node ./scripts/find_past_events/index.js run",
+    "find_txs": "node ./scripts/find_txs/index.js run",
+    "find_txs_fast": "node ./scripts/find_txs_fast/index.js run",
+    "parse_calldata": "node ./scripts/parse_calldata/index.js run",
+    "print_selectors": "node ./scripts/print_selectors/index.js run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajsantander/awesome-eth-tools.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajsantander/awesome-eth-tools/issues"
+  },
+  "homepage": "https://github.com/ajsantander/awesome-eth-tools#readme",
+  "dependencies": {
+    "commander": "^2.20.0",
+    "web3": "^1.0.0-beta.54"
+  }
+}

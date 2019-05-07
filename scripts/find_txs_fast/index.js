@@ -10,7 +10,7 @@ let maxThreads = 200;
 
 program
   .version('0.1.0')
-  .command('scan <networkName> <contractAddress> <functionSelector> <startBlock> [maxThreads]')
+  .command('run <networkName> <contractAddress> <functionSelector> <startBlock> [maxThreads]')
   .action(async (networkName, contractAddress, functionSelector, startBlock) => {
 
     // Validate input.
@@ -120,4 +120,5 @@ program
     scanBlockRange(startBlock, latestBlock);
   });
 
-program.parse(process.argv);
+if(!process.argv.slice(3).length) program.help();
+else program.parse(process.argv);
