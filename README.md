@@ -8,6 +8,12 @@ These tools query the blockchain for information.
 **[event_query](https://github.com/ajsantander/audit-tools/tree/master/event_query)**:
 Simple tool that queries events of a given contract, in a given network.
 
+**[query_tx](https://github.com/ajsantander/audit-tools/tree/master/query_tx)**:
+(WIP) Simple script for querying transactions made to a contract.
+
+**[account_scanner](https://github.com/ajsantander/audit-tools/tree/master/account_scanner)**:
+(WIP) As query_tx but a bit more advanced, querying multiple blocks in parallel. Based on Ross Perkins' gist: https://gist.github.com/ross-p/bd5d4258ac23319f363dc75c2b722dd9
+
 ## Calldata parsing
 
 **[calldata_reader](https://github.com/ajsantander/audit-tools/tree/master/calldata_reader)**:

@@ -6,11 +6,6 @@
 const Web3 = require('web3');
 const program = require('commander');
 
-let gethServer = {
-    host: '10.0.0.10', // change this to your geth hostname/IP
-    port: 8545 // change this to your geth RPC port
-};
-
 let maxThreads = 200;
 
 program
@@ -58,9 +53,7 @@ program
     function scanBlockRange(startingBlock, stoppingBlock, callback) {
       console.log(`Scanning block range:`, startingBlock, stoppingBlock);
 
-      if(startingBlock > stoppingBlock) {
-        return -1;
-      }
+      if(startingBlock > stoppingBlock) return -1;
 
       let blockNumber = startingBlock,
           gotError = false,
@@ -74,59 +67,42 @@ program
       }
 
       function exitThread() {
-        if (--numThreads == 0) {
-            var numBlocksScanned = 1 + stoppingBlock - startingBlock,
-                stopTime = new Date(),
-                duration = (stopTime.getTime() - startTime.getTime())/1000,
-                blocksPerSec = Math.floor(numBlocksScanned / duration, 2),
-                msg = `Scanned to block ${stoppingBlock} (${numBlocksScanned} in ${duration} seconds; ${blocksPerSec} blocks/sec).`,
-                len = msg.length,
-                numSpaces = process.stdout.columns - len,
-                spaces = Array(1+numSpaces).join(" ");
+        if(--numThreads == 0) {
+          var numBlocksScanned = 1 + stoppingBlock - startingBlock,
+              stopTime = new Date(),
+              duration = (stopTime.getTime() - startTime.getTime())/1000,
+              blocksPerSec = Math.floor(numBlocksScanned / duration, 2),
+              msg = `Scanned to block ${stoppingBlock} (${numBlocksScanned} in ${duration} seconds; ${blocksPerSec} blocks/sec).`,
+              len = msg.length,
+              numSpaces = process.stdout.columns - len,
+              spaces = Array(1+numSpaces).join(" ");
 
-            process.stdout.write("\r"+msg+spaces+"\n");
-            if (callback) {
-                callback(gotError, stoppingBlock);
-            }
+          process.stdout.write("\r"+msg+spaces+"\n");
+          if(callback) {
+            callback(gotError, stoppingBlock);
+          }
         }
         return numThreads;
       }
 
       function asyncScanNextBlock() {
+        if(gotError) return exitThread();
+        if(blockNumber > stoppingBlock) return exitThread();
 
-        // If we've encountered an error, stop scanning blocks
-        if (gotError) {
-            return exitThread();
-        }
-
-        // If we've reached the end, don't scan more blocks
-        if (blockNumber > stoppingBlock) {
-            return exitThread();
-        }
-
-        // Scan the next block and assign a callback to scan even more
-        // once that is done.
         var myBlockNumber = blockNumber++;
-
-        // Write periodic status update so we can tell something is happening
         if (myBlockNumber % maxThreads == 0 || myBlockNumber == stoppingBlock) {
-            var pctDone = getPercentComplete(myBlockNumber);
-            process.stdout.write(`\rScanning block ${myBlockNumber} - ${pctDone} %`);
+          var pctDone = getPercentComplete(myBlockNumber);
+          process.stdout.write(`\rScanning block ${myBlockNumber} - ${pctDone} %`);
         }
-
-        // Async call to getBlock() means we can run more than 1 thread
-        // at a time, which is MUCH faster for scanning.
 
         web3.eth.getBlock(myBlockNumber, true, (error, block) => {
-
-            if (error) {
-                // Error retrieving this block
-                gotError = true;
-                console.error("Error:", error);
-            } else {
-                scanBlockCallback(block);
-                asyncScanNextBlock();
-            }
+          if (error) {
+            gotError = true;
+            console.error("Error:", error);
+          } else {
+            scanBlockCallback(block);
+            asyncScanNextBlock();
+          }
         });
       }
 
@@ -136,7 +112,7 @@ program
         asyncScanNextBlock();
       }
 
-      return nt; // number of threads spawned (they'll continue processing)
+      return nt;
     }
     
     // Start scan.
