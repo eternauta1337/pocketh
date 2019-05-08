@@ -22,8 +22,6 @@ program
     // console.log(JSON.stringify(ast, null, 2));
     // console.log(ast);
 
-    // TODO: Determine if the ast is legacy or not (from compiler version?),
-    // and be able to parse legacy ast.
     parseAst(ast);
 
   });
@@ -47,6 +45,7 @@ function parseAst(ast) {
   function astListNodes(nodes) {
     for(let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
+      // console.log('========> ' + node.nodeType);
       switch(node.nodeType) {
         case 'FunctionDefinition':
           astParseFunctionNode(node);
@@ -57,6 +56,9 @@ function parseAst(ast) {
         case 'EventDefinition':
           astParseEventNode(node);
           break;
+        case 'ModifierDefinition':
+          astParseModifierNode(node);
+          break;
         default:
           console.log('TODO: ' + node.nodeType);
       }
@@ -64,6 +66,15 @@ function parseAst(ast) {
   }
 
   // Parse node types into readable format.
+  function astParseModifierNode(node) {
+    let str = 'modifier ';
+    str += node.name;
+    str += '('
+    str += astParseParameterList(node.parameters);
+    str += ')';
+    str += ' {...}';
+    console.log(str);
+  }
   function astParseEventNode(node) {
     let str = '';
     str += node.name;
@@ -75,32 +86,38 @@ function parseAst(ast) {
     // console.log(node);
   }
   function astParseVariableNode(node) {
+    // console.log(node);
     let str = '';
     str += node.typeDescriptions.typeString + ' ';
+    if(node.visibility) str += node.visibility + ' ';
     str += node.name;
     str += ';';
     console.log(str);
-    // console.log(node);
   }
   function astParseParameterList(list) {
     // console.log(list.parameters);
     if(list.parameters.length === 0) return '';
     const paramStrings = [];
     list.parameters.map((parameter) => {
-      paramStrings.push(`${parameter.typeName.name}${parameter.name ? ' ' + parameter.name : ''}`);
+      const type = parameter.typeName.name || parameter.typeDescriptions.typeString;
+      paramStrings.push(`${type}${parameter.name ? ' ' + parameter.name : ''}`);
     });
     return paramStrings.join(', ');
   }
   function astParseFunctionNode(node) {
     // console.log(node);
     let str = '';
-    if(node.kind === 'function' || node.kind === 'fallback') str += 'function ' + node.name;
-    if(node.kind === 'constructor') str += 'constructor';
+    if(node.kind) {
+      if(node.kind === 'constructor') str += 'constructor';
+      else if(node.kind === 'function' || node.kind === 'fallback') str += 'function ' + node.name;
+    }
+    else str += node.name;
     str += '(';
     str += astParseParameterList(node.parameters);
     str += ')'
     str += ' ';
     str += node.visibility;
+    // TODO: process modifiers!!
     if(node.stateMutability !== 'nonpayable') str += ' ' + node.stateMutability;
     if(node.returnParameters.parameters.length > 0) str += ' returns(' + astParseParameterList(node.returnParameters) + ')'
     str += ' {...}';
@@ -109,10 +126,6 @@ function parseAst(ast) {
 
   // List child nodes of root node.
   astListNodes(contractDefinition.nodes);
-}
-
-function parseLegacyAst(ast) {
-  console.log(`Legacy ast not supported yet!`);
 }
 
 if(!process.argv.slice(3).length) program.help();
