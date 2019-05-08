@@ -9,7 +9,8 @@
     "find_txs": "node ./scripts/find_txs/find_txs.js run",
     "find_txs_fast": "node ./scripts/find_txs_fast/find_txs_fast.js run",
     "parse_calldata": "node ./scripts/parse_calldata/parse_calldata.js run",
-    "print_selectors": "node ./scripts/print_selectors/print_selectors.js run"
+    "print_selectors": "node ./scripts/print_selectors/print_selectors.js run",
+    "list_members": "node ./scripts/list_members/list_members.js run"
   },
   "repository": {
     "type": "git",
