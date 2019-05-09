@@ -3,7 +3,7 @@ A pocket knife for auditing smart contracts.
 
 ## Installation:
 ```
-npm install pocketh
+npm install --global pocketh
 ```
 
 ## Usage:
