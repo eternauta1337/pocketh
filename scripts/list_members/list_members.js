@@ -1,63 +1,77 @@
 const program = require('commander');
 const fs = require('fs');
+const path = require('path');
 
 program
   .version('0.1.0')
-  .command('run <contractPath>')
-  .action((contractPath) => {
+  .command('run <contractPath> [listInherited]')
+  .action((contractPath, listInherited) => {
 
     // Validate input.
+    listInherited = listInherited ? listInherited === 'true' : false;
     // TODO
 
-    // Retrieve contract artifacts and abi.
-    if(!fs.existsSync(contractPath)) throw new Error(`Cannot find ${contractPath}.`);
-    const contractArtifacts = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
-    
-    // Print contract name.
-    console.log(`${contractArtifacts.contractName}\n`);
+    // Evaluate root path.
+    const rootPath = path.dirname(contractPath);
+    const filename = path.basename(contractPath);
 
-    // Retrieve ast.
-    const ast = contractArtifacts.ast;
-    if(!ast) throw new Error(`Cannot find ast data.`);
-    // console.log(JSON.stringify(ast, null, 2));
-    // console.log(ast);
-
-    parseAst(ast);
-
+    // Parse contract.
+    parseContract(filename, rootPath, listInherited);
   });
 
-function parseAst(ast) {
+function parseContract(filename, rootPath, listInherited) {
+
+  // Retrieve contract artifacts and abi.
+  const contractPath = rootPath + '/' + filename;
+  if(!fs.existsSync(contractPath)) throw new Error(`Cannot find ${contractPath}.`);
+  const contractArtifacts = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
+
+  // Retrieve ast.
+  const ast = contractArtifacts.ast;
+  if(!ast) throw new Error(`Cannot find ast data.`);
+  // console.log(JSON.stringify(ast, null, 2));
+  // console.log(ast);
+
+  // Print out members.
+  parseAst(ast, contractArtifacts.contractName, rootPath, listInherited);
+}
+
+function parseAst(ast, name, rootPath, listInherited) {
+  console.log(`================> ${name} members:`);
 
   // Find a node of type.
-  function astFindNode(nodes, type) {
+  function findNode(nodes, type, name) {
     for(let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
-      if(node.nodeType === type) return node;
+      if(node.nodeType === type && node.name === name) return node;
     }
     return null;
   }
 
   // Find root node.
-  const contractDefinition = astFindNode(ast.nodes, 'ContractDefinition');
+  const contractDefinition = findNode(ast.nodes, 'ContractDefinition', name);
   // console.log(contractDefinition);
 
   // List sub-nodes of a particular node.
-  function astListNodes(nodes) {
+  function listNodes(nodes) {
     for(let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       // console.log('========> ' + node.nodeType);
       switch(node.nodeType) {
         case 'FunctionDefinition':
-          astParseFunctionNode(node);
+          console.log(parseFunctionNode(node));
           break;
         case 'VariableDeclaration':
-          astParseVariableNode(node);
+          console.log(parseVariableNode(node));
           break;
         case 'EventDefinition':
-          astParseEventNode(node);
+          console.log(parseEventNode(node));
           break;
         case 'ModifierDefinition':
-          astParseModifierNode(node);
+          console.log(parseModifierNode(node));
+          break;
+        case 'StructDefinition':
+          console.log(parseStructNode(node));
           break;
         default:
           console.log('TODO: ' + node.nodeType);
@@ -66,35 +80,47 @@ function parseAst(ast) {
   }
 
   // Parse node types into readable format.
-  function astParseModifierNode(node) {
+  function parseStructNode(node) {
+    // console.log(node);
+    let str = 'struct ';
+    if(node.visibility) str += node.visibility + ' ';
+    str += node.name;
+    str += '{\n';
+    node.members.map((member) => {
+      str += '  ' + parseVariableNode(member) + '\n';
+    });
+    str += '}';
+    return str;
+  }
+  function parseModifierNode(node) {
     let str = 'modifier ';
     str += node.name;
     str += '('
-    str += astParseParameterList(node.parameters);
+    str += parseParameterList(node.parameters);
     str += ')';
     str += ' {...}';
-    console.log(str);
+    return str;
   }
-  function astParseEventNode(node) {
+  function parseEventNode(node) {
+    // console.log(node);
     let str = '';
     str += node.name;
     str += '('
-    str += astParseParameterList(node.parameters);
+    str += parseParameterList(node.parameters);
     str += ')';
     str += ';';
-    console.log(str);
-    // console.log(node);
+    return str;
   }
-  function astParseVariableNode(node) {
+  function parseVariableNode(node) {
     // console.log(node);
     let str = '';
     str += node.typeDescriptions.typeString + ' ';
     if(node.visibility) str += node.visibility + ' ';
     str += node.name;
     str += ';';
-    console.log(str);
+    return str;
   }
-  function astParseParameterList(list) {
+  function parseParameterList(list) {
     // console.log(list.parameters);
     if(list.parameters.length === 0) return '';
     const paramStrings = [];
@@ -104,7 +130,7 @@ function parseAst(ast) {
     });
     return paramStrings.join(', ');
   }
-  function astParseFunctionNode(node) {
+  function parseFunctionNode(node) {
     // console.log(node);
     let str = '';
     if(node.kind) {
@@ -113,19 +139,30 @@ function parseAst(ast) {
     }
     else str += node.name;
     str += '(';
-    str += astParseParameterList(node.parameters);
+    str += parseParameterList(node.parameters);
     str += ')'
     str += ' ';
     str += node.visibility;
-    // TODO: process modifiers!!
     if(node.stateMutability !== 'nonpayable') str += ' ' + node.stateMutability;
-    if(node.returnParameters.parameters.length > 0) str += ' returns(' + astParseParameterList(node.returnParameters) + ')'
+    if(node.returnParameters.parameters.length > 0) str += ' returns(' + parseParameterList(node.returnParameters) + ')'
     str += ' {...}';
-    console.log(str);
+    return str;
   }
 
   // List child nodes of root node.
-  astListNodes(contractDefinition.nodes);
+  listNodes(contractDefinition.nodes);
+  
+  // List parents.
+  if(listInherited) {
+    const parents = contractDefinition.baseContracts;
+    if(parents && parents.length > 0) {
+      for(let i = 0; i < parents.length; i++) {
+        const parent = parents[i];
+        const parentName = parent.baseName.name;
+        parseContract(parentName + '.json', rootPath, listInherited);
+      }
+    }
+  }
 }
 
 if(!process.argv.slice(3).length) program.help();
