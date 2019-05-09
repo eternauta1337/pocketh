@@ -7,6 +7,7 @@ module.exports = {
   register: (program) => {
     program
       .command('disassemble <contractPath>')
+      .description('Disassembles compiled bytecode into readable EVM opcodes.')
       .action((contractPath) => {
 
         // Validate input.

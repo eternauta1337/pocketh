@@ -5,6 +5,7 @@ module.exports = {
   register: (program) => {
     program
       .command(`txs <networkName> <contractAddress> <functionSelector> <fromBlock> [toBlock]`)
+      .description('Finds transactions made to a deployed contract, for a specified funciton selector.')
       .action(async (networkName, contractAddress, functionSelector, fromBlock, toBlock) => {
         
         // Validate input.

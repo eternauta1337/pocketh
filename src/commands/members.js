@@ -5,6 +5,7 @@ module.exports = {
   register: (program) => {
     program
       .command(`members <contractPath> [listInherited]`)
+      .description('Provides a list of all the members of the provided contract artifacts.')
       .action((contractPath, listInherited) => {
         
         // Validate input.

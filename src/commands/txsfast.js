@@ -6,6 +6,7 @@ module.exports = {
   register: (program) => {
     program
       .command('txsfast <networkName> <contractAddress> <functionSelector> <fromBlock> [toBlock] [maxThreads]')
+      .description('Finds transactions made to a deployed contract, for a specified funciton selector, using multiple simultaneous threads.')
       .action(async (networkName, contractAddress, functionSelector, fromBlock, toBlock, maxThreads) => {
 
         // Validate input.

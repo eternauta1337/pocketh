@@ -6,6 +6,7 @@ module.exports = {
   register: (program) => {
     program
       .command(`blockdate <networkName> <blockNumber>`)
+      .description('Get the date of a block number in the given network.')
       .action(async (networkName, blockNumber) => {
         
         // Validate input.

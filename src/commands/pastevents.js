@@ -7,6 +7,7 @@ module.exports = {
   register: (program) => {
     program
       .command('pastevents <networkName> <contractPath> <contractAddress> <eventName> <fromBlock> [toBlock] [batchSize]')
+      .description('Finds past events for a given deployed contract.')
       .action(async (networkName, contractPath, contractAddress, eventName, fromBlock, toBlock, batchSize) => {
 
         // Validate input.

@@ -5,6 +5,7 @@ module.exports = {
   register: (program) => {
     program
       .command(`selectors <contractPath>`)
+      .description('List all the function selectors of the provided contract artifacts.')
       .action((contractPath) => {
         
         // Validate input.

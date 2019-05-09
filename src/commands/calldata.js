@@ -2,6 +2,7 @@ module.exports = {
   register: (program) => {
     program
       .command(`calldata <data>`)
+      .description('Split up calldata into a more readable format.')
       .action((data) => {
         
         // Validate input.

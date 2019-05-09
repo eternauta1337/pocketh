@@ -5,6 +5,7 @@ module.exports = {
   register: (program) => {
     program
       .command(`inheritance <contractPath>`)
+      .description('Displays the inheritance tree of the provided contract artifacts.')
       .action((contractPath) => {
         
         // Validate input.
