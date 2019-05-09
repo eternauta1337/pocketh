@@ -1,23 +1,25 @@
-const program = require('commander');
 const fs = require('fs');
 const path = require('path');
 
-program
-  .version('0.1.0')
-  .command('run <contractPath> [listInherited]')
-  .action((contractPath, listInherited) => {
+module.exports = {
+  register: (program) => {
+    program
+      .command(`members <contractPath> [listInherited]`)
+      .action((contractPath, listInherited) => {
+        
+        // Validate input.
+        listInherited = listInherited ? listInherited === 'true' : false;
+        // TODO
 
-    // Validate input.
-    listInherited = listInherited ? listInherited === 'true' : false;
-    // TODO
+        // Evaluate root path.
+        const rootPath = path.dirname(contractPath);
+        const filename = path.basename(contractPath);
 
-    // Evaluate root path.
-    const rootPath = path.dirname(contractPath);
-    const filename = path.basename(contractPath);
-
-    // Parse contract.
-    parseContract(filename, rootPath, listInherited);
-  });
+        // Parse contract.
+        parseContract(filename, rootPath, listInherited);
+      });
+  }
+};
 
 function parseContract(filename, rootPath, listInherited) {
 
@@ -164,6 +166,3 @@ function parseAst(ast, name, rootPath, listInherited) {
     }
   }
 }
-
-if(!process.argv.slice(3).length) program.help();
-else program.parse(process.argv);

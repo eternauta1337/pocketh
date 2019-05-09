@@ -1,22 +1,24 @@
-const program = require('commander');
 const fs = require('fs');
 const path = require('path');
 
-program
-  .version('0.1.0')
-  .command('run <contractPath>')
-  .action((contractPath) => {
+module.exports = {
+  register: (program) => {
+    program
+      .command(`inheritance <contractPath>`)
+      .action((contractPath) => {
+        
+        // Validate input.
+        // TODO
 
-    // Validate input.
-    // TODO
+        // Evaluate root path.
+        const rootPath = path.dirname(contractPath);
+        const filename = path.basename(contractPath);
 
-    // Evaluate root path.
-    const rootPath = path.dirname(contractPath);
-    const filename = path.basename(contractPath);
-
-    // Parse contract.
-    parseContract(filename, rootPath, 0);
-  });
+        // Parse contract.
+        parseContract(filename, rootPath, 0);
+      });
+  }
+};
 
 function parseContract(filename, rootPath, spaces) {
 
@@ -61,6 +63,3 @@ function parseAst(ast, name, rootPath, spaces) {
     }
   }
 }
-
-if(!process.argv.slice(3).length) program.help();
-else program.parse(process.argv);
