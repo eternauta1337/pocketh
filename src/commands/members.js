@@ -1,16 +1,17 @@
 const fs = require('fs');
 const path = require('path');
+const getArtifacts = require('../utils/getArtifacts');
 
 module.exports = {
   register: (program) => {
     program
-      .command(`members <contractPath> [listInherited]`)
+      .command(`members <contractPath>`)
       .description('Provides a list of all the members of the provided contract artifacts.')
-      .action((contractPath, listInherited) => {
+      .option(`i, --inherited`, `list inherited contracts' members as well`)
+      .action((contractPath, options) => {
         
         // Validate input.
-        listInherited = listInherited ? listInherited === 'true' : false;
-        // TODO
+        const listInherited = options.inherited;
 
         // Evaluate root path.
         const rootPath = path.dirname(contractPath);
@@ -26,8 +27,7 @@ function parseContract(filename, rootPath, listInherited) {
 
   // Retrieve contract artifacts and abi.
   const contractPath = rootPath + '/' + filename;
-  if(!fs.existsSync(contractPath)) throw new Error(`Cannot find ${contractPath}.`);
-  const contractArtifacts = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
+  const contractArtifacts = getArtifacts(contractPath);
 
   // Retrieve ast.
   const ast = contractArtifacts.ast;

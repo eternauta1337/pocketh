@@ -14,16 +14,6 @@ module.exports = {
         maxThreads = maxThreads ? parseInt(maxThreads, 10) : 10;
         fromBlock = fromBlock ? parseInt(fromBlock, 10) : 0;
         toBlock = toBlock ? toBlock : 'latest';
-        // TODO
-
-        // Display info.
-        console.log(`Querying events:`);
-        console.log(`  networkName:`, networkName);
-        console.log(`  contractAddress:`, contractAddress);
-        console.log(`  functionSelector:`, functionSelector);
-        console.log(`  fromBlock:`, fromBlock);
-        console.log(`  toBlock:`, toBlock);
-        console.log(`  maxThreads:`, maxThreads);
 
         // Connect to network.
         const web3 = await getWeb3(networkName);

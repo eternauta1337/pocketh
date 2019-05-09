@@ -2,6 +2,7 @@ const program = require('commander');
 const fs = require('fs');
 const path = require('path');
 const getWeb3 = require('../utils/getWeb3.js');
+const getArtifacts = require('../utils/getArtifacts');
 
 module.exports = {
   register: (program) => {
@@ -10,12 +11,8 @@ module.exports = {
       .description('Disassembles compiled bytecode into readable EVM opcodes.')
       .action((contractPath) => {
 
-        // Validate input.
-        // TODO
-
         // Retrieve contract artifacts and abi.
-        if(!fs.existsSync(contractPath)) throw new Error(`Cannot find ${contractPath}.`);
-        const contractArtifacts = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
+        const contractArtifacts = getArtifacts(contractPath);
         
         // Print contract name.
         console.log(`${contractArtifacts.contractName}`);

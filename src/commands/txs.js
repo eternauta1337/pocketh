@@ -12,15 +12,6 @@ module.exports = {
         contractAddress = contractAddress.toLowerCase();
         fromBlock = parseInt(fromBlock, 10);
         toBlock = toBlock ? toBlock : 'latest';
-        // TODO
-
-        // Display info.
-        console.log(`Querying events:`);
-        console.log(`  networkName:`, networkName);
-        console.log(`  contractAddress:`, contractAddress);
-        console.log(`  functionSelector:`, functionSelector);
-        console.log(`  fromBlock:`, fromBlock);
-        console.log(`  toBlock:`, toBlock);
 
         // Connect to network.
         const web3 = await getWeb3(networkName);

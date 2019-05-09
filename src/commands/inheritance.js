@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const getArtifacts = require('../utils/getArtifacts');
 
 module.exports = {
   register: (program) => {
@@ -8,9 +9,6 @@ module.exports = {
       .description('Displays the inheritance tree of the provided contract artifacts.')
       .action((contractPath) => {
         
-        // Validate input.
-        // TODO
-
         // Evaluate root path.
         const rootPath = path.dirname(contractPath);
         const filename = path.basename(contractPath);
@@ -25,9 +23,7 @@ function parseContract(filename, rootPath, spaces) {
 
   // Retrieve contract artifacts and abi.
   const contractPath = rootPath + '/' + filename;
-  if(!fs.existsSync(contractPath)) throw new Error(`Cannot find ${contractPath}.`);
-  const contractArtifacts = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
-
+  const contractArtifacts = getArtifacts(contractPath);
   // Retrieve ast.
   const ast = contractArtifacts.ast;
   if(!ast) throw new Error(`Cannot find ast data.`);

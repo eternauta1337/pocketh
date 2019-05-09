@@ -11,12 +11,6 @@ module.exports = {
         
         // Validate input.
         blockNumber = parseInt(blockNumber , 10);
-        // TODO
-
-        // Display info.
-        console.log(`Get block date:`);
-        console.log(`  networkName:`, networkName);
-        console.log(`  blockNumber:`, blockNumber);
 
         // Connect to network.
         const web3 = await getWeb3(networkName);

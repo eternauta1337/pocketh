@@ -5,9 +5,6 @@ module.exports = {
       .description('Split up calldata into a more readable format.')
       .action((data) => {
         
-        // Validate input.
-        // TODO
-
         // Parse calldata.
         if(data) {
 

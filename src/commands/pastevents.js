@@ -2,6 +2,7 @@ const program = require('commander');
 const fs = require('fs');
 const path = require('path');
 const getWeb3 = require('../utils/getWeb3.js');
+const getArtifacts = require('../utils/getArtifacts');
 
 module.exports = {
   register: (program) => {
@@ -14,24 +15,12 @@ module.exports = {
         batchSize = batchSize ? parseInt(batchSize, 10) : 100;
         fromBlock = parseInt(fromBlock, 10);
         toBlock = toBlock ? toBlock : 'latest';
-        // TODO
-
-        // Display info.
-        console.log(`Querying events:`);
-        console.log(`  networkName:`, networkName);
-        console.log(`  contractPath:`, contractPath);
-        console.log(`  contractAddress:`, contractAddress);
-        console.log(`  eventName:`, eventName);
-        console.log(`  fromBlock:`, fromBlock);
-        console.log(`  toBlock:`, toBlock);
-        console.log(`  batchSize:`, batchSize);
 
         // Connect to network.
         const web3 = await getWeb3(networkName);
 
         // Retrieve contract artifacts.
-        if(!fs.existsSync(contractPath)) throw new Error(`Cannot find ${contractPath}.`);
-        const contractArtifacts = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
+        const contractArtifacts = getArtifacts(contractPath);
 
         // Retrieve contract instance.
         const instance = await web3.eth.Contract(contractArtifacts.abi, contractAddress);

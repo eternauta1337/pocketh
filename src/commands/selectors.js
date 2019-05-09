@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Web3 = require('web3');
+const getArtifacts = require('../utils/getArtifacts');
 
 module.exports = {
   register: (program) => {
@@ -8,13 +9,9 @@ module.exports = {
       .description('List all the function selectors of the provided contract artifacts.')
       .action((contractPath) => {
         
-        // Validate input.
-        // TODO
-
         // Retrieve contract artifacts and abi.
-        if(!fs.existsSync(contractPath)) throw new Error(`Cannot find ${contractPath}.`);
-        const contractArtifacts = JSON.parse(fs.readFileSync(contractPath, 'utf8'));
-        
+        const contractArtifacts = getArtifacts(contractPath);        
+
         // Print contract name.
         console.log(`${contractArtifacts.contractName}`);
 
