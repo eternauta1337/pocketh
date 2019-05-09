@@ -11,7 +11,8 @@
     "parse_calldata": "node ./scripts/parse_calldata/parse_calldata.js run",
     "print_selectors": "node ./scripts/print_selectors/print_selectors.js run",
     "list_members": "node ./scripts/list_members/list_members.js run",
-    "get_block_date": "node ./scripts/get_block_date/get_block_date.js run"
+    "get_block_date": "node ./scripts/get_block_date/get_block_date.js run",
+    "list_inheritance": "node ./scripts/list_inheritance/list_inheritance.js run"
   },
   "repository": {
     "type": "git",
