@@ -12,6 +12,8 @@ pocketh <command> [options]
 ```
 
 ## Documentation:
+Please refer to the inline documentation of the program for a list of available commands.
+
 ```
 pocketh --help
 ```
