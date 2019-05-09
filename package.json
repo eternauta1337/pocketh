@@ -1,25 +1,16 @@
 {
-  "name": "audit-tools",
+  "name": "pocketh",
   "version": "1.0.0",
-  "description": "A curated list of tools for analysing smart contracts. The list not only contains external well known tools, but also contains experiments, ideas, and scripts that are useful for a very specific thing. Such experiments could eventually become separate projects.",
-  "main": "index.js",
+  "description": "A pocket knife for auditing smart contracts.",
+  "main": "src/program.js",
   "scripts": {
-    "disassemble_bytecode": "node ./scripts/disassemble_bytecode/disassemble_bytecode.js run",
-    "find_past_events": "node ./scripts/find_past_events/find_past_events.js run",
-    "find_txs": "node ./scripts/find_txs/find_txs.js run",
-    "find_txs_fast": "node ./scripts/find_txs_fast/find_txs_fast.js run",
-    "parse_calldata": "node ./scripts/parse_calldata/parse_calldata.js run",
-    "print_selectors": "node ./scripts/print_selectors/print_selectors.js run",
-    "list_members": "node ./scripts/list_members/list_members.js run",
-    "get_block_date": "node ./scripts/get_block_date/get_block_date.js run",
-    "list_inheritance": "node ./scripts/list_inheritance/list_inheritance.js run"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ajsantander/awesome-eth-tools.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["ethereum", "audit", "tools"],
+  "author": "ajsantander",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ajsantander/awesome-eth-tools/issues"
