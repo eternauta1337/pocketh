@@ -95,7 +95,7 @@ function parseAst(ast, name, rootPath, listInherited) {
   function parseModifierNode(node) {
     let str = 'modifier ';
     str += node.name;
-    str += '('
+    str += '(';
     str += parseParameterList(node.parameters);
     str += ')';
     str += ' {...}';
@@ -105,7 +105,7 @@ function parseAst(ast, name, rootPath, listInherited) {
     // console.log(node);
     let str = '';
     str += node.name;
-    str += '('
+    str += '(';
     str += parseParameterList(node.parameters);
     str += ')';
     str += ';';
@@ -140,11 +140,11 @@ function parseAst(ast, name, rootPath, listInherited) {
     else str += node.name;
     str += '(';
     str += parseParameterList(node.parameters);
-    str += ')'
+    str += ')';
     str += ' ';
     str += node.visibility;
     if(node.stateMutability !== 'nonpayable') str += ' ' + node.stateMutability;
-    if(node.returnParameters.parameters.length > 0) str += ' returns(' + parseParameterList(node.returnParameters) + ')'
+    if(node.returnParameters.parameters.length > 0) str += ' returns(' + parseParameterList(node.returnParameters) + ')';
     str += ' {...}';
     return str;
   }

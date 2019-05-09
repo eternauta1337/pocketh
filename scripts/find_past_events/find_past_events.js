@@ -57,7 +57,7 @@ program
     let currentBlock = fromBlock;
     const numBlocks = toBlock - fromBlock;
     async function logNextBatch() {
-      if(currentBlock == toBlock) {
+      if(currentBlock === toBlock) {
         console.log(`Query finished!`);
         console.log(`Total found: ${count}`);
         return;
