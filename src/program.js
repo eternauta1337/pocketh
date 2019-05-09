@@ -1,5 +1,6 @@
-const program = require('commander');
+#!/usr/bin/env node
 
+const program = require('commander');
 const { version } = require('../package.json');
 
 // Defined commands.
@@ -18,6 +19,7 @@ const commands = [
 // Program definition.
 program
   .name('pocketh')
+  .version(version, '--version')
   .usage('<command> [options]');
 
 // Register each command in the program.
