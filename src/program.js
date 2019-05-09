@@ -18,8 +18,8 @@ const commands = [
 
 // Program definition.
 program
+  .version(version)
   .name('pocketh')
-  .version(version, '--version')
   .usage('<command> [options]');
 
 // Register each command in the program.
