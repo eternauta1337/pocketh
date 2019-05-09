@@ -1,6 +1,6 @@
 {
   "name": "pocketh",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A pocket knife for auditing smart contracts.",
   "main": "src/program.js",
   "bin": {
@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/ajsantander/awesome-eth-tools.git"
   },
-  "keywords": ["ethereum", "audit", "tools"],
+  "keywords": [
+    "ethereum",
+    "audit",
+    "tools"
+  ],
   "author": "ajsantander",
   "license": "ISC",
   "bugs": {
