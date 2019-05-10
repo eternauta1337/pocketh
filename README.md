@@ -7,7 +7,7 @@ A pocket knife for auditing smart contracts. Provides a series of cli commands t
 - Disassemble a contract's bytecode.
 - etc...
 
-## Sample output:
+### Sample output:
 
 `pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
 
@@ -56,17 +56,17 @@ uint256 public GEN0_STARTING_PRICE;
 ...
 ```
 
-## Installation:
+### Installation:
 ```
 npm install --global pocketh
 ```
 
-## Usage:
+### Usage:
 ```
 pocketh <command> [options]
 ```
 
-## Documentation:
+### Documentation:
 Please refer to the inline documentation of the program for a list of available commands.
 
 ```
@@ -91,5 +91,5 @@ Commands:
   disassemble <contractPath>                                                                               Disassembles compiled bytecode into readable EVM opcodes.
 ```
 
-## Network configuration:
+### Network configuration:
 Commands access networks by name. To define a name, edit `./truffle-config.js`.
