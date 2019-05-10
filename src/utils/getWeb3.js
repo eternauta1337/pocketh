@@ -6,7 +6,7 @@ module.exports = async (networkName) => {
   console.log(`Conecting web3...`);
 
   // Retrieve provider info.
-  const config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+  const config = require('../../truffle-config.js');
   const network = config.networks[networkName];
   if(!network) throw new Error(`Network ${networkName} not found!`);
 
