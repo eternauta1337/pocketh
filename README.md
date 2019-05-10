@@ -12,7 +12,6 @@ A pocket knife for auditing smart contracts. Provides a series of cli commands t
 Command:
 `pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json`
 
-Output:
 ```
 └─ KittyCore
    └─ KittyMinting
@@ -27,7 +26,6 @@ Output:
 Command:
 `pocketh selectors ~/cryptokitties/build/contracts/KittyCore.json`
 
-Output:
 ```
 HASH:      SIGNATURE:
 0x046c472f IOU()
