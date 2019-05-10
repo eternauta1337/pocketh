@@ -16,15 +16,14 @@ const commands = [
   require('./commands/disassemble.js'),
 ];
 
-// Program definition.
-program
-  .version(version)
-  .name('pocketh')
-  .usage('<command> [options]');
-
 // Register each command in the program.
 commands.forEach(command => command.register(program));
 
+// Program definition.
+program
+  .name('pocketh')
+  .usage('<command> [options]')
+  .version(version, '-v, --version');
+
 // Parse program.
-if(!process.argv.slice(3).length) program.help();
-else program.parse(process.argv);
+program.parse(process.argv);
