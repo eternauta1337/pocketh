@@ -14,6 +14,8 @@ const commands = [
   require('./commands/txsfast.js'),
   require('./commands/pastevents.js'),
   require('./commands/disassemble.js'),
+  require('./commands/hex2str.js'),
+  require('./commands/str2hex.js'),
 ];
 
 // Register each command in the program.
