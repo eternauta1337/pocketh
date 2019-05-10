@@ -142,7 +142,7 @@ function parseAst(ast, name, rootPath, listInherited) {
       if(node.kind === 'constructor') str += 'constructor';
       else if(node.kind === 'function' || node.kind === 'fallback') str += 'function ' + node.name;
     }
-    else str += node.name;
+    else str += 'function ' + node.name;
     str += '(';
     str += parseParameterList(node.parameters);
     str += ')';

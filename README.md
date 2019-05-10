@@ -26,15 +26,33 @@ A pocket knife for auditing smart contracts. Provides a series of cli commands t
 
 ```
 HASH:      SIGNATURE:
-0x046c472f IOU()
-0x06a36aee getUserRoles(address)
-0x180cb47f GOV()
-0x27538e90 getCapabilityRoles(address,bytes4)
-0x2f47571f isCapabilityPublic(address,bytes4)
-0x362344b8 MAX_YAYS()
-0x3c278bd5 lift(address)
-0x5123e1fa etch(address[])
-0x5d0341ba approvals(address)<Paste>
+0x01ffc9a7 supportsInterface(bytes4)
+0x0519ce79 cfoAddress()
+0x0560ff44 tokenMetadata(uint256,string)
+0x05e45546 promoCreatedCount()
+0x06fdde03 name()
+0x095ea7b3 approve(address,uint256)
+0x0a0f8168 ceoAddress()
+0x0e583df0 GEN0_STARTING_PRICE()
+0x14001f4c setSiringAuctionAddress(address)
+0x18160ddd totalSupply()
+...
+```
+
+`pocketh members --inherited ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
+```
+================> KittyCore members:
+address public newContractAddress;
+KittyCore() public {...}
+setNewAddress(address _v2Address) external {...}
+() external payable {...}
+getKitty(uint256 _id) external view returns(bool isGestating, bool isReady, uint256 cooldownIndex, uint256 nextActionAt, uint256 siringWithId, uint256 birthTime, uint256 matronId, uint256 sireId, uint256 generation, uint256 genes) {...}
+unpause() public {...}
+withdrawBalance() external {...}
+================> KittyMinting members:
+uint256 public PROMO_CREATION_LIMIT;
+uint256 public GEN0_CREATION_LIMIT;
+uint256 public GEN0_STARTING_PRICE;
 ...
 ```
 
