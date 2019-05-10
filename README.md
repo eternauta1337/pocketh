@@ -42,5 +42,5 @@ Commands:
   disassemble <contractPath>                                                                               Disassembles compiled bytecode into readable EVM opcodes.
 ```
 
-## Network cofiguration:
+## Network configuration:
 Commands access networks by name. To define a name, edit `./truffle-config.js`.
