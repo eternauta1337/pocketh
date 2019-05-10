@@ -7,6 +7,7 @@
     "pocketh": "src/program.js"
   },
   "scripts": {
+    "ganache": "ganache-cli --deterministic",
     "test": "jest",
     "testwatch": "jest --watch",
     "compile": "truffle compile"
@@ -32,6 +33,7 @@
     "web3": "^1.0.0-beta.54"
   },
   "devDependencies": {
+    "ganache-cli": "^6.4.3",
     "jest": "^24.8.0",
     "truffle": "^5.0.17"
   }

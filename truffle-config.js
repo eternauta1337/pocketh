@@ -12,6 +12,10 @@ module.exports = {
     mainnet: {
       host: "http://localhost",
       port: "8546"
+    },
+    development: {
+      host: "http://localhost",
+      port: "8545"
     }
   },
   compilers: {
