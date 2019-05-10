@@ -9,8 +9,7 @@ A pocket knife for auditing smart contracts. Provides a series of cli commands t
 
 ## Sample output:
 
-Command:
-`pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json`
+`pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
 
 ```
 └─ KittyCore
@@ -23,8 +22,7 @@ Command:
                └─ ERC721
 ```
 
-Command:
-`pocketh selectors ~/cryptokitties/build/contracts/KittyCore.json`
+`pocketh selectors ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
 
 ```
 HASH:      SIGNATURE:
