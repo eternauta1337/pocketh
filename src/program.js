@@ -23,7 +23,14 @@ commands.forEach(command => command.register(program));
 program
   .name('pocketh')
   .usage('<command> [options]')
-  .version(version, '-v, --version');
+  .version(version, '-v, --version')
+  .on('command:*', function () {
+    console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
+    process.exit(1);
+  });
 
 // Parse program.
 program.parse(process.argv);
+
+// Show help if no command is entered.
+if(process.argv.length === 2) program.help();
