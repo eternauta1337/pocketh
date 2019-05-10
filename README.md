@@ -11,7 +11,6 @@ A pocket knife for auditing smart contracts. Provides a series of cli commands t
 
 Command:
 `pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json`
-
 Output:
 ```
 └─ KittyCore
@@ -22,6 +21,22 @@ Output:
                ├─ KittyBase
                │  └─ KittyAccessControl
                └─ ERC721
+```
+
+Command:
+`pocketh selectors ~/cryptokitties/build/contracts/KittyCore.json`
+```
+HASH:      SIGNATURE:
+0x046c472f IOU()
+0x06a36aee getUserRoles(address)
+0x180cb47f GOV()
+0x27538e90 getCapabilityRoles(address,bytes4)
+0x2f47571f isCapabilityPublic(address,bytes4)
+0x362344b8 MAX_YAYS()
+0x3c278bd5 lift(address)
+0x5123e1fa etch(address[])
+0x5d0341ba approvals(address)<Paste>
+...
 ```
 
 ## Installation:
