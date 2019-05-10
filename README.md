@@ -56,6 +56,22 @@ uint256 public GEN0_STARTING_PRICE;
 ...
 ```
 
+`pocketh disassemble ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
+```
+KittyCore
+0 {0x60} [c0] PUSH1 0x80 (dec 128)
+1 {0x60} [c2] PUSH1 0x40 (dec 64)
+2 {0x52} [c4] MSTORE
+3 {0x60} [c5] PUSH1 0x00 (dec 0)
+4 {0x60} [c7] PUSH1 0x02 (dec 2)
+5 {0x60} [c9] PUSH1 0x14 (dec 20)
+6 {0x61} [c11] PUSH2 0x0100 (dec 256)
+7 {0x0a} [c14] EXP
+8 {0x81} [c15] DUP2
+9 {0x54} [c16] SLOAD
+...
+```
+
 ### Installation:
 ```
 npm install --global pocketh
