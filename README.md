@@ -1,4 +1,4 @@
-# pocketh
+# pocketh :rocket:
 A pocket knife for auditing smart contracts.
 
 ## Installation:
