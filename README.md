@@ -1,10 +1,10 @@
 # pocketh :rocket:
 A pocket knife for auditing smart contracts. Provides a series of cli commands that allow you to quickly get information about a contract, and contract related operations, such as:
-- List all function selectors of a contract
-- Print out the inheritance tree of a contract
-- Search for past events of a deployed contract
-- Search for transactions made to a deployed contract hitting a particular function
-- Disassemble a contract's bytecode
+- List all function selectors of a contract.
+- Print out the inheritance tree of a contract.
+- Search for past events of a deployed contract.
+- Search for transactions made to a deployed contract hitting a particular function.
+- Disassemble a contract's bytecode.
 - etc...
 
 ## Installation:
