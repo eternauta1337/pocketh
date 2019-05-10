@@ -1,5 +1,3 @@
-jest.setTimeout(10000);
-
 module.exports = {
   networks: {
     infura_mainnet: {

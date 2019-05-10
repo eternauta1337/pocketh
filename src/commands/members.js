@@ -2,12 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const getArtifacts = require('../utils/getArtifacts');
 
+const listedContracts = [];
+
 module.exports = {
   register: (program) => {
     program
       .command(`members <contractPath>`)
       .description('Provides a list of all the members of the provided contract artifacts.')
-      .option(`i, --inherited`, `list inherited contracts' members as well`)
+      .option(`--inherited`, `list inherited contracts' members as well`)
       .action((contractPath, options) => {
         
         // Validate input.
@@ -156,13 +158,16 @@ function parseAst(ast, name, rootPath, listInherited) {
   listNodes(contractDefinition.nodes);
   
   // List parents.
+  listedContracts.push(name);
   if(listInherited) {
     const parents = contractDefinition.baseContracts;
     if(parents && parents.length > 0) {
       for(let i = 0; i < parents.length; i++) {
         const parent = parents[i];
         const parentName = parent.baseName.name;
-        parseContract(parentName + '.json', rootPath, listInherited);
+        if(!listedContracts.includes(parentName)) {
+          parseContract(parentName + '.json', rootPath, listInherited);
+        }
       }
     }
   }

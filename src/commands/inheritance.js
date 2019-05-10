@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const getArtifacts = require('../utils/getArtifacts');
 
+const listedContracts = [];
+
 module.exports = {
   register: (program) => {
     program
@@ -51,12 +53,15 @@ function parseAst(ast, name, rootPath, spaces) {
   // console.log(contractDefinition);
   
   // Find parents.
+  listedContracts.push(name);
   const parents = contractDefinition.baseContracts;
   if(parents && parents.length > 0) {
     for(let i = 0; i < parents.length; i++) {
       const parent = parents[i];
       const parentName = parent.baseName.name;
-      parseContract(parentName + '.json', rootPath, spaces + 1);
+      if(!listedContracts.includes(parentName)) {
+        parseContract(parentName + '.json', rootPath, spaces + 1);
+      }
     }
   }
 }

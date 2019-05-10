@@ -1,6 +1,18 @@
 pragma solidity ^0.5.7;
 
-contract Test {
+contract GrandParent {
+  uint256 public granparent_value;
+}
+
+contract Parent1 is GrandParent {
+  uint256 public parent1_value;
+}
+
+contract Parent2 {
+  uint256 public parent2_value;
+}
+
+contract Test is Parent1, Parent2 {
   uint256 public value;
 
   constructor() public {
