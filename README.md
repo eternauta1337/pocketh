@@ -43,12 +43,12 @@ HASH:      SIGNATURE:
 ```
 ================> KittyCore members:
 address public newContractAddress;
-KittyCore() public {...}
-setNewAddress(address _v2Address) external {...}
-() external payable {...}
-getKitty(uint256 _id) external view returns(bool isGestating, bool isReady, uint256 cooldownIndex, uint256 nextActionAt, uint256 siringWithId, uint256 birthTime, uint256 matronId, uint256 sireId, uint256 generation, uint256 genes) {...}
-unpause() public {...}
-withdrawBalance() external {...}
+function KittyCore() public {...}
+function setNewAddress(address _v2Address) external {...}
+function () external payable {...}
+function getKitty(uint256 _id) external view returns(bool isGestating, bool isReady, uint256 cooldownIndex, uint256 nextActionAt, uint256 siringWithId, uint256 birthTime, uint256 matronId, uint256 sireId, uint256 generation, uint256 genes) {...}
+function unpause() public {...}
+function withdrawBalance() external {...}
 ================> KittyMinting members:
 uint256 public PROMO_CREATION_LIMIT;
 uint256 public GEN0_CREATION_LIMIT;
