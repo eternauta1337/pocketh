@@ -83,12 +83,12 @@ pocketh <command> [options]
 ```
 
 ### Documentation:
-Please refer to the inline documentation of the program for a list of available commands.
+Please refer to the inline documentation of the program for a list of available commands,
 
 ```
 pocketh --help
 ```
-or, for command specific documentation
+or, for command specific documentation.
 ```
 pocketh <command> --help
 ```
@@ -105,7 +105,8 @@ Commands:
   txsfast <networkName> <contractAddress> <functionSelector> <fromBlock> [toBlock] [maxThreads]            Finds transactions made to a deployed contract, for a specified funciton selector, using multiple simultaneous threads.
   pastevents <networkName> <contractPath> <contractAddress> <eventName> <fromBlock> [toBlock] [batchSize]  Finds past events for a given deployed contract.
   disassemble <contractPath>                                                                               Disassembles compiled bytecode into readable EVM opcodes.
+  ...
 ```
 
 ### Network configuration:
-Commands access networks by name. To define a name, edit `./truffle-config.js`.
+Commands access networks by name. To define a network, add it to `./truffle-config.js`.
