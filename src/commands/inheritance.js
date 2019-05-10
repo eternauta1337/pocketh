@@ -1,8 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+const treeify = require('treeify');
 const getArtifacts = require('../utils/getArtifacts');
 
 const listedContracts = [];
+const tree = {};
+let rootName;
 
 module.exports = {
   register: (program) => {
@@ -16,12 +19,14 @@ module.exports = {
         const filename = path.basename(contractPath);
 
         // Parse contract.
-        parseContract(filename, rootPath, 0);
+        rootName = filename.split('.')[0];
+        tree[rootName] = {};
+        parseContract(filename, rootPath, tree[rootName]);
       });
   }
 };
 
-function parseContract(filename, rootPath, spaces) {
+function parseContract(filename, rootPath, branch) {
 
   // Retrieve contract artifacts and abi.
   const contractPath = rootPath + '/' + filename;
@@ -33,11 +38,10 @@ function parseContract(filename, rootPath, spaces) {
   // console.log(ast);
 
   // Print out members.
-  parseAst(ast, contractArtifacts.contractName, rootPath, spaces);
+  parseAst(ast, contractArtifacts.contractName, rootPath, branch);
 }
 
-function parseAst(ast, name, rootPath, spaces) {
-  console.log(`${'  '.repeat(spaces)}- ${name}`);
+function parseAst(ast, name, rootPath, branch) {
 
   // Find a node of type.
   function findNode(nodes, type, name) {
@@ -60,8 +64,10 @@ function parseAst(ast, name, rootPath, spaces) {
       const parent = parents[i];
       const parentName = parent.baseName.name;
       if(!listedContracts.includes(parentName)) {
-        parseContract(parentName + '.json', rootPath, spaces + 1);
+        branch[parentName] = {};
+        parseContract(parentName + '.json', rootPath, branch[parentName]);
       }
     }
+    if(name === rootName) console.log(treeify.asTree(tree, true));
   }
 }

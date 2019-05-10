@@ -7,6 +7,23 @@ A pocket knife for auditing smart contracts. Provides a series of cli commands t
 - Disassemble a contract's bytecode.
 - etc...
 
+## Sample output:
+
+Command:
+`pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json`
+
+Output:
+```
+└─ KittyCore
+   └─ KittyMinting
+      └─ KittyAuction
+         └─ KittyBreeding
+            └─ KittyOwnership
+               ├─ KittyBase
+               │  └─ KittyAccessControl
+               └─ ERC721
+```
+
 ## Installation:
 ```
 npm install --global pocketh
