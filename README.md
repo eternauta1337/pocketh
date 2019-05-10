@@ -88,7 +88,7 @@ Please refer to the inline documentation of the program for a list of available 
 ```
 pocketh --help
 ```
-or
+or, for command specific documentation
 ```
 pocketh <command> --help
 ```
