@@ -3,12 +3,12 @@ const cli = require('../utils/cli.js');
 describe('calldata command', () => {
   
   test('Result code should be 0', async () => {
-    let result = await cli('calldata', '0xabcabcab');
+    const result = await cli('calldata', '0xabcabcab');
     expect(result.code).toBe(0);
   });
 
   test('Result stdout should identify selectors', async () => {
-    let result = await cli('calldata', '0xffffffff');
+    const result = await cli('calldata', '0xffffffff');
     expect(result.stdout).toContain('Selector: 0xffffffff');
   });
 
@@ -19,7 +19,7 @@ describe('calldata command', () => {
       '0000000000000000000000000000000000000000000000000000000000000002',
       '0000000000000000000000000000000000000000000000000000000000000003'
     ].join('');
-    let result = await cli('calldata', calldata);
+    const result = await cli('calldata', calldata);
     expect(result.stdout).toContain(
       '0x0000: 0x0000000000000000000000000000000000000000000000000000000000000001'
     );

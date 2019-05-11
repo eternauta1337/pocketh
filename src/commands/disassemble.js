@@ -14,16 +14,12 @@ module.exports = {
         // Retrieve contract artifacts and abi.
         const contractArtifacts = getArtifacts(contractPath);
         
-        // Print contract name.
-        console.log(`${contractArtifacts.contractName}`);
-
         // Retrieve bytecode.
         const output = disassemble(
           contractArtifacts.bytecode,
           contractArtifacts.deployedBytecode
         );
-        console.log(output);
-
+        process.stdout.write(output);
       });
 
     let opcodes;

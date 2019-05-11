@@ -3,7 +3,7 @@ const cli = require('../utils/cli.js');
 describe('pastevents command', () => {
   
   test('Result code should be 0', async () => {
-    let result = await cli(
+    const result = await cli(
       'pastevents', 
       'development',
       './test/artifacts/Test.json', 
