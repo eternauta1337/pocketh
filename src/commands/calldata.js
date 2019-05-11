@@ -15,9 +15,7 @@ module.exports = {
           // Extract words.
           let idx = 10;
           let position = 0;
-          console.log(`len:`, data.length);
           while(idx < data.length) {
-            console.log(`idx:`, idx);
             const value = '0x' + data.substring(idx, Math.min(idx + 64, data.length));
             const posStr = '0x' + position.toString(16).padStart(4, '0');
             process.stdout.write(`${posStr}: ${value}\n`);
