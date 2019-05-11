@@ -18,7 +18,7 @@ module.exports = {
         // Get block info.
         const block = await web3.eth.getBlock(blockNumber);
         const date = new Date(parseInt(block.timestamp, 10) * 1000);
-        console.log(`Date for block #${blockNumber} => ${date}`);
+        process.stdout.write(`Date for block #${blockNumber} => ${date}\n`);
       });
   }
 };

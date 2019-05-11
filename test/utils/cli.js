@@ -4,9 +4,8 @@ const exec = require('child_process').exec;
 module.exports = function cli(...args) {
   cwd = '.';
   return new Promise(resolve => { 
-    const command = `node ${path.resolve('./src/program.js')} ${args.join(' ')}`;
     exec(
-      command,
+      `node ${path.resolve('./src/program.js')} ${args.join(' ')}`,
       { cwd }, 
       (error, stdout, stderr) => { 
         if(error) console.log(error);
