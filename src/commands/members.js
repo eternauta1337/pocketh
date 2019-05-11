@@ -34,16 +34,15 @@ function parseContract(filename, rootPath, listInherited) {
   // Retrieve ast.
   const ast = contractArtifacts.ast;
   if(!ast) throw new Error(`Cannot find ast data.`);
-  // console.log(JSON.stringify(ast, null, 2));
-  // console.log(ast);
+  // process.stdout.write(JSON.stringify(ast, null, 2));
+  // process.stdout.write(ast);
 
   // Print out members.
   parseAst(ast, contractArtifacts.contractName, rootPath, listInherited);
 }
 
 function parseAst(ast, name, rootPath, listInherited) {
-  console.log(`================> ${name} members:`);
-
+  
   // Find a node of type.
   function findNode(nodes, type, name) {
     for(let i = 0; i < nodes.length; i++) {
@@ -55,38 +54,39 @@ function parseAst(ast, name, rootPath, listInherited) {
 
   // Find root node.
   const contractDefinition = findNode(ast.nodes, 'ContractDefinition', name);
-  // console.log(contractDefinition);
+  // process.stdout.write(contractDefinition);
 
   // List sub-nodes of a particular node.
   function listNodes(nodes) {
     for(let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
-      // console.log('========> ' + node.nodeType);
+      // process.stdout.write('========> ' + node.nodeType);
+      const prefix = listInherited ? `(${name}) ` : '';
       switch(node.nodeType) {
         case 'FunctionDefinition':
-          console.log(parseFunctionNode(node));
+          process.stdout.write(`${prefix}${parseFunctionNode(node)}\n`);
           break;
         case 'VariableDeclaration':
-          console.log(parseVariableNode(node));
+          process.stdout.write(`${prefix}${parseVariableNode(node)}\n`);
           break;
         case 'EventDefinition':
-          console.log(parseEventNode(node));
+          process.stdout.write(`${prefix}${parseEventNode(node)}\n`);
           break;
         case 'ModifierDefinition':
-          console.log(parseModifierNode(node));
+          process.stdout.write(`${prefix}${parseModifierNode(node)}\n`);
           break;
         case 'StructDefinition':
-          console.log(parseStructNode(node));
+          process.stdout.write(`${prefix}${parseStructNode(node)}\n`);
           break;
         default:
-          console.log('TODO: ' + node.nodeType);
+          process.stdout.write(`TODO: ${node.nodeType}`);
       }
     }
   }
 
   // Parse node types into readable format.
   function parseStructNode(node) {
-    // console.log(node);
+    // process.stdout.write(node);
     let str = 'struct ';
     if(node.visibility) str += node.visibility + ' ';
     str += node.name;
@@ -107,7 +107,7 @@ function parseAst(ast, name, rootPath, listInherited) {
     return str;
   }
   function parseEventNode(node) {
-    // console.log(node);
+    // process.stdout.write(node);
     let str = '';
     str += node.name;
     str += '(';
@@ -117,7 +117,7 @@ function parseAst(ast, name, rootPath, listInherited) {
     return str;
   }
   function parseVariableNode(node) {
-    // console.log(node);
+    // process.stdout.write(node);
     let str = '';
     str += node.typeDescriptions.typeString + ' ';
     if(node.visibility) str += node.visibility + ' ';
@@ -126,7 +126,7 @@ function parseAst(ast, name, rootPath, listInherited) {
     return str;
   }
   function parseParameterList(list) {
-    // console.log(list.parameters);
+    // process.stdout.write(list.parameters);
     if(list.parameters.length === 0) return '';
     const paramStrings = [];
     list.parameters.map((parameter) => {
@@ -136,7 +136,7 @@ function parseAst(ast, name, rootPath, listInherited) {
     return paramStrings.join(', ');
   }
   function parseFunctionNode(node) {
-    // console.log(node);
+    // process.stdout.write(node);
     let str = '';
     if(node.kind) {
       if(node.kind === 'constructor') str += 'constructor';
