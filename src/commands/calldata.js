@@ -10,19 +10,19 @@ module.exports = {
 
           // Extract function selector.
           const selector = '0x' + data.substring(2, 10);
-          console.log(`Selector:`, selector);
+          process.stdout.write(`Selector: ${selector}\n`);
 
           // Extract words.
           let idx = 10;
           let position = 0;
-          while(idx <= data.length) {
-            const value = '0x' + data.substring(idx, idx + 64);
-            console.log(
-              '0x' + position.toString(16).padStart(4, '0') + ":", 
-              value
-            );
+          console.log(`len:`, data.length);
+          while(idx < data.length) {
+            console.log(`idx:`, idx);
+            const value = '0x' + data.substring(idx, Math.min(idx + 64, data.length));
+            const posStr = '0x' + position.toString(16).padStart(4, '0');
+            process.stdout.write(`${posStr}: ${value}\n`);
             position += 32;
-            idx += position * 2;
+            idx += 64;
           }
         }
       });
