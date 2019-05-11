@@ -32,10 +32,10 @@ module.exports = {
             eventName,
             {fromBlock: from, toBlock: to},
             (err, events) => {
-              if(err) console.log(err);
+              if(err) process.stdout.write(err);
               else if(events && events.length > 0) {
                 events.map((event) => {
-                  console.log(`\n`, event);
+                  process.stdout.write(`\n${JSON.stringify(event, null, 2)}`);
                 });
                 count += events.length;
               }
@@ -48,10 +48,9 @@ module.exports = {
         let currentBlock = fromBlock;
         const numBlocks = toBlock - fromBlock;
         async function logNextBatch() {
-          if(currentBlock === toBlock) {
-            console.log(`Query finished!`);
-            console.log(`Total found: ${count}`);
-            return;
+          if(currentBlock >= toBlock) {
+            process.stdout.write(`\nTotal "${eventName}" events found: ${count}\n`);
+            process.exit();
           }
           const to = Math.min(currentBlock + batchSize, toBlock);
           const percentage = Math.floor(( currentBlock - fromBlock ) / numBlocks * 100, 2);

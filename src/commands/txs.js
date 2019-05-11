@@ -19,9 +19,12 @@ module.exports = {
         // Query a transaction.
         async function queryTransaction(txHash) {
           const tx = await web3.eth.getTransaction(txHash);
+          process.stdout.write(`\ntransaction hash: ${tx.hash}`);
           if(tx.to && tx.to.toLowerCase() === contractAddress) {
+            process.stdout.write(`\naddress match`);
             if(tx.input.substring(0, 10) === functionSelector) {
-              console.log(`\n`, tx);
+              process.stdout.write(`\nselector match`);
+              process.stdout.write(`\n${JSON.stringify(tx, null, 2)}`);
             }
           }
         }
@@ -45,7 +48,8 @@ module.exports = {
           currentBlock++;
         }
 
-        console.log(`Finished block sweep.`);
+        process.stdout.write(`\nFinished block sweep.`);
+        process.exit();
       });
   }
 };

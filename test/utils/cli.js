@@ -8,9 +8,10 @@ module.exports = function cli(...args) {
       `node ${path.resolve('./src/program.js')} ${args.join(' ')}`,
       { cwd }, 
       (error, stdout, stderr) => { 
-        if(error) console.log(error);
+        const err = error || stderr;
+        if(err) console.log(err);
         resolve({
-          code: error && error.code ? error.code : 0,
+          code: err ? 1 : 0,
           error,
           stdout,
           stderr 
