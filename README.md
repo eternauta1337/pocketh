@@ -109,4 +109,4 @@ Commands:
 ```
 
 ### Network configuration:
-Commands access networks by name. To define a network, add it to `./truffle-config.js`.
+Commands access networks by name. To define a network, add it to `./networks.json`.

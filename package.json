@@ -34,7 +34,6 @@
   },
   "devDependencies": {
     "ganache-cli": "^6.4.3",
-    "jest": "^24.8.0",
-    "truffle": "^5.0.17"
+    "jest": "^24.8.0"
   }
 }
