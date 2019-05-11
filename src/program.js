@@ -11,7 +11,6 @@ const commands = [
   require('./commands/calldata.js'),
   require('./commands/blockdate.js'),
   require('./commands/txs.js'),
-  require('./commands/txsfast.js'),
   require('./commands/pastevents.js'),
   require('./commands/disassemble.js'),
   require('./commands/hex2str.js'),
