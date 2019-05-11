@@ -12,9 +12,6 @@ module.exports = {
         // Retrieve contract artifacts and abi.
         const contractArtifacts = getArtifacts(contractPath);        
 
-        // Print contract name.
-        console.log(`${contractArtifacts.contractName}`);
-
         // Retrieve abi.
         const abi = contractArtifacts.abi;
 
@@ -37,15 +34,11 @@ module.exports = {
           return hash.substring(0, 10);
         }
 
-        // Print 'table' headers.
-        console.log(``);
-        console.log(`HASH:      SIGNATURE:`);
-
         // Scan the abi and identify function signatures.
         abi.map((item) => {
           if(item.type === 'function') {
             const hash = item.signature ? item.signature : getAbiItemSigHash(item);
-            console.log(`${hash} ${abiItemToSigStr(item)}`);
+            process.stdout.write(`${hash} ${abiItemToSigStr(item)}\n`);
           }
         });
       });
