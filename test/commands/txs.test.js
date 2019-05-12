@@ -24,7 +24,7 @@ describe('txs command', () => {
       '0xa9059cbb',
       '7729780',
       '7729790',
-      '1'
+      '10'
     );
     expect(result.stdout).toContain(`Found 27 transactions`);
   });

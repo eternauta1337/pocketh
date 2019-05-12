@@ -46,12 +46,16 @@ module.exports = {
             true, 
             (err, block) => {
 
-              // Re-register block as being scanned.
-              blocksBeingScanned.splice(blocksBeingScanned.indexOf(blockNumber), 1);
-
               // Process errors with a max number of tries.
               if(err) {
+                
+                // De-register block as being scanned.
+                blocksBeingScanned.splice(blocksBeingScanned.indexOf(blockNumber), 1);
+
+                // Report error.
                 process.stderr.write(`\nError: ${err}`);
+
+                // Retry or end.
                 triesLeft--;
                 if(triesLeft < 0) evalScanNextBlock();
                 else {
@@ -73,7 +77,7 @@ module.exports = {
                     if(txToTargetFunction) {
 
                       // Report match immediately.
-                      process.stdout.write(`\n${tx.hash}`)
+                      process.stdout.write(`\n${tx.hash}`);
 
                       // Register match.
                       matchingTxs.push(tx.hash);
@@ -98,7 +102,10 @@ module.exports = {
                 // Monitor progress.
                 const blocksRemaining = numBlocks - scannedBlocks.length;
                 const percentage = Math.floor(100 * scannedBlocks.length / numBlocks, 2);
-                process.stdout.write(`\rScanned block #${blockNumber}, ${blocksRemaining} blocks remaining (${percentage}%), ${avgBlocksPerSecond.toFixed(2)} blocks per second.`);
+                process.stdout.write(`\rScanned block #${blockNumber}, ${blocksRemaining} blocks remaining (${percentage}%), ${avgBlocksPerSecond.toFixed(2)} blocks per second per thread, ${blocksBeingScanned.length} threads open.`);
+                
+                // De-register block as being scanned.
+                blocksBeingScanned.splice(blocksBeingScanned.indexOf(blockNumber), 1);
                 
                 // Continue or end scan.
                 evalEndScan();
