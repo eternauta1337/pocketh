@@ -81,7 +81,7 @@ npm install --global pocketh
 pocketh <command> [options]
 ```
 
-_Note: Commands that take <networkUrl> as a parameter expect an url such as http://localhost:8545 or a common network name such as mainnet, ropsten or rinkeby._
+_Note: Commands that take "networkUrl" as a parameter expect an url such as http://localhost:8545 or a common network name such as mainnet, ropsten or rinkeby._
 
 ### Documentation:
 Please refer to the inline documentation of the program for a list of available commands,

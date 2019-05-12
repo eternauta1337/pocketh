@@ -72,6 +72,9 @@ module.exports = {
                     const txToTargetFunction = tx.input.substring(0, 10) === functionSelector;
                     if(txToTargetFunction) {
 
+                      // Report match immediately.
+                      process.stdout.write(`\n${tx.hash}`)
+
                       // Register match.
                       matchingTxs.push(tx.hash);
                     }
