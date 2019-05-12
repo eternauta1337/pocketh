@@ -10,7 +10,7 @@ A pocket knife for auditing smart contracts. Provides a series of cli commands t
 ### Sample output:
 
 `pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
-
+:sparkles:
 ```
 └─ KittyCore
    └─ KittyMinting
@@ -23,7 +23,7 @@ A pocket knife for auditing smart contracts. Provides a series of cli commands t
 ```
 
 `pocketh selectors ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
-
+:sparkles:
 ```
 HASH:      SIGNATURE:
 0x01ffc9a7 supportsInterface(bytes4)
@@ -40,6 +40,7 @@ HASH:      SIGNATURE:
 ```
 
 `pocketh members --inherited ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
+:sparkles:
 ```
 ================> KittyCore members:
 address public newContractAddress;
@@ -57,6 +58,7 @@ uint256 public GEN0_STARTING_PRICE;
 ```
 
 `pocketh disassemble ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
+:sparkles:
 ```
 0 {0x60} [c0] PUSH1 0x80 (dec 128)
 1 {0x60} [c2] PUSH1 0x40 (dec 64)
