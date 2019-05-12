@@ -9,7 +9,9 @@ module.exports = {
       .action(async (networkUrl) => {
         const info = {};
         const web3 = await getWeb3(networkUrl);
+        const latest = await web3.eth.getBlock('latest');
         info.latestBlock = await web3.eth.getBlockNumber();
+        info.gasLimit = latest.gasLimit;
         info.gasPrice = await web3.eth.getGasPrice();
         console.log(`${networkUrl}: ${ JSON.stringify(info, null, 2) }`);
       });
