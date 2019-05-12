@@ -4,9 +4,9 @@ const getWeb3 = require('../utils/getWeb3.js');
 module.exports = {
   register: (program) => {
     program
-      .command(`txs <networkName> <contractAddress> <functionSelector> <fromBlock> <toBlock> [maxThreads]`)
+      .command(`txs <networkUrl> <contractAddress> <functionSelector> <fromBlock> <toBlock> [maxThreads]`)
       .description('Finds transactions made to a deployed contract, for a specified funciton selector.')
-      .action(async (networkName, contractAddress, functionSelector, fromBlock, toBlock, maxThreads) => {
+      .action(async (networkUrl, contractAddress, functionSelector, fromBlock, toBlock, maxThreads) => {
         
         // Validate input.
         contractAddress = contractAddress.toLowerCase();
@@ -15,7 +15,7 @@ module.exports = {
         maxThreads = maxThreads ? parseInt(maxThreads, 10) : 1;
 
         // Connect to network.
-        const web3 = await getWeb3(networkName);
+        const web3 = await getWeb3(networkUrl);
 
         // Init state.
         let triesLeft = 10;

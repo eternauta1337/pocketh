@@ -6,7 +6,7 @@ describe('txs command', () => {
   test('Result code should be 0', async () => {
     const result = await cli(
       'txs', 
-      'infura_mainnet',
+      'mainnet',
       '0x06012c8cf97bead5deae237070f9587f8e7a266d',
       '0x095ea7b3',
       '7729780',
@@ -19,7 +19,7 @@ describe('txs command', () => {
   test('Result stdout should contain', async () => {
     const result = await cli(
       'txs', 
-      'infura_mainnet',
+      'mainnet',
       '0x06012c8cf97bead5deae237070f9587f8e7a266d',
       '0xa9059cbb',
       '7729780',

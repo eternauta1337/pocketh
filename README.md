@@ -58,7 +58,6 @@ uint256 public GEN0_STARTING_PRICE;
 
 `pocketh disassemble ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
 ```
-KittyCore
 0 {0x60} [c0] PUSH1 0x80 (dec 128)
 1 {0x60} [c2] PUSH1 0x40 (dec 64)
 2 {0x52} [c4] MSTORE
@@ -82,6 +81,8 @@ npm install --global pocketh
 pocketh <command> [options]
 ```
 
+_Note: Commands that take <networkUrl> as a parameter expect an url such as http://localhost:8545 or a common network name such as mainnet, ropsten or rinkeby._
+
 ### Documentation:
 Please refer to the inline documentation of the program for a list of available commands,
 
@@ -100,13 +101,10 @@ Commands:
   members [options] <contractPath>                                                                         Provides a list of all the members of the provided contract artifacts.
   selectors <contractPath>                                                                                 List all the function selectors of the provided contract artifacts.
   calldata <data>                                                                                          Split up calldata into a more readable format.
-  blockdate <networkName> <blockNumber>                                                                    Get the date of a block number in the given network.
-  txs <networkName> <contractAddress> <functionSelector> <fromBlock> [toBlock]                             Finds transactions made to a deployed contract, for a specified funciton selector.
-  txsfast <networkName> <contractAddress> <functionSelector> <fromBlock> [toBlock] [maxThreads]            Finds transactions made to a deployed contract, for a specified funciton selector, using multiple simultaneous threads.
-  pastevents <networkName> <contractPath> <contractAddress> <eventName> <fromBlock> [toBlock] [batchSize]  Finds past events for a given deployed contract.
+  blockdate <networkUrl> <blockNumber>                                                                    Get the date of a block number in the given network.
+  txs <networkUrl> <contractAddress> <functionSelector> <fromBlock> [toBlock]                             Finds transactions made to a deployed contract, for a specified funciton selector.
+  txsfast <networkUrl> <contractAddress> <functionSelector> <fromBlock> [toBlock] [maxThreads]            Finds transactions made to a deployed contract, for a specified funciton selector, using multiple simultaneous threads.
+  pastevents <networkUrl> <contractPath> <contractAddress> <eventName> <fromBlock> [toBlock] [batchSize]  Finds past events for a given deployed contract.
   disassemble <contractPath>                                                                               Disassembles compiled bytecode into readable EVM opcodes.
   ...
 ```
-
-### Network configuration:
-Commands access networks by name. To define a network, add it to `./networks.json`.

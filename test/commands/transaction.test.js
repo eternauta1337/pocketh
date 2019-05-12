@@ -6,7 +6,7 @@ describe('transaction command', () => {
   test('Result code should be 0', async () => {
     const result = await cli(
       'transaction', 
-      'infura_mainnet',
+      'mainnet',
       '0x95ecb5317de43d2c682e93350f160c10d3a816002ad43f2b67fb631062c1484b'
     );
     expect(result.code).toBe(0);
@@ -15,7 +15,7 @@ describe('transaction command', () => {
   test('Result stdout should contain', async () => {
     const result = await cli(
       'transaction', 
-      'infura_mainnet',
+      'mainnet',
       '0x95ecb5317de43d2c682e93350f160c10d3a816002ad43f2b67fb631062c1484b'
     );
     expect(result.stdout).toContain(`0x95ecb5317de43d2c682e93350f160c10d3a816002ad43f2b67fb631062c1484b => {

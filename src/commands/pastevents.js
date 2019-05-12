@@ -7,9 +7,9 @@ const getArtifacts = require('../utils/getArtifacts');
 module.exports = {
   register: (program) => {
     program
-      .command('pastevents <networkName> <contractPath> <contractAddress> <eventName> <fromBlock> [toBlock] [batchSize]')
+      .command('pastevents <networkUrl> <contractPath> <contractAddress> <eventName> <fromBlock> [toBlock] [batchSize]')
       .description('Finds past events for a given deployed contract.')
-      .action(async (networkName, contractPath, contractAddress, eventName, fromBlock, toBlock, batchSize) => {
+      .action(async (networkUrl, contractPath, contractAddress, eventName, fromBlock, toBlock, batchSize) => {
 
         // Validate input.
         batchSize = batchSize ? parseInt(batchSize, 10) : 100;
@@ -17,7 +17,7 @@ module.exports = {
         toBlock = toBlock ? toBlock : 'latest';
 
         // Connect to network.
-        const web3 = await getWeb3(networkName);
+        const web3 = await getWeb3(networkUrl);
 
         // Retrieve contract artifacts.
         const contractArtifacts = getArtifacts(contractPath);

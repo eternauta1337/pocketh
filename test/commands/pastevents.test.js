@@ -6,7 +6,7 @@ describe('pastevents command', () => {
   test('Result code should be 0', async () => {
     const result = await cli(
       'pastevents', 
-      'infura_mainnet',
+      'mainnet',
       './test/artifacts/KittyCore.json', 
       '0x06012c8cf97bead5deae237070f9587f8e7a266d',
       'Transfer',
@@ -20,7 +20,7 @@ describe('pastevents command', () => {
   test.skip('Result stdout should contain a known event', async () => {
     const result = await cli(
       'pastevents', 
-      'infura_mainnet',
+      'mainnet',
       './test/artifacts/KittyCore.json', 
       '0x06012c8cf97bead5deae237070f9587f8e7a266d',
       'Transfer',

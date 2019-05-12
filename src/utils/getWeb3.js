@@ -1,16 +1,13 @@
 const fs = require('fs');
 const Web3 = require('web3');
 
-module.exports = async (networkName) => {
+const defaultNetworks = {
+  mainnet: "https://mainnet.infura.io/v3/ac987ae2aa3c436c958e050a82a5c8da",
+  ropsten: "https://ropsten.infura.io/v3/ac987ae2aa3c436c958e050a82a5c8da",
+  rinkeby: "https://rinkeby.infura.io/v3/ac987ae2aa3c436c958e050a82a5c8da"
+};
 
-  // Retrieve provider info.
-  const config = JSON.parse(fs.readFileSync('./networks.json', 'utf8'));
-  const network = config.networks[networkName];
-  if(!network) throw new Error(`Network ${networkName} not found!`);
-
-  // Instantiate web3.
-  const provider = `${network.host}${network.port ? `:${network.port}` : ''}`;
-  const web3 = new Web3(provider);
-
-  return web3;
+module.exports = async (network) => {
+  const provider = defaultNetworks[network] ? defaultNetworks[network] : network;
+  return new Web3(provider);
 };
