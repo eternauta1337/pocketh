@@ -22,7 +22,7 @@ module.exports = {
         const scannedBlocks = [];
         const blocksBeingScanned = [];
         const matchingTxs = [];
-        const absStartTime = new Date();
+        const absStartTime = (new Date()).getTime() / 1000;
         const numBlocks = toBlock - fromBlock + 1;
         let blocksPerSecond = 0;
         const lastBlocksPerSecondReadings = [];
@@ -77,7 +77,7 @@ module.exports = {
                     if(txToTargetFunction) {
 
                       // Report match immediately.
-                      process.stdout.write(`\n${tx.hash}`);
+                      console.log(`\n👉 match: ${tx.hash}`);
 
                       // Register match.
                       matchingTxs.push(tx.hash);
@@ -89,7 +89,8 @@ module.exports = {
                 scannedBlocks.push(blockNumber);
 
                 // Calculate speed.
-                const elapsedTime = (new Date()).getTime() / 1000 - startTime.getTime() / 1000;
+                const now = (new Date()).getTime() / 1000;
+                const elapsedTime = now - startTime.getTime() / 1000;
                 const blocksPerSecond = 1 / elapsedTime;
                 if(lastBlocksPerSecondReadings.length >= 10) {
                   lastBlocksPerSecondReadings.splice(0, 1);
@@ -100,9 +101,10 @@ module.exports = {
                 ) / lastBlocksPerSecondReadings.length;
                 
                 // Monitor progress.
+                const elapsedTotalTime = now - absStartTime;
                 const blocksRemaining = numBlocks - scannedBlocks.length;
                 const percentage = Math.floor(100 * scannedBlocks.length / numBlocks, 2);
-                process.stdout.write(`\rScanned block #${blockNumber}, ${blocksRemaining} blocks remaining (${percentage}%), ${avgBlocksPerSecond.toFixed(2)} blocks per second per thread, ${blocksBeingScanned.length} threads open.`);
+                process.stdout.write(`\r${percentage}% #${blockNumber}, ${scannedBlocks.length} scanned, ${blocksRemaining} remaining, ${avgBlocksPerSecond.toFixed(2)} b/s per thread, ${elapsedTotalTime.toFixed(2)} s, ${blocksBeingScanned.length} threads`);
                 
                 // De-register block as being scanned.
                 blocksBeingScanned.splice(blocksBeingScanned.indexOf(blockNumber), 1);
@@ -134,10 +136,10 @@ module.exports = {
 
         // End scan and exit program.
         function endScan() {
-          const elapsedTime = (new Date()).getTime() / 1000 - absStartTime.getTime() / 1000;
-          process.stdout.write(`\n`);
-          matchingTxs.map(tx => process.stdout.write(`\n${tx}`));
-          process.stdout.write(`\n\nFound ${matchingTxs.length} transactions in block range [${fromBlock}-${toBlock}] that target the address ${contractAddress} and the selector ${functionSelector} (listed above) in ${elapsedTime.toFixed(2)} seconds.`);
+          const elapsedTime = (new Date()).getTime() / 1000 - absStartTime;
+          console.log(`\n\nMatches:`);
+          matchingTxs.map(tx => console.log(`${tx}`));
+          process.stdout.write(`\nFound ${matchingTxs.length} transactions in block range [${fromBlock}-${toBlock}] that target the address ${contractAddress} and the selector ${functionSelector} (listed above) in ${elapsedTime.toFixed(2)} seconds.`);
           process.exit();
         }
 
