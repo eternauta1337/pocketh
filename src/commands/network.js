@@ -5,7 +5,7 @@ module.exports = {
   register: (program) => {
     program
       .command('network <networkUrl>')
-      .description('Retrieves info about a network')
+      .description('Retrieves info about a network.')
       .action(async (networkUrl) => {
         const info = {};
         const web3 = await getWeb3(networkUrl);
