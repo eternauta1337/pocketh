@@ -4,20 +4,21 @@ const getWeb3 = require('../utils/getWeb3.js');
 module.exports = {
   register: (program) => {
     program
-      .command(`txs <networkUrl> <contractAddress> <functionSelector> <fromBlock> <toBlock> [maxThreads]`)
+      .command(`txs <networkUrl> <contractAddress> <functionSelector> <fromBlock> [toBlock] [maxThreads]`)
       .description('Finds transactions made to a deployed contract, for a specified funciton selector.')
       .action(async (networkUrl, contractAddress, functionSelector, fromBlock, toBlock, maxThreads) => {
         
         // Validate input.
         contractAddress = contractAddress.toLowerCase();
         fromBlock = parseInt(fromBlock, 10);
-        toBlock = parseInt(toBlock, 10);
-        maxThreads = maxThreads ? parseInt(maxThreads, 10) : 1;
+        toBlock = toBlock ? toBlock : 'latest';
+        maxThreads = maxThreads ? parseInt(maxThreads, 10) : 20;
 
         // Connect to network.
         const web3 = await getWeb3(networkUrl);
 
         // Init state.
+        if(toBlock === 'latest') toBlock = await web3.eth.getBlockNumber();
         let triesLeft = 10;
         const scannedBlocks = [];
         const blocksBeingScanned = [];
