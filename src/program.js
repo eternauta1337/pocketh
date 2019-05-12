@@ -20,6 +20,7 @@ const commands = [
   require('./commands/network.js'),
   require('./commands/hex2dec.js'),
   require('./commands/dec2hex.js'),
+  require('./commands/convert.js'),
 ];
 
 // Register each command in the program.
