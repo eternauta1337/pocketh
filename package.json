@@ -1,6 +1,6 @@
 {
   "name": "pocketh",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "A pocket knife for auditing smart contracts.",
   "main": "src/program.js",
   "bin": {
