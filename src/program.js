@@ -17,6 +17,7 @@ const commands = [
   require('./commands/str2hex.js'),
   require('./commands/transaction.js'),
   require('./commands/block.js'),
+  require('./commands/network.js'),
 ];
 
 // Register each command in the program.
