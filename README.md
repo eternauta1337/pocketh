@@ -7,6 +7,12 @@ A pocket knife for auditing smart contracts. Provides a series of cli commands t
 - Disassemble a contract's bytecode.
 - etc...
 
+Some commands interact with a network only by reading information from it but never by 
+sending transactions to it. Other commands don't even read stuff from a network and simply analyze 
+compiler output. For the time being *pocketh* does not compile contracts, so solc, solcjs, truffle 
+or some other tool needs to be used to compile contracts. This tool can then look into the 
+compilation artifacts and provide useful information about the code.
+
 ### Sample output:
 
 `pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
