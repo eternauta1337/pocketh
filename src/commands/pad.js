@@ -16,7 +16,7 @@ module.exports = {
 
         // Validate direction.
         if(direction !== 'right' && direction !== 'left') {
-          throw new Error('Invalid direction. Please use ">" for padRight and "<" for padLeft.');
+          throw new Error('Invalid direction. Please use "right" for padRight and "left" for padLeft.');
         }
 
         // Pad!
