@@ -17,11 +17,10 @@ module.exports = {
 
         // Check current compiler version.
         // Set version accordingly.
-        const currentVersion = solc.version();
-        if(!currentVersion.includes(solcVersion)) {
-          console.log(`\nCurrent compiler version is ${currentVersion} and requested version is ${solcVersion}.`);
+        if(requiresCompilerDownload(solcVersion)) {
           solc = await getCompilerVersion(solcVersion);
         }
+        console.log(`Using compiler ${solc.version()}`);
 
         // Retrieve contract source.
         if(!fs.existsSync(sourcePath)) throw new Error(`Cannot find ${sourcePath}.`);
@@ -38,10 +37,26 @@ module.exports = {
         fs.writeFileSync(destPath, JSON.stringify(compiled, null, 2));
 
         // Report.
-        console.log(`\nCompiled ${filename} succesfully to ${destPath}.`);
+        console.log(`Compiled ${filename} succesfully to ${destPath}.`);
       });
   }
 };
+
+function requiresCompilerDownload(solcVersion) {
+  const currentVersion = solc.version();
+  const currentVersionComps = currentVersion.split('+')[0].split('.');
+  const currentMajor = currentVersionComps[0];
+  const currentMinor = currentVersionComps[1];
+  const currentPatch = currentVersionComps[2];
+  const solcVersionComps = solcVersion.split('.');
+  const wantedMajor = solcVersionComps[0];
+  const wantedMinor = solcVersionComps[1];
+  const wantedPatch = solcVersionComps[2];
+  if(currentMajor !== wantedMajor) return true;
+  if(currentMinor !== wantedMinor) return true;
+  if(parseInt(wantedPatch, 10) > parseInt(currentPatch, 10)) return true;
+  return false;
+}
 
 function displayErrors(errors) {
   console.log(`\nCompilation failed with errors:\n`);
@@ -106,7 +121,7 @@ async function getCompilerVersion(version) {
     match = match.replace('soljson-', ''); // Remove soljson-
 
     // Retrieve version.
-    console.log(`\nDownloading compiler ${match}...`);
+    console.log(`Downloading compiler ${match}...`);
     solc.loadRemoteVersion(match, (err, solcSnapshot) => {
       if(err) throw err;
       else resolve(solcSnapshot);
