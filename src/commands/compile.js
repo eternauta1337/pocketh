@@ -2,6 +2,7 @@ const program = require('commander');
 const axios = require('axios');
 const vm = require('vm');
 const fs = require('fs');
+const path = require('path');
 let solc = require('solc'); // Can be modified by downloading a new compiler snapshot.
 
 module.exports = {
@@ -17,69 +18,73 @@ module.exports = {
         // Check current compiler version.
         // Set version accordingly.
         const currentVersion = solc.version();
-        console.log(currentVersion, solcVersion);
         if(!currentVersion.includes(solcVersion)) {
-          console.log(`Current compiler version is ${currentVersion} and requested version is ${solcVersion}, setting version.`);
+          console.log(`\nCurrent compiler version is ${currentVersion} and requested version is ${solcVersion}.`);
           solc = await getCompilerVersion(solcVersion);
         }
 
         // Retrieve contract source.
         if(!fs.existsSync(sourcePath)) throw new Error(`Cannot find ${sourcePath}.`);
+        const filename = path.basename(sourcePath);
         const source = fs.readFileSync(sourcePath, 'utf8');
 
         // Compile.
-        const compiled = compile(source);
-        console.log(compiled.contracts.source.Test);
+        const compiled = compile(filename, source);
+
+        // Write result to file.
+        if(outputDirectory.charAt(outputDirectory.length - 1) !== '/') throw new Error('outputDirectory must be a directory path.');
+        if(!fs.existsSync(outputDirectory)) throw new Error(`Cannot find ${outputDirectory}.`);
+        const destPath = outputDirectory + filename.split('.')[0] + '.json';
+        fs.writeFileSync(destPath, JSON.stringify(compiled, null, 2));
+
+        // Report.
+        console.log(`\nCompiled ${filename} succesfully to ${destPath}.`);
       });
   }
 };
 
-function compile(source) {
-
-  // Prepare json input.
-  const sources = { source };
-  const json = buildStandardJSONInput(sources);
-
-  // Compile.
-  const output = JSON.parse(solc.compile(json));
-  return output;
+function displayErrors(errors) {
+  console.log(`\nCompilation failed with errors:\n`);
+  errors.map(err => console.log(err.formattedMessage));
 }
 
-function buildStandardJSONInput(sources) {
+function compile(filename, source) {
 
-  const newSources = {};
-  for(let contractKey in sources) {
-    const contractContent = sources[contractKey];
-    newSources[contractKey] = {
-      content: contractContent
-    };
+  // Prepare json input.
+  const jsonInput = buildStandardJsonInput(filename, source);
+
+  // Compile.
+  try {
+    const compiled = JSON.parse(solc.compile(JSON.stringify(jsonInput)));
+    if(compiled.errors) {
+      displayErrors(compiled.errors);
+      process.exit();
+    }
+    return compiled;
   }
+  catch(error) {
+    console.log(`ERROR: ${error}`);
+    throw error;
+    process.exit();
+  }
+}
 
-  const nativeSources = {
+function buildStandardJsonInput(filename, source) {
+  return {
     language: "Solidity",
-    sources: newSources,
+    sources: {
+      [filename]: {
+        content: source
+      }
+    },
     settings: {
       optimizer: {
         enabled: true,
         runs: 200
       },
-      outputSelection: {
-        "*": {
-          "*": [
-            "metadata",
-            "ast",
-            "evm.bytecode.opcodes", 
-            "evm.bytecode.sourceMap",
-            "evm.deployedBytecode.opcodes",
-            "evm.deployedBytecode.sourceMap"
-          ]
-        }
-      }
+      outputSelection: { "*": { "*": [ "*" ], "": [ "*" ] } }
     }
   };
-
-  const nativeSourcesStr = JSON.stringify(nativeSources);
-  return nativeSourcesStr;
 }
 
 async function availableCompilerVersions() {
@@ -101,7 +106,7 @@ async function getCompilerVersion(version) {
     match = match.replace('soljson-', ''); // Remove soljson-
 
     // Retrieve version.
-    console.log(`Retrieving compiler version ${match}...`);
+    console.log(`\nDownloading compiler ${match}...`);
     solc.loadRemoteVersion(match, (err, solcSnapshot) => {
       if(err) throw err;
       else resolve(solcSnapshot);
