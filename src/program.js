@@ -22,6 +22,7 @@ const commands = [
   require('./commands/dec2hex.js'),
   require('./commands/convert.js'),
   require('./commands/pad.js'),
+  require('./commands/compile.js'),
 ];
 
 // Register each command in the program.

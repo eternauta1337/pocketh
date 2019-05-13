@@ -28,7 +28,9 @@
   },
   "homepage": "https://github.com/ajsantander/awesome-eth-tools#readme",
   "dependencies": {
+    "axios": "^0.18.0",
     "commander": "^2.20.0",
+    "solc": "^0.5.8",
     "treeify": "^1.1.0",
     "web3": "^1.0.0-beta.54"
   },
