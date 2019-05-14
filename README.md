@@ -15,6 +15,7 @@ compiler output.
 
 `pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
 :sparkles:
+<details><summary>Show output</summary>
 ```
 └─ KittyCore
    └─ KittyMinting
@@ -25,9 +26,11 @@ compiler output.
                │  └─ KittyAccessControl
                └─ ERC721
 ```
+</details>
 
 `pocketh selectors ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
 :sparkles:
+<details><summary>Show output</summary>
 ```
 HASH:      SIGNATURE:
 0x01ffc9a7 supportsInterface(bytes4)
@@ -42,9 +45,11 @@ HASH:      SIGNATURE:
 0x18160ddd totalSupply()
 ...
 ```
+</details>
 
 `pocketh members --inherited ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
 :sparkles:
+<details><summary>Show output</summary>
 ```
 ================> KittyCore members:
 address public newContractAddress;
@@ -60,9 +65,11 @@ uint256 public GEN0_CREATION_LIMIT;
 uint256 public GEN0_STARTING_PRICE;
 ...
 ```
+</details>
 
 `pocketh disassemble ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
 :sparkles:
+<details><summary>Show output</summary>
 ```
 0 {0x60} [c0] PUSH1 0x80 (dec 128)
 1 {0x60} [c2] PUSH1 0x40 (dec 64)
@@ -76,9 +83,11 @@ uint256 public GEN0_STARTING_PRICE;
 9 {0x54} [c16] SLOAD
 ...
 ```
+</details>
 
 `pocketh compile ~/test/contracts/Kitties.sol ~/tmp/build/ 0.4.25` :point_right:
 :sparkles:
+<details><summary>Show output</summary>
 ```
 Downloading compiler soljson-v0.4.25+commit.59dbf8f1.js...
 Compiler stored in /home/user/.soljson/soljson-v0.4.25+commit.59dbf8f1.js
@@ -87,6 +96,7 @@ Using compiler 0.4.25+commit.59dbf8f1.Emscripten.clang
 Compiled Kitties.sol succesfully to tmp/build/
 ...
 ```
+</details>
 
 ### Installation:
 ```
