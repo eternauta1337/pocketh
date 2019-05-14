@@ -13,10 +13,9 @@ compiler output.
 
 ### Sample output:
 
-`pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
-:sparkles:
-<details><summary>Show output</summary>
+<details><summary>Show output for `pocketh inheritance` command</summary>
 <p>
+`pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json` :point_right: :sparkles:
 ```
 └─ KittyCore
    └─ KittyMinting
