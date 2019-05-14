@@ -3,7 +3,12 @@ const axios = require('axios');
 const vm = require('vm');
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 let solc = require('solc'); // Can be modified by downloading a new compiler snapshot.
+
+// Downloaded compilers will be stored here.
+// Pretty intrusive but works for now.
+const SOLJSON_PATH = `${os.homedir()}/.soljson/`;
 
 module.exports = {
   register: (program) => {
@@ -120,21 +125,12 @@ async function getCompilerVersion(version) {
 
     // Retrieve version source.
     let compilerSource;
-    if(fs.existsSync(match)) compilerSource = fs.readFileSync(`./${match}`, 'utf8');
+    if(fs.existsSync(`${SOLJSON_PATH}${match}`)) compilerSource = fs.readFileSync(`${SOLJSON_PATH}${match}`, 'utf8');
     else compilerSource = await downloadAndCacheCompilerSource(match);
 
     // Wrap compiler source.
     solc = solc.setupMethods(requireFromString(compilerSource, match));
     resolve(solc);
-    
-    // Old method.
-    // TODO: Remove if the new method works.
-    // match = match.substring(0, match.length - 3); // Remove .js
-    // match = match.replace('soljson-', ''); // Remove soljson-
-    // solc.loadRemoteVersion(match, (err, solcSnapshot) => {
-    //   if(err) throw err;
-    //   else resolve(solcSnapshot);
-    // });
   });
 }
 
@@ -148,6 +144,9 @@ function requireFromString(src, filename) {
 async function downloadAndCacheCompilerSource(version) {
   console.log(`Downloading compiler ${version}...`);
   const compilerSource = (await axios.get(`https://solc-bin.ethereum.org/bin/${version}`)).data;
-  fs.writeFileSync(`./${version}`, compilerSource);
+  const path = `${SOLJSON_PATH}${version}`;
+  if(!fs.existsSync(SOLJSON_PATH)) fs.mkdirSync(SOLJSON_PATH);
+  fs.writeFileSync(path, compilerSource);
+  console.log(`Compiler stored in ${path}`);
   return compilerSource;
 }
