@@ -10,6 +10,8 @@ let solc = require('solc'); // Can be modified by downloading a new compiler sna
 // Pretty intrusive but works for now.
 const SOLJSON_PATH = `${os.homedir()}/.soljson/`;
 
+let sourceDir;
+
 module.exports = {
   register: (program) => {
     program
@@ -29,6 +31,7 @@ module.exports = {
 
         // Retrieve contract source.
         if(!fs.existsSync(sourcePath)) throw new Error(`Cannot find ${sourcePath}.`);
+        sourceDir = path.dirname(sourcePath);
         const filename = path.basename(sourcePath);
         const source = fs.readFileSync(sourcePath, 'utf8');
 
@@ -94,6 +97,13 @@ function displayErrors(errors) {
   errors.map(err => console.log(err.formattedMessage));
 }
 
+function resolveImports(sourcepath) {
+  const normpath = path.resolve(sourceDir + '/' + sourcepath);
+  if(!fs.existsSync(normpath)) return { error: `Unable to resolve import: ${normpath}` };
+  const contents = fs.readFileSync(normpath, 'utf8');
+  return { contents };
+}
+
 function compile(filename, source) {
 
   // Prepare json input.
@@ -101,7 +111,7 @@ function compile(filename, source) {
 
   // Compile.
   try {
-    const compiled = JSON.parse(solc.compile(JSON.stringify(jsonInput)));
+    const compiled = JSON.parse(solc.compile(JSON.stringify(jsonInput), resolveImports));
     if(compiled.errors) {
       displayErrors(compiled.errors);
     }
