@@ -15,7 +15,11 @@ compiler output.
 
 <details><summary>Show output for `pocketh inheritance` command</summary>
 <p>
+
+*Command*
 `pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json` :point_right: :sparkles:
+
+*Output*
 ```
 └─ KittyCore
    └─ KittyMinting
