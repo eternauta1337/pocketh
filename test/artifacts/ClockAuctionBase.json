@@ -91,9 +91,9 @@
       "type": "event"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.4.25+commit.59dbf8f1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"ownerCut\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"nonFungibleContract\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"startingPrice\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"endingPrice\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"duration\",\"type\":\"uint256\"}],\"name\":\"AuctionCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"totalPrice\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"winner\",\"type\":\"address\"}],\"name\":\"AuctionSuccessful\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"AuctionCancelled\",\"type\":\"event\"}],\"devdoc\":{\"methods\":{},\"title\":\"Auction Core\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"Kitties.sol\":\"ClockAuctionBase\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"Kitties.sol\":{\"keccak256\":\"0xda7b4abda87584aadceb7a08f991ea4bc2a0dce19f532a106454fc2a58759e52\",\"urls\":[\"bzzr://dee7266b7f27f269b6437ebdf870e05981236cdb6e683984c3e6cb543a5c1c13\"]}},\"version\":1}",
-  "bytecode": "608060405234801561001057600080fd5b50610121806100206000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806383b5ff8b14604e578063dd1b7a0f146076575b600080fd5b348015605957600080fd5b50606060ca565b6040518082815260200191505060405180910390f35b348015608157600080fd5b50608860d0565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60015481565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a72305820cb599c69535ebff4b06849e458b63751d58a633670201c32da399574ebe08fb70029",
-  "deployedBytecode": "6080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806383b5ff8b14604e578063dd1b7a0f146076575b600080fd5b348015605957600080fd5b50606060ca565b6040518082815260200191505060405180910390f35b348015608157600080fd5b50608860d0565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60015481565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a72305820cb599c69535ebff4b06849e458b63751d58a633670201c32da399574ebe08fb70029",
+  "metadata": "{\"compiler\":{\"version\":\"0.4.26+commit.4563c3fc\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"ownerCut\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"nonFungibleContract\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"startingPrice\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"endingPrice\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"duration\",\"type\":\"uint256\"}],\"name\":\"AuctionCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"totalPrice\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"winner\",\"type\":\"address\"}],\"name\":\"AuctionSuccessful\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"AuctionCancelled\",\"type\":\"event\"}],\"devdoc\":{\"methods\":{},\"title\":\"Auction Core\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"Kitties.sol\":\"ClockAuctionBase\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"Kitties.sol\":{\"keccak256\":\"0xda7b4abda87584aadceb7a08f991ea4bc2a0dce19f532a106454fc2a58759e52\",\"urls\":[\"bzzr://dee7266b7f27f269b6437ebdf870e05981236cdb6e683984c3e6cb543a5c1c13\"]}},\"version\":1}",
+  "bytecode": "608060405234801561001057600080fd5b50610121806100206000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806383b5ff8b14604e578063dd1b7a0f146076575b600080fd5b348015605957600080fd5b50606060ca565b6040518082815260200191505060405180910390f35b348015608157600080fd5b50608860d0565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60015481565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058208ccc2f6ac3173ad737320e1222ca1b892bf2a621b50903f468f4d2cf896ca6aa0029",
+  "deployedBytecode": "6080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806383b5ff8b14604e578063dd1b7a0f146076575b600080fd5b348015605957600080fd5b50606060ca565b6040518082815260200191505060405180910390f35b348015608157600080fd5b50608860d0565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60015481565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058208ccc2f6ac3173ad737320e1222ca1b892bf2a621b50903f468f4d2cf896ca6aa0029",
   "ast": {
     "absolutePath": "Kitties.sol",
     "exportedSymbols": {
@@ -15200,20 +15200,20 @@
                       {
                         "externalReferences": [
                           {
-                            "_dest": {
-                              "declaration": 1108,
-                              "isOffset": false,
-                              "isSlot": false,
-                              "src": "27860:5:0",
-                              "valueSize": 1
-                            }
-                          },
-                          {
                             "_src": {
                               "declaration": 1110,
                               "isOffset": false,
                               "isSlot": false,
                               "src": "27873:4:0",
+                              "valueSize": 1
+                            }
+                          },
+                          {
+                            "_dest": {
+                              "declaration": 1108,
+                              "isOffset": false,
+                              "isSlot": false,
+                              "src": "27860:5:0",
                               "valueSize": 1
                             }
                           }
@@ -15937,15 +15937,6 @@
                 {
                   "externalReferences": [
                     {
-                      "outputString": {
-                        "declaration": 1157,
-                        "isOffset": false,
-                        "isSlot": false,
-                        "src": "28753:12:0",
-                        "valueSize": 1
-                      }
-                    },
-                    {
                       "outputPtr": {
                         "declaration": 1164,
                         "isOffset": false,
@@ -15960,6 +15951,15 @@
                         "isOffset": false,
                         "isSlot": false,
                         "src": "28795:9:0",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "outputString": {
+                        "declaration": 1157,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "28753:12:0",
                         "valueSize": 1
                       }
                     },

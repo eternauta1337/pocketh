@@ -15152,20 +15152,20 @@
                       {
                         "externalReferences": [
                           {
-                            "_dest": {
-                              "declaration": 1108,
-                              "isOffset": false,
-                              "isSlot": false,
-                              "src": "27860:5:0",
-                              "valueSize": 1
-                            }
-                          },
-                          {
                             "_src": {
                               "declaration": 1110,
                               "isOffset": false,
                               "isSlot": false,
                               "src": "27873:4:0",
+                              "valueSize": 1
+                            }
+                          },
+                          {
+                            "_dest": {
+                              "declaration": 1108,
+                              "isOffset": false,
+                              "isSlot": false,
+                              "src": "27860:5:0",
                               "valueSize": 1
                             }
                           }
@@ -15889,15 +15889,6 @@
                 {
                   "externalReferences": [
                     {
-                      "outputString": {
-                        "declaration": 1157,
-                        "isOffset": false,
-                        "isSlot": false,
-                        "src": "28753:12:0",
-                        "valueSize": 1
-                      }
-                    },
-                    {
                       "outputPtr": {
                         "declaration": 1164,
                         "isOffset": false,
@@ -15912,6 +15903,15 @@
                         "isOffset": false,
                         "isSlot": false,
                         "src": "28795:9:0",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "outputString": {
+                        "declaration": 1157,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "28753:12:0",
                         "valueSize": 1
                       }
                     },

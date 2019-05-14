@@ -4,7 +4,7 @@ const vm = require('vm');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const findVersoins = require('find-versions');
+const findVersions = require('find-versions');
 let solc = require('solc'); // Can be modified by downloading a new compiler snapshot.
 
 // Downloaded compilers will be stored here.
@@ -55,7 +55,7 @@ module.exports = {
 
 function detectSolcVersion(source) {
   const pragmaLine = source.match(/^pragma.*$/gm)[0];
-  return findVersoins(pragmaLine)[0];
+  return findVersions(pragmaLine)[0];
 }
 
 /*
@@ -168,13 +168,36 @@ async function availableCompilerVersions() {
   return output.soljsonSources;
 }
 
+function findMostRecentPatchVersion(targetVersion, versions) {
+
+  // Find versions that match the major and minor semver.
+  const targetVersionComps = targetVersion.split('.');
+  const targetVersionMajorMinorOnly = targetVersionComps[0] + '.' + targetVersionComps[1];
+  const candidates = versions.filter(v => v.includes(targetVersionMajorMinorOnly));
+
+  // Return the version with the largest patch.
+  if(candidates.length === 0) throw new Error(`Target compiler version not found: ${targetVersion}`);
+  if(candidates.length === 1) return candidates[0];
+  let match = candidates[0];
+  let largestPatch = 0;
+  candidates.forEach(candidate => {
+    const v = findVersions(candidate)[0];
+    const patch = parseInt(v.match(/[^-|+]*/)[0].split('.')[2], 10);
+    if(patch > largestPatch) {
+      match = candidate;
+      largestPatch = patch;
+    }
+  });
+
+  return match;
+}
+
 async function getCompilerVersion(version) {
   return new Promise(async (resolve, reject) => {
     
     // Find version in available versions.
     const versions = await availableCompilerVersions();
-    let match = versions.find(v => v.includes(version));
-    if(!match) throw new Error(`Target compiler version not found: ${version}`);
+    let match = findMostRecentPatchVersion(version, versions);
 
     // Retrieve version source.
     let compilerSource;
