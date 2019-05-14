@@ -17,7 +17,7 @@ module.exports = {
 
         // Check current compiler version.
         // Set version accordingly.
-        if(requiresCompilerDownload(solcVersion)) {
+        if(requiresDifferentCompiler(solcVersion)) {
           solc = await getCompilerVersion(solcVersion);
         }
         console.log(`Using compiler ${solc.version()}`);
@@ -42,7 +42,7 @@ module.exports = {
   }
 };
 
-function requiresCompilerDownload(solcVersion) {
+function requiresDifferentCompiler(solcVersion) {
   const currentVersion = solc.version();
   const currentVersionComps = currentVersion.split('+')[0].split('.');
   const currentMajor = currentVersionComps[0];
@@ -117,14 +117,37 @@ async function getCompilerVersion(version) {
     const versions = await availableCompilerVersions();
     let match = versions.find(v => v.includes(version));
     if(!match) throw new Error(`Target compiler version not found: ${version}`);
-    match = match.substring(0, match.length - 3); // Remove .js
-    match = match.replace('soljson-', ''); // Remove soljson-
 
-    // Retrieve version.
-    console.log(`Downloading compiler ${match}...`);
-    solc.loadRemoteVersion(match, (err, solcSnapshot) => {
-      if(err) throw err;
-      else resolve(solcSnapshot);
-    });
+    // Retrieve version source.
+    let compilerSource;
+    if(fs.existsSync(match)) compilerSource = fs.readFileSync(`./${match}`, 'utf8');
+    else compilerSource = await downloadAndCacheCompilerSource(match);
+
+    // Wrap compiler source.
+    solc = solc.setupMethods(requireFromString(compilerSource, match));
+    resolve(solc);
+    
+    // Old method.
+    // TODO: Remove if the new method works.
+    // match = match.substring(0, match.length - 3); // Remove .js
+    // match = match.replace('soljson-', ''); // Remove soljson-
+    // solc.loadRemoteVersion(match, (err, solcSnapshot) => {
+    //   if(err) throw err;
+    //   else resolve(solcSnapshot);
+    // });
   });
+}
+
+function requireFromString(src, filename) {
+  var Module = module.constructor;
+  var m = new Module();
+  m._compile(src, filename);
+  return m.exports;
+}
+
+async function downloadAndCacheCompilerSource(version) {
+  console.log(`Downloading compiler ${version}...`);
+  const compilerSource = (await axios.get(`https://solc-bin.ethereum.org/bin/${version}`)).data;
+  fs.writeFileSync(`./${version}`, compilerSource);
+  return compilerSource;
 }
