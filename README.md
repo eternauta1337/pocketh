@@ -157,4 +157,4 @@ If you can think of something useful that could be added to the tool, pls don’
 Even better, if you want to throw a PR, you’re more than welcome! 
 
 **Architecture**:
-Architecture-wise, each command/script should be self contained, so there is no complex architecture going on. It’s basically a collection of scripts.
+Architecture-wise, each command/script should be self contained, so there is no complex architecture going on. **pocketh** is basically just a collection of scripts.
