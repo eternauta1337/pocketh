@@ -128,7 +128,19 @@ function buildStandardJsonInput(filename, source) {
         enabled: false,
         runs: 200
       },
-      outputSelection: { "*": { "*": [ "*" ], "": [ "*" ] } }
+      outputSelection: {
+        "*": {
+          "*": [ 
+            "abi",
+            "metadata",
+            "evm.bytecode.object",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.sourceMap"
+          ], 
+          "": [ "*" ] 
+        } 
+      }
     }
   };
 }
