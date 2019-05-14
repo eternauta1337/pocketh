@@ -77,6 +77,17 @@ uint256 public GEN0_STARTING_PRICE;
 ...
 ```
 
+`pocketh compile ~/test/contracts/Kitties.sol ~/tmp/build/ 0.4.25` :point_right:
+:sparkles:
+```
+Downloading compiler soljson-v0.4.25+commit.59dbf8f1.js...
+Compiler stored in /home/ajs/.soljson/soljson-v0.4.25+commit.59dbf8f1.js
+Using compiler 0.4.25+commit.59dbf8f1.Emscripten.clang
+...
+Compiled Kitties.sol succesfully to tmp/build/
+...
+```
+
 ### Installation:
 ```
 npm install --global pocketh
