@@ -4,6 +4,7 @@ const vm = require('vm');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const findVersoins = require('find-versions');
 let solc = require('solc'); // Can be modified by downloading a new compiler snapshot.
 
 // Downloaded compilers will be stored here.
@@ -19,8 +20,14 @@ module.exports = {
       .description('Compiles a source file with solcjs.')
       .action(async (sourcePath, outputDirectory, solcVersion) => {
 
-        // Default values.
-        solcVersion = solcVersion || '0.5.8';
+        // Retrieve contract source.
+        if(!fs.existsSync(sourcePath)) throw new Error(`Cannot find ${sourcePath}.`);
+        sourceDir = path.dirname(sourcePath);
+        const filename = path.basename(sourcePath);
+        const source = fs.readFileSync(sourcePath, 'utf8');
+
+        // If no solcVersion is provided, try to auto detect it.
+        solcVersion = solcVersion || detectSolcVersion(source);
 
         // Check current compiler version.
         // Set version accordingly.
@@ -28,12 +35,6 @@ module.exports = {
           solc = await getCompilerVersion(solcVersion);
         }
         console.log(`Using compiler ${solc.version()}`);
-
-        // Retrieve contract source.
-        if(!fs.existsSync(sourcePath)) throw new Error(`Cannot find ${sourcePath}.`);
-        sourceDir = path.dirname(sourcePath);
-        const filename = path.basename(sourcePath);
-        const source = fs.readFileSync(sourcePath, 'utf8');
 
         // Compile.
         const compiledJsons = compile(filename, source);
@@ -51,6 +52,11 @@ module.exports = {
       });
   }
 };
+
+function detectSolcVersion(source) {
+  const pragmaLine = source.match(/^pragma.*$/gm)[0];
+  return findVersoins(pragmaLine)[0];
+}
 
 /*
  * Solcjs output and truffle compiler output are different.
