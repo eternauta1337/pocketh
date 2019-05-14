@@ -13,13 +13,11 @@ compiler output.
 
 ### Sample output:
 
-<details><summary>Show output for `pocketh inheritance` command</summary>
+<details><summary>Show output for `pocketh inheritance`</summary>
 <p>
 
-*Command*
+*Syntax*
 `pocketh inheritance ~/cryptokitties/build/contracts/KittyCore.json` :point_right: :sparkles:
-
-*Output*
 ```
 └─ KittyCore
    └─ KittyMinting
@@ -33,10 +31,11 @@ compiler output.
 </p>
 </details>
 
-`pocketh selectors ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
-:sparkles:
-<details><summary>Show output</summary>
+<details><summary>Show output for `pocketh selectors`</summary>
 <p>
+
+*Syntax*
+`pocketh selectors ~/cryptokitties/build/contracts/KittyCore.json` :point_right: :sparkles:
 ```
 HASH:      SIGNATURE:
 0x01ffc9a7 supportsInterface(bytes4)
@@ -54,10 +53,11 @@ HASH:      SIGNATURE:
 </p>
 </details>
 
-`pocketh members --inherited ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
-:sparkles:
-<details><summary>Show output</summary>
+<details><summary>Show output for `pocketh members`</summary>
 <p>
+
+*Syntax*
+`pocketh members --inherited ~/cryptokitties/build/contracts/KittyCore.json` :point_right: :sparkles:
 ```
 ================> KittyCore members:
 address public newContractAddress;
@@ -76,10 +76,11 @@ uint256 public GEN0_STARTING_PRICE;
 </p>
 </details>
 
-`pocketh disassemble ~/cryptokitties/build/contracts/KittyCore.json` :point_right:
-:sparkles:
-<details><summary>Show output</summary>
+<details><summary>Show output for `pocketh disassemble`</summary>
 <p>
+
+*Syntax*
+`pocketh disassemble ~/cryptokitties/build/contracts/KittyCore.json` :point_right: :sparkles:
 ```
 0 {0x60} [c0] PUSH1 0x80 (dec 128)
 1 {0x60} [c2] PUSH1 0x40 (dec 64)
@@ -96,10 +97,11 @@ uint256 public GEN0_STARTING_PRICE;
 </p>
 </details>
 
-`pocketh compile ~/test/contracts/Kitties.sol ~/tmp/build/ 0.4.25` :point_right:
-:sparkles:
-<details><summary>Show output</summary>
+<details><summary>Show output for `pocketh compile`</summary>
 <p>
+
+*Syntax*
+`pocketh compile ~/test/contracts/Kitties.sol ~/tmp/build/ 0.4.25` :point_right: :sparkles:
 ```
 Downloading compiler soljson-v0.4.25+commit.59dbf8f1.js...
 Compiler stored in /home/user/.soljson/soljson-v0.4.25+commit.59dbf8f1.js
