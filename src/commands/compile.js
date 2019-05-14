@@ -44,7 +44,7 @@ module.exports = {
         });
 
         // Report.
-        console.log(`Compiled ${filename} succesfully to ${outputDirectory}.`);
+        console.log(`Compiled ${filename} succesfully to ${outputDirectory}`);
       });
   }
 };
@@ -90,7 +90,7 @@ function requiresDifferentCompiler(solcVersion) {
 }
 
 function displayErrors(errors) {
-  console.log(`\nCompilation failed with errors:\n`);
+  console.log(`\nCompilation produced the following warnings/errors:\n`);
   errors.map(err => console.log(err.formattedMessage));
 }
 
@@ -104,7 +104,6 @@ function compile(filename, source) {
     const compiled = JSON.parse(solc.compile(JSON.stringify(jsonInput)));
     if(compiled.errors) {
       displayErrors(compiled.errors);
-      process.exit();
     }
     return splitCompilerOutputIntoSeparateFiles(filename, compiled);
   }
