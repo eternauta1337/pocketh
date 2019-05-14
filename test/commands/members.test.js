@@ -21,8 +21,6 @@ function test(uint256 newValue) public {...}`);
 (Test) function test(uint256 newValue) public {...}
 (Parent1) uint256 public parent1_value;
 (GrandParent) uint256 public granparent_value;
-(Parent2) uint256 public parent2_value;
-(Parent2) constructor() public {...}
-(Parent2) function test(uint256 newValue) public {...}`);
+(Parent2) uint256 public parent2_value;`);
   });
 });

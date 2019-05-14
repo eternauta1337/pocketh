@@ -33,33 +33,59 @@ module.exports = {
         const source = fs.readFileSync(sourcePath, 'utf8');
 
         // Compile.
-        const compiled = compile(filename, source);
+        const compiledJsons = compile(filename, source);
 
-        // Write result to file.
+        // Write results to files.
         if(outputDirectory.charAt(outputDirectory.length - 1) !== '/') throw new Error('outputDirectory must be a directory path.');
         if(!fs.existsSync(outputDirectory)) throw new Error(`Cannot find ${outputDirectory}.`);
-        const destPath = outputDirectory + filename.split('.')[0] + '.json';
-        fs.writeFileSync(destPath, JSON.stringify(compiled, null, 2));
+        compiledJsons.forEach(json => {
+          const destPath = outputDirectory + json.contractName + '.json';
+          fs.writeFileSync(destPath, JSON.stringify(json, null, 2));
+        });
 
         // Report.
-        console.log(`Compiled ${filename} succesfully to ${destPath}.`);
+        console.log(`Compiled ${filename} succesfully to ${outputDirectory}.`);
       });
   }
 };
 
+/*
+ * Solcjs output and truffle compiler output are different.
+ * Solcjs outputs one json file per source file (a source file may contain multiple contracts).
+ * Truffle re-shuffles the original solcjs output and splits it into multiple json files,
+ * one per contract. To maintain compatibility, we do the same thing here.
+ * */
+function splitCompilerOutputIntoSeparateFiles(filename, originalJson) {
+
+  // Retrieve general ast.
+  const ast = originalJson.sources[filename].ast;
+
+  // For each contract object within the file...
+  const splitJsons = [];
+  Object.keys(originalJson.contracts[filename]).forEach(contractName => {
+    const contractJson = originalJson.contracts[filename][contractName];
+    // Collect output from the original format into this format that 
+    // is used by Truffle output.
+    splitJsons.push({
+      contractName,
+      abi: contractJson.abi,
+      metadata: contractJson.metadata,
+      bytecode: contractJson.evm.bytecode.object,
+      deployedBytecode: contractJson.evm.deployedBytecode.object,
+      ast
+    });
+  });
+
+  return splitJsons;
+}
+
 function requiresDifferentCompiler(solcVersion) {
   const currentVersion = solc.version();
-  const currentVersionComps = currentVersion.split('+')[0].split('.');
-  const currentMajor = currentVersionComps[0];
-  const currentMinor = currentVersionComps[1];
-  const currentPatch = currentVersionComps[2];
-  const solcVersionComps = solcVersion.split('.');
-  const wantedMajor = solcVersionComps[0];
-  const wantedMinor = solcVersionComps[1];
-  const wantedPatch = solcVersionComps[2];
-  if(currentMajor !== wantedMajor) return true;
-  if(currentMinor !== wantedMinor) return true;
-  if(parseInt(wantedPatch, 10) > parseInt(currentPatch, 10)) return true;
+  const current = currentVersion.split('+')[0].split('.');
+  const wanted = solcVersion.split('.');
+  if(current[0] !== wanted[0]) return true;
+  if(current[1] !== wanted[1]) return true;
+  if(parseInt(wanted[2], 10) > parseInt(current[2], 10)) return true;
   return false;
 }
 
@@ -80,7 +106,7 @@ function compile(filename, source) {
       displayErrors(compiled.errors);
       process.exit();
     }
-    return compiled;
+    return splitCompilerOutputIntoSeparateFiles(filename, compiled);
   }
   catch(error) {
     console.log(`ERROR: ${error}`);
@@ -99,7 +125,7 @@ function buildStandardJsonInput(filename, source) {
     },
     settings: {
       optimizer: {
-        enabled: true,
+        enabled: false,
         runs: 200
       },
       outputSelection: { "*": { "*": [ "*" ], "": [ "*" ] } }
