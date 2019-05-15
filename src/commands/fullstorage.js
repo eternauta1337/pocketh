@@ -5,8 +5,8 @@ const getWeb3 = require('../utils/getWeb3.js');
 const BN = require('bn.js');
 const getArtifacts = require('../utils/getArtifacts.js');
 
-let slotCounter = 0;
-let offsetCounter = 0;
+let slot = 0;
+let offset = 0;
 
 module.exports = {
   register: (program) => {
@@ -59,6 +59,8 @@ function parseAst(ast, name, contractAddress, web3) {
   async function parseVariableNode(node) {
     // console.log(node);
     
+    let word;
+    
     // Constant variables do not use storage.
     if(node.constant) return;
 
@@ -67,64 +69,77 @@ function parseAst(ast, name, contractAddress, web3) {
     str += node.typeDescriptions.typeString + ' ';
     if(node.visibility) str += node.visibility + ' ';
     str += node.name;
+    console.log(`${str}:`);
 
     // Get variable type.
     const type = node.typeDescriptions.typeString;
+    console.log(`  type: ${type}`);
+
+    // Calculate variable size and advance offset.
+    let size = 0;
+    let newOffset = offset;
+    if(type.includes('uint')) {
+      const bits = parseInt(type.match(/\d+/), 10);
+      size = bits / 4;
+      newOffset += size;
+    }
+    else if(type.includes('bytes')) {
+      const bytes = parseInt(type.match(/\d+/), 10);
+      size = bytes * 2;
+      newOffset += size;
+    }
+    else if(type === 'string') {
+      word = (await web3.eth.getStorageAt(contractAddress, slot)).substring(2, 66);
+      strSize = web3.utils.hexToNumber('0x' + word.substring(62, 64));
+      if(strSize < 62) {
+        size = 62;
+        newOffset += 64;
+      }
+      else throw new Error('Unable to handle multislot strings yet.');
+    }
+    console.log(`  size: ${size}`);
+    
+    // If incoming variable doesn't fit in the remained of the last slot,
+    // Advance the slot.
+    if(64 - offset < size) {
+      offset = 0;
+      slot++;
+    }
+    console.log(`  slot: ${slot}`);
+    offset = newOffset;
 
     // Read corresponding storage.
-    const word = await web3.eth.getStorageAt(contractAddress, slotCounter);
-    const wordNoPrefix = word.substring(2, word.length);
+    if(!word) word = (await web3.eth.getStorageAt(contractAddress, slot)).substring(2, 66);
+    console.log(`  word: ${word}`);
 
-    // Advance offset.
-    // TODO: Use contains uint and regex num and do it auto?
-    switch(type) {
-      case 'uint256':
-        offsetCounter += 256 / 4;
-        break;
-      case 'uint128':
-        offsetCounter += 128 / 4;
-        break;
-      case 'uint64':
-        offsetCounter += 64 / 4;
-        break;
-      case 'uint32':
-        offsetCounter += 32 / 4;
-        break;
-      case 'uint16':
-        offsetCounter += 16 / 4;
-        break;
-    }
-    if(offsetCounter >= 64) offsetCounter = 0;
+    // Read sub-word.
+    const subword = readSubWord(word, size);
+    console.log(`  subword: ${subword}`);
 
-    // Parse value according to type.
+    // Read value in word according to type.
     let value;
-    console.log(`TYPE: ${type}`);
-    switch(type) {
-      case 'uint256':
-        value = (new BN(wordNoPrefix, 16)).toString(10);
-        break;
-      case 'uint128':
-        const subword = wordNoPrefix.substring(64 - offsetCounter, 64);
-        console.log(`sub: ${subword}`);
-        value = (new BN(subword, 16)).toString(10);
-        break;
+    if(type.includes('uint')) {
+      value = (new BN(subword, 16)).toString(10);
     }
-
-    // Output variable and value.
-    console.log(`${str}:`);
-    console.log(`  slot: ${slotCounter}`);
-    console.log(`  offset: ${offsetCounter}`);
-    console.log(`  raw: ${word}`);
+    else if(type.includes('bytes')) {
+      const asciiString = web3.utils.toAscii(`0x${subword}`);
+      value = `${subword} (${asciiString})`;
+    }
     console.log(`  value: ${value}`);
 
     // Advance slot.
-    switch(type) {
-      case 'uint256':
-        slotCounter++;
-        break;
+    if(offset >= 64) {
+      offset = 0;
+      slot++;
     }
   }
 
   // List child nodes of root node.
   listNodes(contractDefinition.nodes);
+}
+
+function readSubWord(word, size) {
+  const startIdx = 64 - offset;
+  const endIdx = startIdx + size;
+  return word.substring(startIdx, endIdx);
 }
