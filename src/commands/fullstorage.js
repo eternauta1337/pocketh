@@ -6,7 +6,7 @@ const BN = require('bn.js');
 const getArtifacts = require('../utils/getArtifacts.js');
 
 let slot = 0;
-let offset = 0;
+let rightOffset = 0;
 
 module.exports = {
   register: (program) => {
@@ -45,101 +45,110 @@ function parseAst(ast, name, contractAddress, web3) {
 
   // Find root node.
   const contractDefinition = findNode(ast.nodes, 'ContractDefinition', name);
-  // process.stdout.write(contractDefinition);
 
-  // List sub-nodes of a particular node.
+  // Traverse ast nodes and focus on top level variable declarations.
   async function listNodes(nodes) {
     for(let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
-      if(node.nodeType === 'VariableDeclaration') await parseVariableNode(node);
+      if(node.nodeType === 'VariableDeclaration') {
+        await processVariableDeclaration(node);
+      }
     }
   }
 
   // Parse node types into readable format.
-  async function parseVariableNode(node) {
+  async function processVariableDeclaration(node) {
     // console.log(node);
-    
-    let word;
     
     // Constant variables do not use storage.
     if(node.constant) return;
 
-    // Build variable string.
-    let str = '';
-    str += node.typeDescriptions.typeString + ' ';
-    if(node.visibility) str += node.visibility + ' ';
-    str += node.name;
-    console.log(`${str}:`);
-
+    // Print variable declaration.
+    const declaration = getVariableDeclaration(node);
+    console.log(declaration);
+    // console.log(`  offset: ${rightOffset}`);
+    
     // Get variable type.
     const type = node.typeDescriptions.typeString;
-    console.log(`  type: ${type}`);
+    // console.log(`  type: ${type}`);
 
-    // Calculate variable size and advance offset.
-    let size = 0;
-    let newOffset = offset;
-    if(type.includes('uint')) {
-      const bits = parseInt(type.match(/\d+/), 10);
-      size = bits / 4;
-      newOffset += size;
-    }
-    else if(type.includes('bytes')) {
-      const bytes = parseInt(type.match(/\d+/), 10);
-      size = bytes * 2;
-      newOffset += size;
-    }
-    else if(type === 'string') {
-      word = (await web3.eth.getStorageAt(contractAddress, slot)).substring(2, 66);
-      strSize = web3.utils.hexToNumber('0x' + word.substring(62, 64));
-      if(strSize < 62) {
-        size = 62;
-        newOffset += 64;
-      }
-      else throw new Error('Unable to handle multislot strings yet.');
-    }
-    console.log(`  size: ${size}`);
+    // Calculate variable size.
+    const size = getVariableSize(type, web3);
+    const sizeRemainingInWord = 64 - rightOffset;
+    if(sizeRemainingInWord < size) advanceSlot(size);
+    console.log(`  size: ${size / 2} bytes`);
     
-    // If incoming variable doesn't fit in the remained of the last slot,
-    // Advance the slot.
-    if(64 - offset < size) {
-      offset = 0;
-      slot++;
-    }
-    console.log(`  slot: ${slot}`);
-    offset = newOffset;
-
     // Read corresponding storage.
-    if(!word) word = (await web3.eth.getStorageAt(contractAddress, slot)).substring(2, 66);
+    console.log(`  slot: ${slot}`);
+    const word = (await web3.eth.getStorageAt(contractAddress, slot)).substring(2, 66);
     console.log(`  word: ${word}`);
 
     // Read sub-word.
-    const subword = readSubWord(word, size);
+    const start = 64 - rightOffset - size;
+    const end = start + size;
+    let subword;
+    if(type === 'string') subword = word.substring(start, end - 2);
+    else subword = word.substring(start, end);
     console.log(`  subword: ${subword}`);
 
     // Read value in word according to type.
-    let value;
-    if(type.includes('uint')) {
-      value = (new BN(subword, 16)).toString(10);
-    }
-    else if(type.includes('bytes')) {
-      const asciiString = web3.utils.toAscii(`0x${subword}`);
-      value = `${subword} (${asciiString})`;
-    }
+    const value = getVariableValue(subword, type, web3);
     console.log(`  value: ${value}`);
 
-    // Advance slot.
-    if(offset >= 64) {
-      offset = 0;
-      slot++;
-    }
+    advanceSlot(size);
   }
 
   // List child nodes of root node.
   listNodes(contractDefinition.nodes);
 }
 
-function readSubWord(word, size) {
-  const startIdx = 64 - offset;
-  const endIdx = startIdx + size;
-  return word.substring(startIdx, endIdx);
+function advanceSlot(size) {
+  rightOffset += size;
+  if(rightOffset >= 64) {
+    rightOffset = 0;
+    slot++;
+  }
+}
+
+function getVariableSize(type, web3) {
+  let size = 64;
+  if(type.includes('uint')) {
+    const bits = parseInt(type.match(/\d+/), 10);
+    size = bits / 4;
+  }
+  else if(type.includes('bytes')) {
+    const bytes = parseInt(type.match(/\d+/), 10);
+    size = bytes * 2;
+  }
+  else if(type === 'string') {
+    size = 64;
+  }
+  return size;
+}
+
+function getVariableValue(subword, type, web3) {
+  let value;
+  if(type.includes('[]') || type.includes('mapping')) {
+    value = 'dynamic';
+  }
+  else if(type.includes('uint')) {
+    value = (new BN(subword, 16)).toString(10);
+  }
+  else if(type.includes('bytes')) {
+    const asciiString = web3.utils.toAscii(`0x${subword}`);
+    value = `${subword} (${asciiString})`;
+  }
+  else if(type === 'string') {
+    const asciiString = web3.utils.toAscii(`0x${subword}`);
+    value = `${asciiString}`;
+  }
+  return value;
+}
+
+function getVariableDeclaration(node) {
+  let str = '';
+  str += node.typeDescriptions.typeString + ' ';
+  if(node.visibility) str += node.visibility + ' ';
+  str += node.name;
+  return str;
 }
