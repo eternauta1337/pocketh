@@ -24,6 +24,7 @@ const commands = [
   require('./commands/pad.js'),
   require('./commands/compile.js'),
   require('./commands/storage.js'),
+  require('./commands/fullstorage.js'),
 ];
 
 // Register each command in the program.
