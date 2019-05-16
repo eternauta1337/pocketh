@@ -27,8 +27,8 @@ contract Storage {
 
   function testStorage() public {
 
-    address address1 = 0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa;
-    address address2 = 0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB;
+    address address1 = 0xbccc714d56bc0da0fd33d96d2a87b680dd6d0df6;
+    address address2 = 0xaee905fdd3ed851e48d22059575b9f4245a82b04;
 
     uints1[address1] = 88;
     uints1[address2] = 99;
