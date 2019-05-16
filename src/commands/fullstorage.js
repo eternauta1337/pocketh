@@ -127,6 +127,9 @@ function getVariableSize(type, web3) {
   else if(type === 'bool') {
     size = 2;
   }
+  else if(type === 'address') {
+    size = 40;
+  }
   return size;
 }
 
@@ -152,6 +155,9 @@ function getVariableValue(subword, type, web3) {
   }
   else if(type === 'bool') {
     value = subword === '01' ? 'true' : 'false';
+  }
+  else if(type === 'address') {
+    value = `0x${subword}`;
   }
   return value;
 }
