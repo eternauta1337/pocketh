@@ -25,6 +25,7 @@ const commands = [
   require('./commands/compile.js'),
   require('./commands/storage.js'),
   require('./commands/fullstorage.js'),
+  require('./commands/checksum.js'),
 ];
 
 // Register each command in the program.
