@@ -80,7 +80,8 @@ function parseAst(ast, name, contractAddress, web3) {
     
     // Read corresponding storage.
     console.log(`  slot: ${slot}`);
-    const word = (await web3.eth.getStorageAt(contractAddress, slot)).substring(2, 66);
+    const raw = await web3.eth.getStorageAt(contractAddress, slot);
+    const word = web3.utils.padLeft(raw, 64, '0').substring(2, 66);
     console.log(`  word: ${word}`);
 
     // Read sub-word.
@@ -112,7 +113,7 @@ function advanceSlot(size) {
 
 function getVariableSize(type, web3) {
   let size = 64;
-  if(type.includes('uint')) {
+  if(type.includes('int')) {
     const bits = parseInt(type.match(/\d+/), 10);
     size = bits / 4;
   }
@@ -133,6 +134,10 @@ function getVariableValue(subword, type, web3) {
   }
   else if(type.includes('uint')) {
     value = (new BN(subword, 16)).toString(10);
+  }
+  else if(type.includes('int')) {
+    const raw = new BN(subword, 16).fromTwos(256);
+    value = raw.toString(10);
   }
   else if(type.includes('bytes')) {
     const asciiString = web3.utils.toAscii(`0x${subword}`);
