@@ -118,6 +118,8 @@ Compiled Kitties.sol succesfully to tmp/build/
 npm install --global pocketh
 ```
 
+_Note: Since pocketh is in a very early stage of development, it gets updated quite frequently. Make sure to run `npm upgrade --global pocketh` every so often to use the latest version._
+
 ### Usage:
 ```
 pocketh <command> [options]
