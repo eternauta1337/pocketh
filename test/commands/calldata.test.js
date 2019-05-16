@@ -1,18 +1,13 @@
 const cli = require('../utils/cli.js');
 
 describe('calldata command', () => {
-  
-  test('Result code should be 0', async () => {
-    const result = await cli('calldata', '0xabcabcab');
-    expect(result.code).toBe(0);
-  });
 
-  test('Result stdout should identify selectors', async () => {
+  test('Should properly identify selectors', async () => {
     const result = await cli('calldata', '0xffffffff');
     expect(result.stdout).toContain('Selector: 0xffffffff');
   });
 
-  test('Result stdout should split parameters', async () => {
+  test('Should properly split parameters', async () => {
     const calldata = [
       '0xffffffff',
       '0000000000000000000000000000000000000000000000000000000000000001',

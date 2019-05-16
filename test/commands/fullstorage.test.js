@@ -2,13 +2,7 @@ const cli = require('../utils/cli.js');
 jest.setTimeout(60000);
 
 describe('fullstorage command', () => {
-  
-  test('Result code should be 0', async () => {
-    const result = await cli('fullstorage', 'ropsten', 'test/artifacts/Storage.json', '0xf1f5896ace3a78c347eb7eab503450bc93bd0c3b');
-    expect(result.code).toBe(0);
-  });
-
-  test('Result stdout should contain some of the expected output', async () => {
+  test('Should properly read storage from a contract deployed in ropsten', async () => {
     const result = await cli('fullstorage', 'ropsten', 'test/artifacts/Storage.json', '0xf1f5896ace3a78c347eb7eab503450bc93bd0c3b');
     expect(result.stdout).toContain(`uint256 internal storeduint1
   size: 32 bytes

@@ -2,17 +2,7 @@ const cli = require('../utils/cli.js');
 jest.setTimeout(60000);
 
 describe('transaction command', () => {
-  
-  test('Result code should be 0', async () => {
-    const result = await cli(
-      'transaction', 
-      'mainnet',
-      '0x95ecb5317de43d2c682e93350f160c10d3a816002ad43f2b67fb631062c1484b'
-    );
-    expect(result.code).toBe(0);
-  });
-
-  test('Result stdout should contain', async () => {
+  test('Should properly retrieve a known transaction from mainnet', async () => {
     const result = await cli(
       'transaction', 
       'mainnet',

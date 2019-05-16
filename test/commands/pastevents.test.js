@@ -2,22 +2,7 @@ const cli = require('../utils/cli.js');
 jest.setTimeout(60000);
 
 describe('pastevents command', () => {
-  
-  test('Result code should be 0', async () => {
-    const result = await cli(
-      'pastevents', 
-      'mainnet',
-      './test/artifacts/KittyCore.json', 
-      '0x06012c8cf97bead5deae237070f9587f8e7a266d',
-      'Transfer',
-      '7729780',
-      '7729781',
-      '10'
-    );
-    expect(result.code).toBe(0);
-  });
-
-  test.skip('Result stdout should contain a known event', async () => {
+  test.skip('Should retrieve some expected results for a know contract in mainnet', async () => {
     const result = await cli(
       'pastevents', 
       'mainnet',

@@ -1,13 +1,7 @@
 const cli = require('../utils/cli.js');
 
 describe('disassemble command', () => {
-  
-  test('Result code should be 0', async () => {
-    const result = await cli('disassemble', './test/artifacts/Test.json');
-    expect(result.code).toBe(0);
-  });
-
-  test('Result stdout should contain some of the expected output', async () => {
+  test('Should produce appropriate opcode output', async () => {
     const result = await cli('disassemble', './test/artifacts/Test.json');
     expect(result.stdout).toContain(`171 {0x60} [c253, r213] PUSH1 0x20 (dec 32)
 172 {0x01} [c255, r215] ADD
