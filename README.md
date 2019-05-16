@@ -156,7 +156,7 @@ Commands:
 ### Contributing:
 If you can think of something useful that could be added to the tool, pls don’t hesitate to create a new issue in the repo with your feature request. Keep in mind that the tool is intended to only read the blockchain for simplicity, i.e. it is not intended to send txs.
 
-Even better, if you want to throw a PR, you’re more than welcome! 
+Even better, if you want to throw a PR, you’re more than welcome! Just make sure that tests pass before submitting your pull request with `npm test`.
 
 **Architecture**:
 Architecture-wise, each command/script should be self contained, so there is no complex architecture going on. **pocketh** is basically just a collection of scripts.
