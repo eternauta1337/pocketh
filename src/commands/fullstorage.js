@@ -124,6 +124,9 @@ function getVariableSize(type, web3) {
   else if(type === 'string') {
     size = 64;
   }
+  else if(type === 'bool') {
+    size = 2;
+  }
   return size;
 }
 
@@ -146,6 +149,9 @@ function getVariableValue(subword, type, web3) {
   else if(type === 'string') {
     const asciiString = web3.utils.toAscii(`0x${subword}`);
     value = `${asciiString}`;
+  }
+  else if(type === 'bool') {
+    value = subword === '01' ? 'true' : 'false';
   }
   return value;
 }
