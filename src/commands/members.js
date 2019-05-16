@@ -121,6 +121,7 @@ function parseAst(ast, name, rootPath, listInherited) {
     let str = '';
     str += node.typeDescriptions.typeString + ' ';
     if(node.visibility) str += node.visibility + ' ';
+    if(node.constant) str += 'constant ';
     str += node.name;
     str += ';';
     return str;

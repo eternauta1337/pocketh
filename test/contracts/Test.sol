@@ -14,6 +14,7 @@ contract Parent2 {
 
 contract Test is Parent1, Parent2 {
   uint256 public value;
+  uint256 public constant CONS = 42;
 
   constructor() public {
     value = 5;
