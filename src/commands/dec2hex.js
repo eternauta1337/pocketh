@@ -9,7 +9,7 @@ module.exports = {
       .action((decNumber) => {
         const web3 = new Web3();
         const hexString = web3.utils.numberToHex(decNumber);
-        console.log(`${decNumber} => ${hexString}`);
+        console.log(hexString);
       });
   }
 };

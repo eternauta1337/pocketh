@@ -9,7 +9,7 @@ module.exports = {
       .action((hexString) => {
         const web3 = new Web3();
         const asciiString = web3.utils.toAscii(hexString);
-        console.log(`${hexString} => ${asciiString}`);
+        console.log(`${asciiString}`);
       });
   }
 };
