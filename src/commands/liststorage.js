@@ -11,7 +11,7 @@ let rightOffset = 0;
 module.exports = {
   register: (program) => {
     program
-      .command('fullstorage <networkUrl> <contractPath> <contractAddress>')
+      .command('liststorage <networkUrl> <contractPath> <contractAddress>')
       .description('Query the storage of a contract deployed at a given address.')
       .action(async (networkUrl, contractPath, contractAddress) => {
 

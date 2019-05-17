@@ -24,7 +24,7 @@ const commands = [
   require('./commands/pad.js'),
   require('./commands/compile.js'),
   require('./commands/storage.js'),
-  require('./commands/fullstorage.js'),
+  require('./commands/liststorage.js'),
   require('./commands/checksum.js'),
   require('./commands/selector.js'),
 ];
