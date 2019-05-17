@@ -150,8 +150,11 @@ function getVariableValue(subword, type, web3) {
     value = `${subword} (${asciiString})`;
   }
   else if(type === 'string') {
-    const asciiString = web3.utils.toAscii(`0x${subword}`);
-    value = `${asciiString}`;
+    if(subword === '0'.repeat(62)) value = 'dynamic';
+    else {
+      const asciiString = web3.utils.toAscii(`0x${subword}`);
+      value = `${asciiString}`;
+    }
   }
   else if(type === 'bool') {
     value = subword === '01' ? 'true' : 'false';
