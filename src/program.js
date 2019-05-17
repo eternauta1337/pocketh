@@ -27,6 +27,7 @@ const commands = [
   require('./commands/liststorage.js'),
   require('./commands/checksum.js'),
   require('./commands/selector.js'),
+  require('./commands/docyul.js'),
 ];
 
 // Register each command in the program.
