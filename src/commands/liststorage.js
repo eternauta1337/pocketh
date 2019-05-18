@@ -14,6 +14,7 @@ module.exports = {
       .command('liststorage <networkUrl> <contractPath> <contractAddress>')
       .description('Query the storage of a contract deployed at a given address.')
       .action(async (networkUrl, contractPath, contractAddress) => {
+        console.log(`WARNING: This command cannot handle inheritance yet =(. Pls see: https://github.com/ajsantander/pocketh/issues/50`);
 
         // Connect to network.
         const web3 = await getWeb3(networkUrl);
@@ -48,12 +49,15 @@ function parseAst(ast, name, contractAddress, web3) {
 
   // Traverse ast nodes and focus on top level variable declarations.
   async function listNodes(nodes) {
+    let variableCount = 0;
     for(let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       if(node.nodeType === 'VariableDeclaration') {
+        variableCount++;
         await processVariableDeclaration(node);
       }
     }
+    if(variableCount === 0) console.log(`No variables found in the provided artifacts.`);
   }
 
   // Parse node types into readable format.
