@@ -1,12 +1,12 @@
 const BN = require('bn.js');
-const remove0x = require('./remove0x.js');
+const stringUtil = require('./stringUtil.js');
 const Web3 = require('web3');
 
 const web3 = new Web3();
 
 module.exports = {
   parseVariableValue: (type, hex) => {
-    hex = remove0x(hex);
+    hex = stringUtil.remove0x(hex);
   
     if(type.startsWith('struct')) {
       return 'composite value';

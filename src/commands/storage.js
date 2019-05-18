@@ -2,7 +2,7 @@ const program = require('commander');
 const fs = require('fs');
 const path = require('path');
 const getWeb3 = require('../utils/getWeb3.js');
-const remove0x = require('../utils/remove0x.js');
+const stringUtil = require('../utils/stringUtil.js');
 const BN = require('bn.js');
 
 module.exports = {
@@ -47,7 +47,7 @@ module.exports = {
           console.log(`mapping key: ${options.mapping}`);
 
           // Calculate dynamic slot.
-          const paddedMappingKey = `0x` + web3.utils.padLeft(remove0x(options.mapping), 64, '0');
+          const paddedMappingKey = `0x` + web3.utils.padLeft(stringUtil.remove0x(options.mapping), 64, '0');
           const paddedStorageSlot = `0x` + web3.utils.padLeft(storageSlot, 64, '0');
           storageSlot = web3.utils.soliditySha3(paddedMappingKey, paddedStorageSlot);
           console.log(`mapping slot: ${storageSlot}`);
@@ -72,7 +72,7 @@ function readRange(value, range, web3) {
 }
 
 function interpretHexValue(hexValue, web3) {
-  const asDec = new BN(remove0x(hexValue), 16).toString(10);
+  const asDec = new BN(stringUtil.remove0x(hexValue), 16).toString(10);
   const asStr = web3.utils.toAscii(hexValue);
   console.log(`  (dec): ${asDec}`);
   console.log(`  (str): ${asStr}`);
