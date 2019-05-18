@@ -4,6 +4,7 @@ const path = require('path');
 const getWeb3 = require('../utils/getWeb3.js');
 const BN = require('bn.js');
 const getArtifacts = require('../utils/getArtifacts.js');
+const astUtil = require('../utils/astUtil.js');
 
 let slot = 0;
 let rightOffset = 0;
@@ -14,50 +15,48 @@ module.exports = {
       .command('liststorage <networkUrl> <contractPath> <contractAddress>')
       .description('Query the storage of a contract deployed at a given address.')
       .action(async (networkUrl, contractPath, contractAddress) => {
-        console.log(`WARNING: This command cannot handle inheritance yet =(. Pls see: https://github.com/ajsantander/pocketh/issues/50`);
 
         // Connect to network.
         const web3 = await getWeb3(networkUrl);
 
         // Retrieve contract artifacts.
         const contractArtifacts = getArtifacts(contractPath);
+        // console.log( JSON.stringify(contractArtifacts.ast, null, 2) );
 
-        // Parse ast and read storage as variables are found.
-        parseAst(
-          contractArtifacts.ast, 
-          contractArtifacts.contractName,
-          contractAddress,
-          web3
-        );
+        // Retrieve the ast.
+        const ast = contractArtifacts.ast;
+        if(!ast) throw new Error('AST data not found.');
+
+        // Retrieve the target contract definition node.
+        const contractName = path.basename(contractPath).split('.')[0];
+        const contractDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', contractName);
+
+        // Retrieve the linearized base contract nodes of the contract.
+        const linearizedContractDefs = astUtil.getLinearizedBaseContractNodes(ast, contractDefinition);
+
+        // Traverse each base contract in the linearized order, and process their variables.
+        for(let i = 0; i < linearizedContractDefs.length; i++) {
+          const def = linearizedContractDefs[i];
+          await traverseContractDefVariables(def, contractAddress, web3);
+        }
       });
   }
 };
 
-function parseAst(ast, name, contractAddress, web3) {
+// ----------------------------------------------------------------
+/* OLD CODE */
+// ----------------------------------------------------------------
+
+async function traverseContractDefVariables(contractDefinition, contractAddress, web3) {
   
-  // Find a node of type.
-  function findNode(nodes, type, name) {
-    for(let i = 0; i < nodes.length; i++) {
-      const node = nodes[i];
-      if(node.nodeType === type && node.name === name) return node;
-    }
-    return null;
-  }
-
-  // Find root node.
-  const contractDefinition = findNode(ast.nodes, 'ContractDefinition', name);
-
   // Traverse ast nodes and focus on top level variable declarations.
   async function listNodes(nodes) {
-    let variableCount = 0;
     for(let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       if(node.nodeType === 'VariableDeclaration') {
-        variableCount++;
         await processVariableDeclaration(node);
       }
     }
-    if(variableCount === 0) console.log(`No variables found in the provided artifacts.`);
   }
 
   // Parse node types into readable format.
@@ -77,7 +76,7 @@ function parseAst(ast, name, contractAddress, web3) {
     // console.log(`  type: ${type}`);
 
     // Calculate variable size.
-    const size = getVariableSize(type, web3);
+    const size = getVariableSize(contractDefinition, node, type, web3);
     const sizeRemainingInWord = 64 - rightOffset;
     if(sizeRemainingInWord < size) advanceSlot(size);
     console.log(`  size: ${size / 2} bytes`);
@@ -104,7 +103,7 @@ function parseAst(ast, name, contractAddress, web3) {
   }
 
   // List child nodes of root node.
-  listNodes(contractDefinition.nodes);
+  await listNodes(contractDefinition.nodes);
 }
 
 function advanceSlot(size) {
@@ -115,9 +114,26 @@ function advanceSlot(size) {
   }
 }
 
-function getVariableSize(type, web3) {
+function getVariableSize(contractDefinition, node, type, web3) {
   let size = 64;
-  if(type.includes('int')) {
+  if(type.substring(0, 6) === 'struct') {
+    const declarationId = node.typeName.baseType.referencedDeclaration;
+    const declarationNode = astUtil.findNodeWithId(contractDefinition, declarationId);
+    let sum = 0;
+    for(let i = 0; i < declarationNode.members.length; i++) {
+      const member = declarationNode.members[i];
+      const type = member.typeDescriptions.typeString;
+      sum += getVariableSize(contractDefinition, member, type, web3);
+    }
+    size = sum;
+  }
+  else if(type.substring(0, 8) === 'contract') {
+    size = 40; // address
+  }
+  else if(type.includes('mapping')) {
+    size = 64;
+  }
+  else if(type.includes('int')) {
     const bits = parseInt(type.match(/\d+/), 10);
     size = bits / 4;
   }
@@ -139,7 +155,13 @@ function getVariableSize(type, web3) {
 
 function getVariableValue(subword, type, web3) {
   let value;
-  if(type.includes('[]') || type.includes('mapping')) {
+  if(type.includes('struct')) {
+    value = 'composite';
+  }
+  else if(type.substring(0, 8) === 'contract') {
+    value = `0x${subword}`;
+  }
+  else if(type.includes('[]') || type.includes('mapping')) {
     value = 'dynamic';
   }
   else if(type.includes('uint')) {
