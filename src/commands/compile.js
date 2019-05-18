@@ -27,12 +27,17 @@ module.exports = {
         const source = fs.readFileSync(sourcePath, 'utf8');
 
         // If no solcVersion is provided, try to auto detect it.
-        solcVersion = solcVersion || detectSolcVersion(source);
+        let usingDetectedSolcVersion = false;
+        if(!solcVersion) {
+          solcVersion = detectSolcVersion(source);
+          usingDetectedSolcVersion = true;
+        }
 
         // Check current compiler version.
         // Set version accordingly.
         if(requiresDifferentCompiler(solcVersion)) {
-          solc = await getCompilerVersion(solcVersion);
+          const useLatestPatch = usingDetectedSolcVersion;
+          solc = await getCompilerVersion(solcVersion, useLatestPatch);
         }
         console.log(`Using compiler ${solc.version()}`);
 
@@ -118,7 +123,7 @@ function compile(filename, source) {
   // Compile.
   try {
     const compiled = JSON.parse(solc.compile(JSON.stringify(jsonInput), resolveImports));
-    if(compiled.errors) {
+    if(compiled.errors && compiled.errors.length > 0) {
       displayErrors(compiled.errors);
     }
     return splitCompilerOutputIntoSeparateFiles(filename, compiled);
@@ -192,12 +197,33 @@ function findMostRecentPatchVersion(targetVersion, versions) {
   return match;
 }
 
-async function getCompilerVersion(version) {
+function findExactPatchVersion(targetVersion, versions) {
+
+  // Find versions that match the version.
+  const candidates = versions.filter(v => v.includes(targetVersion));
+
+  // Return the version with the largest patch.
+  if(candidates.length === 0) throw new Error(`Target compiler version not found: ${targetVersion}`);
+  if(candidates.length === 1) return candidates[0];
+  let match = candidates[0];
+  let shortestVersion = Number.MAX_VALUE;
+  candidates.forEach(candidate => {
+    if(candidate.length < shortestVersion) {
+      match = candidate;
+      shortestVersion = candidate.length;
+    }
+  });
+
+  return match;
+}
+async function getCompilerVersion(version, useLatestPatch) {
   return new Promise(async (resolve, reject) => {
     
     // Find version in available versions.
     const versions = await availableCompilerVersions();
-    let match = findMostRecentPatchVersion(version, versions);
+    let match;
+    if(useLatestPatch) match = findMostRecentPatchVersion(version, versions);
+    else match = findExactPatchVersion(version, versions);
 
     // Retrieve version source.
     let compilerSource;
