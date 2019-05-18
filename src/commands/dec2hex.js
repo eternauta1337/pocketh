@@ -1,4 +1,3 @@
-const program = require('commander');
 const Web3 = require('web3');
 
 module.exports = {

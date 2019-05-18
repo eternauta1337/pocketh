@@ -1,4 +1,3 @@
-const program = require('commander');
 const axios = require('axios');
 const vm = require('vm');
 const fs = require('fs');

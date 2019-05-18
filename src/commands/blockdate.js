@@ -1,4 +1,3 @@
-const program = require('commander');
 const fs = require('fs');
 const getWeb3 = require('../utils/getWeb3.js');
 

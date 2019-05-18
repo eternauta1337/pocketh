@@ -1,4 +1,3 @@
-const program = require('commander');
 const BN = require('bn.js');
 const stringUtil = require('../utils/stringUtil.js');
 

@@ -1,4 +1,3 @@
-const program = require('commander');
 const getWeb3 = require('../utils/getWeb3');
 
 module.exports = {
