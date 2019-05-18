@@ -77,6 +77,74 @@ const astUtil = {
     }
 
     throw new Error(`astUtil cannot determine the size of variable of type ${type}`);
+  },
+
+  parseNodeToString: (node) => {
+
+    function parseParameterList(list) {
+      if(list.parameters.length === 0) return '';
+      const paramStrings = [];
+      list.parameters.map((parameter) => {
+        const type = parameter.typeName.name || parameter.typeDescriptions.typeString;
+        paramStrings.push(`${type}${parameter.name ? ' ' + parameter.name : ''}`);
+      });
+      return paramStrings.join(', ');
+    }
+
+    let str = '';
+    switch(node.nodeType) {
+      case 'FunctionDefinition':
+        if(node.kind) {
+          if(node.kind === 'constructor') str += 'constructor';
+          else if(node.kind === 'function' || node.kind === 'fallback') str += 'function ' + node.name;
+        }
+        else str += 'function ' + node.name;
+        str += '(';
+        str += parseParameterList(node.parameters);
+        str += ')';
+        str += ' ';
+        str += node.visibility;
+        if(node.stateMutability !== 'nonpayable') str += ' ' + node.stateMutability;
+        if(node.returnParameters.parameters.length > 0) str += ' returns(' + parseParameterList(node.returnParameters) + ')';
+        str += ' {...}';
+        break;
+      case 'VariableDeclaration':
+        str += node.typeDescriptions.typeString + ' ';
+        if(node.visibility) str += node.visibility + ' ';
+        if(node.constant) str += 'constant ';
+        str += node.name;
+        str += ';';
+        break;
+      case 'EventDefinition':
+        str += node.name;
+        str += '(';
+        str += parseParameterList(node.parameters);
+        str += ')';
+        str += ';';
+        break;
+      case 'ModifierDefinition':
+        str += 'modifier ';
+        str += node.name;
+        str += '(';
+        str += parseParameterList(node.parameters);
+        str += ')';
+        str += ' {...}';
+        break;
+      case 'StructDefinition':
+        str += 'struct ';
+        if(node.visibility) str += node.visibility + ' ';
+        str += node.name;
+        str += '{\n';
+        node.members.map((member) => {
+          str += '  ' + parseVariableNode(member) + '\n';
+        });
+        str += '}';
+        break;
+      default:
+        throw new Error(`astUtil does not now how to convert node type ${node.nodeType} to string.`);
+    }
+
+    return str;
   }
 };
 

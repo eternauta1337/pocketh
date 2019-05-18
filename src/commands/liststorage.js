@@ -65,7 +65,7 @@ async function traverseContractDefVariables(contractDefinition, contractAddress,
     if(node.constant) return;
 
     // Print variable declaration.
-    const declaration = getVariableDeclaration(node);
+    const declaration = astUtil.parseNodeToString(node);
     console.log(declaration);
     // console.log(`  offset: ${rightOffset}`);
     
@@ -110,12 +110,4 @@ function advanceSlot(size) {
     rightOffset = 0;
     slot++;
   }
-}
-
-function getVariableDeclaration(node) {
-  let str = '';
-  str += node.typeDescriptions.typeString + ' ';
-  if(node.visibility) str += node.visibility + ' ';
-  str += node.name;
-  return str;
 }

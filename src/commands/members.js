@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const getArtifacts = require('../utils/getArtifacts');
+const astUtil = require('../utils/astUtil.js');
 
 const listedContracts = [];
 
@@ -60,99 +61,9 @@ function parseAst(ast, name, rootPath, listInherited) {
   function listNodes(nodes) {
     for(let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
-      // process.stdout.write('========> ' + node.nodeType);
       const prefix = listInherited ? `(${name}) ` : '';
-      switch(node.nodeType) {
-        case 'FunctionDefinition':
-          process.stdout.write(`${prefix}${parseFunctionNode(node)}\n`);
-          break;
-        case 'VariableDeclaration':
-          process.stdout.write(`${prefix}${parseVariableNode(node)}\n`);
-          break;
-        case 'EventDefinition':
-          process.stdout.write(`${prefix}${parseEventNode(node)}\n`);
-          break;
-        case 'ModifierDefinition':
-          process.stdout.write(`${prefix}${parseModifierNode(node)}\n`);
-          break;
-        case 'StructDefinition':
-          process.stdout.write(`${prefix}${parseStructNode(node)}\n`);
-          break;
-        default:
-          process.stdout.write(`TODO: ${node.nodeType}`);
-      }
+      console.log(`${prefix}${astUtil.parseNodeToString(node)}`);
     }
-  }
-
-  // Parse node types into readable format.
-  function parseStructNode(node) {
-    // process.stdout.write(node);
-    let str = 'struct ';
-    if(node.visibility) str += node.visibility + ' ';
-    str += node.name;
-    str += '{\n';
-    node.members.map((member) => {
-      str += '  ' + parseVariableNode(member) + '\n';
-    });
-    str += '}';
-    return str;
-  }
-  function parseModifierNode(node) {
-    let str = 'modifier ';
-    str += node.name;
-    str += '(';
-    str += parseParameterList(node.parameters);
-    str += ')';
-    str += ' {...}';
-    return str;
-  }
-  function parseEventNode(node) {
-    // process.stdout.write(node);
-    let str = '';
-    str += node.name;
-    str += '(';
-    str += parseParameterList(node.parameters);
-    str += ')';
-    str += ';';
-    return str;
-  }
-  function parseVariableNode(node) {
-    // process.stdout.write(node);
-    let str = '';
-    str += node.typeDescriptions.typeString + ' ';
-    if(node.visibility) str += node.visibility + ' ';
-    if(node.constant) str += 'constant ';
-    str += node.name;
-    str += ';';
-    return str;
-  }
-  function parseParameterList(list) {
-    // process.stdout.write(list.parameters);
-    if(list.parameters.length === 0) return '';
-    const paramStrings = [];
-    list.parameters.map((parameter) => {
-      const type = parameter.typeName.name || parameter.typeDescriptions.typeString;
-      paramStrings.push(`${type}${parameter.name ? ' ' + parameter.name : ''}`);
-    });
-    return paramStrings.join(', ');
-  }
-  function parseFunctionNode(node) {
-    // process.stdout.write(node);
-    let str = '';
-    if(node.kind) {
-      if(node.kind === 'constructor') str += 'constructor';
-      else if(node.kind === 'function' || node.kind === 'fallback') str += 'function ' + node.name;
-    }
-    else str += 'function ' + node.name;
-    str += '(';
-    str += parseParameterList(node.parameters);
-    str += ')';
-    str += ' ';
-    str += node.visibility;
-    if(node.stateMutability !== 'nonpayable') str += ' ' + node.stateMutability;
-    if(node.returnParameters.parameters.length > 0) str += ' returns(' + parseParameterList(node.returnParameters) + ')';
-    str += ' {...}';
-    return str;
   }
 
   // List child nodes of root node.
