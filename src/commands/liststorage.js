@@ -25,6 +25,8 @@ module.exports = {
 
         // Retrieve the ast.
         const ast = contractArtifacts.ast;
+        // console.log( JSON.stringify(ast, null, 2) );
+        // return;
         if(!ast) throw new Error('AST data not found.');
 
         // Retrieve the target contract definition node.
@@ -72,10 +74,10 @@ async function traverseContractDefVariables(contractDefinition, contractAddress,
     // console.log(`  type: ${type}`);
 
     // Calculate variable size.
-    const size = getVariableSize(contractDefinition, node, type, web3);
+    const charCount = astUtil.getVariableDeclarationBytesSize(contractDefinition, node) * 2;
     const sizeRemainingInWord = 64 - rightOffset;
-    if(sizeRemainingInWord < size) advanceSlot(size);
-    console.log(`  size: ${size / 2} bytes`);
+    if(sizeRemainingInWord < charCount) advanceSlot(charCount);
+    console.log(`  size: ${charCount / 2} bytes`);
     
     // Read corresponding storage.
     console.log(`  slot: ${slot}`);
@@ -84,8 +86,8 @@ async function traverseContractDefVariables(contractDefinition, contractAddress,
     console.log(`  word: ${word}`);
 
     // Read sub-word.
-    const start = 64 - rightOffset - size;
-    const end = start + size;
+    const start = 64 - rightOffset - charCount;
+    const end = start + charCount;
     let subword;
     if(type === 'string') subword = word.substring(start, end - 2);
     else subword = word.substring(start, end);
@@ -95,7 +97,7 @@ async function traverseContractDefVariables(contractDefinition, contractAddress,
     const value = getVariableValue(subword, type, web3);
     console.log(`  value: ${value}`);
 
-    advanceSlot(size);
+    advanceSlot(charCount);
   }
 
   // List child nodes of root node.
@@ -108,45 +110,6 @@ function advanceSlot(size) {
     rightOffset = 0;
     slot++;
   }
-}
-
-function getVariableSize(contractDefinition, node, type, web3) {
-  let size = 64;
-  if(type.substring(0, 6) === 'struct') {
-    const declarationId = node.typeName.baseType.referencedDeclaration;
-    const declarationNode = astUtil.findNodeWithId(contractDefinition, declarationId);
-    let sum = 0;
-    for(let i = 0; i < declarationNode.members.length; i++) {
-      const member = declarationNode.members[i];
-      const type = member.typeDescriptions.typeString;
-      sum += getVariableSize(contractDefinition, member, type, web3);
-    }
-    size = sum;
-  }
-  else if(type.substring(0, 8) === 'contract') {
-    size = 40; // address
-  }
-  else if(type.includes('mapping')) {
-    size = 64;
-  }
-  else if(type.includes('int')) {
-    const bits = parseInt(type.match(/\d+/), 10);
-    size = bits / 4;
-  }
-  else if(type.includes('bytes')) {
-    const bytes = parseInt(type.match(/\d+/), 10);
-    size = bytes * 2;
-  }
-  else if(type === 'string') {
-    size = 64;
-  }
-  else if(type === 'bool') {
-    size = 2;
-  }
-  else if(type === 'address') {
-    size = 40;
-  }
-  return size;
 }
 
 function getVariableValue(subword, type, web3) {
