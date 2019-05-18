@@ -56,7 +56,6 @@ const docs = {
   "sload(p:u256) ‑> v:u256": "storage[p]",
   "sstore(p:u256, v:u256)": "storage[p] := v",
   "msize() ‑> size:u256": "size of memory, i.e. largest accessed memory index, albeit due due to the memory extension function, which extends by words, this will always be a multiple of 32 bytes",
-  "Execution control": "",
   "create(v:u256, p:u256, n:u256)": "create new contract with code mem[p..(p+n)) and send v wei and return the new address",
   "create2(v:u256, p:u256, n:u256, s:u256)": "create new contract with code mem[p…(p+n)) at address keccak256(0xff . this . s . keccak256(mem[p…(p+n))) and send v wei and return the new address, where 0xff is a 8 byte value, this is the current contract’s address as a 20 byte value and s is a big-endian 256-bit value",
   "call(g:u256, a:u256, v:u256, in:u256, insize:u256, out:u256, outsize:u256) ‑> r:u256": "call contract at address a with input mem[in..(in+insize)) providing g gas and v wei and output area mem[out..(out+outsize)) returning 0 on error (eg. out of gas) and 1 on success",
