@@ -13,7 +13,7 @@ module.exports = {
   register: (program) => {
     program
       .command('liststorage <networkUrl> <contractPath> <contractAddress>')
-      .description('Query the storage of a contract deployed at a given address.')
+      .description(`Query the storage of a contract deployed at a given address. Requires compiled artifacts to traverse the ast and understand how to read the contract's storage.`)
       .action(async (networkUrl, contractPath, contractAddress) => {
 
         // Connect to network.
