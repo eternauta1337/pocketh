@@ -5,6 +5,7 @@ const getWeb3 = require('../utils/getWeb3.js');
 const BN = require('bn.js');
 const getArtifacts = require('../utils/getArtifacts.js');
 const astUtil = require('../utils/astUtil.js');
+const abiUtil = require('../utils/abiUtil.js');
 
 let slot = 0;
 let rightOffset = 0;
@@ -94,7 +95,7 @@ async function traverseContractDefVariables(contractDefinition, contractAddress,
     console.log(`  subword: ${subword}`);
 
     // Read value in word according to type.
-    const value = getVariableValue(subword, type, web3);
+    const value = abiUtil.parseVariableValue(type, subword);
     console.log(`  value: ${value}`);
 
     advanceSlot(charCount);
@@ -110,44 +111,6 @@ function advanceSlot(size) {
     rightOffset = 0;
     slot++;
   }
-}
-
-function getVariableValue(subword, type, web3) {
-  let value;
-  if(type.includes('struct')) {
-    value = 'composite';
-  }
-  else if(type.substring(0, 8) === 'contract') {
-    value = `0x${subword}`;
-  }
-  else if(type.includes('[]') || type.includes('mapping')) {
-    value = 'dynamic';
-  }
-  else if(type.includes('uint')) {
-    value = (new BN(subword, 16)).toString(10);
-  }
-  else if(type.includes('int')) {
-    const raw = new BN(subword, 16).fromTwos(256);
-    value = raw.toString(10);
-  }
-  else if(type.includes('bytes')) {
-    const asciiString = web3.utils.toAscii(`0x${subword}`);
-    value = `${subword} (${asciiString})`;
-  }
-  else if(type === 'string') {
-    if(subword === '0'.repeat(62)) value = 'dynamic';
-    else {
-      const asciiString = web3.utils.toAscii(`0x${subword}`);
-      value = `${asciiString}`;
-    }
-  }
-  else if(type === 'bool') {
-    value = subword === '01' ? 'true' : 'false';
-  }
-  else if(type === 'address') {
-    value = `0x${subword}`;
-  }
-  return value;
 }
 
 function getVariableDeclaration(node) {

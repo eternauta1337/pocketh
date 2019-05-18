@@ -75,6 +75,8 @@ const astUtil = {
     if(type === 'bool') {
       return 1;
     }
+
+    throw new Error(`astUtil cannot determine the size of variable of type ${type}`);
   }
 };
 
