@@ -43,10 +43,6 @@ module.exports = {
   }
 };
 
-// ----------------------------------------------------------------
-/* OLD CODE */
-// ----------------------------------------------------------------
-
 async function traverseContractDefVariables(contractDefinition, contractAddress, web3) {
   
   // Traverse ast nodes and focus on top level variable declarations.
