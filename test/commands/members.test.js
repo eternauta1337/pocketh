@@ -12,12 +12,12 @@ function test(uint256 newValue) public {...}`);
 
   test('Should properly identify the members of Test.sol and its ancestors', async () => {
     const result = await cli('members', '--inherited', './test/artifacts/Test.json');
-    expect(result.stdout).toContain(`(Test) uint256 public value;
+    expect(result.stdout).toContain(`(GrandParent) uint256 public granparent_value;
+(Parent1) uint256 public parent1_value;
+(Parent2) uint256 public parent2_value;
+(Test) uint256 public value;
 (Test) uint256 public constant CONS;
 (Test) constructor() public {...}
-(Test) function test(uint256 newValue) public {...}
-(Parent1) uint256 public parent1_value;
-(GrandParent) uint256 public granparent_value;
-(Parent2) uint256 public parent2_value;`);
+(Test) function test(uint256 newValue) public {...}`);
   });
 });
