@@ -109,14 +109,14 @@ const astUtil = {
         str += ' {...}';
         break;
       case 'VariableDeclaration':
-        str += node.typeDescriptions.typeString + ' ';
+        str += node.typeDescriptions.typeString.replace('contract ', '') + ' ';
         if(node.visibility) str += node.visibility + ' ';
         if(node.constant) str += 'constant ';
         str += node.name;
         str += ';';
         break;
       case 'EventDefinition':
-        str += node.name;
+        str += 'event ' + node.name;
         str += '(';
         str += parseParameterList(node.parameters);
         str += ')';
