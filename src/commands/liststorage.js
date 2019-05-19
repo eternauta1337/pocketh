@@ -36,7 +36,7 @@ module.exports = {
         // Traverse each base contract in the linearized order, and process their variables.
         for(let i = 0; i < linearizedContractDefs.length; i++) {
           const contractDefinition = linearizedContractDefs[i];
-          await processAllVariabledeclarationsInContractDefinition(
+          await processAllVariableDeclarationsInContractDefinition(
             contractDefinition, 
             contractAddress, 
             web3
@@ -46,7 +46,7 @@ module.exports = {
   }
 };
 
-async function processAllVariabledeclarationsInContractDefinition(contractDefinition, contractAddress, web3) {
+async function processAllVariableDeclarationsInContractDefinition(contractDefinition, contractAddress, web3) {
   const nodes = contractDefinition.nodes;
   for(let i = 0; i < nodes.length; i++) {
     const node = nodes[i];
