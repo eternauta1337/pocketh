@@ -1,6 +1,7 @@
 const path = require('path');
 const getArtifacts = require('../utils/getArtifacts');
 const astUtil = require('../utils/astUtil.js');
+const chalk = require('chalk');
 
 module.exports = {
   register: (program) => {
@@ -43,11 +44,10 @@ function processAllBaseContractsFromContractDefinition(ast, contractDefinition) 
   }
 }
 
-function processAllNodesInContractDefinition(contractDefinition, showContractName) {
+function processAllNodesInContractDefinition(contractDefinition) {
   const nodes = contractDefinition.nodes;
+  console.log(chalk`\n{redBright.bold ¬ ${contractDefinition.name}}`);
   for(let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
-    const prefix = showContractName ? `(${contractDefinition.name}) ` : '';
-    console.log(`${prefix}${astUtil.parseNodeToString(node)}`);
+    console.log(`  ${astUtil.parseNodeToString(nodes[i])}`);
   }
 }

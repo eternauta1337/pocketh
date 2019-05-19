@@ -1,4 +1,5 @@
 const stringUtil = require('./stringUtil.js');
+const chalk = require('chalk');
 
 const astUtil = {
 
@@ -98,32 +99,32 @@ const astUtil = {
           if(node.kind === 'constructor') str += 'constructor';
           else if(node.kind === 'function' || node.kind === 'fallback') str += 'function ' + node.name;
         }
-        else str += 'function ' + node.name;
+        else str += chalk`{blue function} ` + node.name;
         str += '(';
         str += parseParameterList(node.parameters);
         str += ')';
         str += ' ';
-        str += node.visibility;
-        if(node.stateMutability !== 'nonpayable') str += ' ' + node.stateMutability;
+        str += chalk`{bold ${node.visibility}}`;
+        if(node.stateMutability !== 'nonpayable') str += ' ' + chalk`{italic ${node.stateMutability}}`;
         if(node.returnParameters.parameters.length > 0) str += ' returns(' + parseParameterList(node.returnParameters) + ')';
         str += ' {...}';
         break;
       case 'VariableDeclaration':
-        str += node.typeDescriptions.typeString.replace('contract ', '') + ' ';
+        str += chalk`{green ${node.typeDescriptions.typeString.replace('contract ', '')}}` + ' ';
         if(node.visibility) str += node.visibility + ' ';
         if(node.constant) str += 'constant ';
         str += node.name;
         str += ';';
         break;
       case 'EventDefinition':
-        str += 'event ' + node.name;
+        str += chalk`{magenta event} ` + node.name;
         str += '(';
         str += parseParameterList(node.parameters);
         str += ')';
         str += ';';
         break;
       case 'ModifierDefinition':
-        str += 'modifier ';
+        str += chalk`{blueBright.italic modifier} `;
         str += node.name;
         str += '(';
         str += parseParameterList(node.parameters);
@@ -131,14 +132,14 @@ const astUtil = {
         str += ' {...}';
         break;
       case 'StructDefinition':
-        str += 'struct ';
+        str += chalk`{green struct} `;
         if(node.visibility) str += node.visibility + ' ';
         str += node.name;
-        str += '{\n';
+        str += ' {\n';
         node.members.map((member) => {
-          str += '  ' + astUtil.parseNodeToString(member) + '\n';
+          str += '    ' + astUtil.parseNodeToString(member) + '\n';
         });
-        str += '}';
+        str += '  }';
         break;
       default:
         throw new Error(`astUtil does not now how to convert node type ${node.nodeType} to string.`);
