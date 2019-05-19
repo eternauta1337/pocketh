@@ -21,87 +21,80 @@ module.exports = {
 
         // Retrieve contract artifacts.
         const contractArtifacts = getArtifacts(contractPath);
-        // console.log( JSON.stringify(contractArtifacts.ast, null, 2) );
 
         // Retrieve the ast.
         const ast = contractArtifacts.ast;
-        // console.log( JSON.stringify(ast, null, 2) );
-        // return;
         if(!ast) throw new Error('AST data not found.');
 
         // Retrieve the target contract definition node.
-        const contractName = path.basename(contractPath).split('.')[0];
-        const contractDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', contractName);
+        const rootContractName = path.basename(contractPath).split('.')[0];
+        const rootContraContractDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', rootContractName);
 
         // Retrieve the linearized base contract nodes of the contract.
-        const linearizedContractDefs = astUtil.getLinearizedBaseContractNodes(ast, contractDefinition);
+        const linearizedContractDefs = astUtil.getLinearizedBaseContractNodes(ast, rootContraContractDefinition);
 
         // Traverse each base contract in the linearized order, and process their variables.
         for(let i = 0; i < linearizedContractDefs.length; i++) {
-          const def = linearizedContractDefs[i];
-          await traverseContractDefVariables(def, contractAddress, web3);
+          const contractDefinition = linearizedContractDefs[i];
+          await processAllVariabledeclarationsInContractDefinition(
+            contractDefinition, 
+            contractAddress, 
+            web3
+          );
         }
       });
   }
 };
 
-async function traverseContractDefVariables(contractDefinition, contractAddress, web3) {
-  
-  // Traverse ast nodes and focus on top level variable declarations.
-  async function listNodes(nodes) {
-    for(let i = 0; i < nodes.length; i++) {
-      const node = nodes[i];
-      if(node.nodeType === 'VariableDeclaration') {
-        await processVariableDeclaration(node);
-      }
+async function processAllVariabledeclarationsInContractDefinition(contractDefinition, contractAddress, web3) {
+  const nodes = contractDefinition.nodes;
+  for(let i = 0; i < nodes.length; i++) {
+    const node = nodes[i];
+    if(node.nodeType === 'VariableDeclaration') {
+      await processVariableDeclaration(contractDefinition, node, contractAddress, web3);
     }
   }
+}
 
-  // Parse node types into readable format.
-  async function processVariableDeclaration(node) {
-    // console.log(node);
-    
-    // Constant variables do not use storage.
-    if(node.constant) return;
+async function processVariableDeclaration(contractDefinition, node, contractAddress, web3) {
+  
+  // Constant variables do not use storage.
+  if(node.constant) return;
 
-    // Print variable declaration.
-    const declaration = astUtil.parseNodeToString(node);
-    console.log(declaration);
-    // console.log(`  offset: ${rightOffset}`);
-    
-    // Get variable type.
-    const type = node.typeDescriptions.typeString;
-    // console.log(`  type: ${type}`);
+  // Print variable declaration.
+  const declaration = astUtil.parseNodeToString(node);
+  console.log(declaration);
+  // console.log(`  offset: ${rightOffset}`);
+  
+  // Get variable type.
+  const type = node.typeDescriptions.typeString;
+  // console.log(`  type: ${type}`);
 
-    // Calculate variable size.
-    const charCount = astUtil.getVariableDeclarationBytesSize(contractDefinition, node) * 2;
-    const sizeRemainingInWord = 64 - rightOffset;
-    if(sizeRemainingInWord < charCount) advanceSlot(charCount);
-    console.log(`  size: ${charCount / 2} bytes`);
-    
-    // Read corresponding storage.
-    console.log(`  slot: ${slot}`);
-    const raw = await web3.eth.getStorageAt(contractAddress, slot);
-    const word = web3.utils.padLeft(raw, 64, '0').substring(2, 66);
-    console.log(`  word: ${word}`);
+  // Calculate variable size.
+  const charCount = astUtil.getVariableDeclarationBytesSize(contractDefinition, node) * 2;
+  const sizeRemainingInWord = 64 - rightOffset;
+  if(sizeRemainingInWord < charCount) advanceSlot(charCount);
+  console.log(`  size: ${charCount / 2} bytes`);
+  
+  // Read corresponding storage.
+  console.log(`  slot: ${slot}`);
+  const raw = await web3.eth.getStorageAt(contractAddress, slot);
+  const word = web3.utils.padLeft(raw, 64, '0').substring(2, 66);
+  console.log(`  word: ${word}`);
 
-    // Read sub-word.
-    const start = 64 - rightOffset - charCount;
-    const end = start + charCount;
-    let subword;
-    if(type === 'string') subword = word.substring(start, end - 2);
-    else subword = word.substring(start, end);
-    console.log(`  subword: ${subword}`);
+  // Read sub-word.
+  const start = 64 - rightOffset - charCount;
+  const end = start + charCount;
+  let subword;
+  if(type === 'string') subword = word.substring(start, end - 2);
+  else subword = word.substring(start, end);
+  console.log(`  subword: ${subword}`);
 
-    // Read value in word according to type.
-    const value = abiUtil.parseVariableValue(type, subword);
-    console.log(`  value: ${value}`);
+  // Read value in word according to type.
+  const value = abiUtil.parseVariableValue(type, subword);
+  console.log(`  value: ${value}`);
 
-    advanceSlot(charCount);
-  }
-
-  // List child nodes of root node.
-  await listNodes(contractDefinition.nodes);
+  advanceSlot(charCount);
 }
 
 function advanceSlot(size) {
