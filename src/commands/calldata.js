@@ -1,9 +1,15 @@
+const validateUtil = require('../utils/validateUtil');
+
 module.exports = {
   register: (program) => {
     program
       .command(`calldata <data>`)
       .description('Split up calldata into a more readable format.')
       .action((data) => {
+
+        // Input validation.
+        if(!validateUtil.hex(data))
+          throw new Error(`Invalid call data: ${data}`);
         
         // Parse calldata.
         if(data) {

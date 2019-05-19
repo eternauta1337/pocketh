@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const getWeb3 = require('../utils/getWeb3.js');
 const getArtifacts = require('../utils/getArtifacts');
+const validateUtil = require('../utils/validateUtil');
 
 module.exports = {
   register: (program) => {
@@ -9,6 +10,10 @@ module.exports = {
       .command('pastevents <networkUrl> <contractPath> <contractAddress> <eventName> <fromBlock> [toBlock] [batchSize]')
       .description('Finds past events for a given deployed contract.')
       .action(async (networkUrl, contractPath, contractAddress, eventName, fromBlock, toBlock, batchSize) => {
+
+        // Input validation.
+        if(!validateUtil.address(contractAddress))
+          throw new Error(`Invalid contract address: ${contractAddress}`);
 
         // Validate input.
         batchSize = batchSize ? parseInt(batchSize, 10) : 100;

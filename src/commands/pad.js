@@ -1,4 +1,5 @@
 const Web3 = require('web3');
+const validateUtil = require('../utils/validateUtil');
 
 module.exports = {
   register: (program) => {
@@ -6,6 +7,11 @@ module.exports = {
       .command('pad <value> [direction] [amount] [char]')
       .description('Pads value left or right with a given amount. Defaults to 64 (32 bytes), left.')
       .action((value, direction, amount, char) => {
+
+        // Input validation.
+        if(!validateUtil.hex(value))
+          throw new Error(`Invalid hex value: ${value}`);
+
         const web3 = new Web3();
 
         // Defaults.

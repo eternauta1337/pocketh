@@ -3,6 +3,7 @@ const path = require('path');
 const getWeb3 = require('../utils/getWeb3.js');
 const stringUtil = require('../utils/stringUtil.js');
 const BN = require('bn.js');
+const validateUtil = require('../utils/validateUtil');
 
 module.exports = {
   register: (program) => {
@@ -14,6 +15,10 @@ module.exports = {
       .description('Query the storage of a contract at a given slot.')
       .action(async (networkUrl, contractAddress, storageSlot, options) => {
         console.log(`slot: ${storageSlot}`);
+
+        // Input validation.
+        if(!validateUtil.address(contractAddress))
+          throw new Error(`Invalid contract address: ${contractAddress}`);
 
         // Connect to network.
         const web3 = await getWeb3(networkUrl);

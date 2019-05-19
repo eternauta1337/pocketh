@@ -6,6 +6,7 @@ const getArtifacts = require('../utils/getArtifacts.js');
 const astUtil = require('../utils/astUtil.js');
 const abiUtil = require('../utils/abiUtil.js');
 const chalk = require('chalk');
+const validateUtil = require('../utils/validateUtil');
 
 let slot = 0;
 let rightOffset = 0;
@@ -17,6 +18,10 @@ module.exports = {
       .description(`Query the storage of a contract deployed at a given address. Requires compiled artifacts to traverse the ast and understand how to read the contract's storage.`)
       .action(async (networkUrl, contractPath, contractAddress) => {
         chalk.enabled = !program.disableColors;
+
+        // Input validation.
+        if(!validateUtil.address(contractAddress))
+          throw new Error(`Invalid address: ${contractAddress}`);
 
         // Connect to network.
         const web3 = await getWeb3(networkUrl);

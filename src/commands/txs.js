@@ -1,5 +1,6 @@
 const fs = require('fs');
 const getWeb3 = require('../utils/getWeb3.js');
+const validateUtil = require('../utils/validateUtil');
 
 module.exports = {
   register: (program) => {
@@ -8,6 +9,12 @@ module.exports = {
       .description('Finds transactions made to a deployed contract, for a specified function selector.')
       .action(async (networkUrl, contractAddress, functionSelector, fromBlock, toBlock, maxThreads) => {
         
+        // Input validation.
+        if(!validateUtil.address(contractAddress))
+          throw new Error(`Invalid contractAddress: ${contractAddress}`);
+        if(!validateUtil.hex(functionSelector))
+          throw new Error(`Invalid functionSelector: ${functionSelector}`);
+
         // Validate input.
         contractAddress = contractAddress.toLowerCase();
         fromBlock = parseInt(fromBlock, 10);

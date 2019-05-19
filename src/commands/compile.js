@@ -16,7 +16,7 @@ module.exports = {
   register: (program) => {
     program
       .command('compile <sourcePath> <outputDirectory> [solcVersion]')
-      .description('Compiles a source file with solcjs.')
+      .description('Compiles a source file with solcjs. Downloads the appropriate solcjs compiler by looking at the source code. A specific solc version can be indicated with the solcVersion parameter.')
       .action(async (sourcePath, outputDirectory, solcVersion) => {
 
         // Retrieve contract source.
