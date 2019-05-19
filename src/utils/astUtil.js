@@ -136,7 +136,7 @@ const astUtil = {
         str += node.name;
         str += '{\n';
         node.members.map((member) => {
-          str += '  ' + parseVariableNode(member) + '\n';
+          str += '  ' + astUtil.parseNodeToString(member) + '\n';
         });
         str += '}';
         break;

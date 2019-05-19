@@ -1,11 +1,9 @@
-const fs = require('fs');
 const path = require('path');
 const treeify = require('treeify');
 const getArtifacts = require('../utils/getArtifacts');
+const astUtil = require('../utils/astUtil');
 
-const listedContracts = [];
 const tree = {};
-let rootName;
 
 module.exports = {
   register: (program) => {
@@ -14,60 +12,35 @@ module.exports = {
       .description('Displays the inheritance tree of the provided contract artifacts.')
       .action((contractPath) => {
         
-        // Evaluate root path.
-        const rootPath = path.dirname(contractPath);
-        const filename = path.basename(contractPath);
+        // Retrieve contract artifacts.
+        const contractArtifacts = getArtifacts(contractPath);
 
-        // Parse contract.
-        rootName = filename.split('.')[0];
-        tree[rootName] = {};
-        parseContract(filename, rootPath, tree[rootName]);
+        // Retrieve the ast.
+        const ast = contractArtifacts.ast;
+        if(!ast) throw new Error('AST data not found.');
+
+        // Retrieve the target contract definition node.
+        const rootContractName = path.basename(contractPath).split('.')[0];
+        const rootContractDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', rootContractName);
+
+        // Start the inheritance tree structure.
+        tree[rootContractName] = {};
+        traverseContractParents(ast, rootContractDefinition, tree[rootContractName]);
+
+        // Print tree after all branches
+        // have been traversed.
+        console.log(treeify.asTree(tree, true));
       });
   }
 };
 
-function parseContract(filename, rootPath, branch) {
-
-  // Retrieve contract artifacts and abi.
-  const contractPath = rootPath + '/' + filename;
-  const contractArtifacts = getArtifacts(contractPath);
-  // Retrieve ast.
-  const ast = contractArtifacts.ast;
-  if(!ast) throw new Error(`Cannot find ast data.`);
-  // console.log(JSON.stringify(ast, null, 2));
-  // console.log(ast);
-
-  // Print out members.
-  parseAst(ast, contractArtifacts.contractName, rootPath, branch);
-}
-
-function parseAst(ast, name, rootPath, branch) {
-
-  // Find a node of type.
-  function findNode(nodes, type, name) {
-    for(let i = 0; i < nodes.length; i++) {
-      const node = nodes[i];
-      if(node.nodeType === type && node.name === name) return node;
-    }
-    return null;
-  }
-
-  // Find root node.
-  const contractDefinition = findNode(ast.nodes, 'ContractDefinition', name);
-  // console.log(contractDefinition);
-  
-  // Find parents.
-  listedContracts.push(name);
+function traverseContractParents(ast, contractDefinition, branch) {
   const parents = contractDefinition.baseContracts;
-  if(parents && parents.length > 0) {
-    for(let i = 0; i < parents.length; i++) {
-      const parent = parents[i];
-      const parentName = parent.baseName.name;
-      if(!listedContracts.includes(parentName)) {
-        branch[parentName] = {};
-        parseContract(parentName + '.json', rootPath, branch[parentName]);
-      }
-    }
-    if(name === rootName) console.log(treeify.asTree(tree, true));
+  for(let i = 0; i < parents.length; i++) {
+    const parent = parents[i];
+    const parentName = parent.baseName.name;
+    branch[parentName] = {};
+    const parentDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', parentName);
+    traverseContractParents(ast, parentDefinition, branch[parentName]);
   }
 }
