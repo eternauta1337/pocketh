@@ -4,7 +4,26 @@ const Web3 = require('web3');
 
 const web3 = new Web3();
 
-module.exports = {
+const abiUtil = {
+
+  getAbiItemSignature: (item) => {
+    const inputs = [];
+    if(item.inputs && item.inputs.length > 0) {
+      item.inputs.map(input => inputs.push(input.type));
+    }
+    return `${item.name}(${inputs.join(',')})`;
+  }, 
+
+  getAbiItemSigHash: (item) => {
+    const sig = abiUtil.getAbiItemSignature(item);
+    return abiUtil.getSelector(sig);
+  },
+
+  getSelector: (signature) => {
+    const hash = web3.utils.sha3(signature);
+    return hash.substring(0, 10);
+  },
+
   parseVariableValue: (type, hex) => {
     hex = stringUtil.remove0x(hex);
   
@@ -48,3 +67,5 @@ module.exports = {
     throw new Error(`abiUtil cannot determine the value of variable of type ${type}`);
   }
 };
+
+module.exports = abiUtil;

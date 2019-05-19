@@ -1,6 +1,6 @@
 const fs = require('fs');
-const Web3 = require('web3');
 const getArtifacts = require('../utils/getArtifacts');
+const abiUtil = require('../utils/abiUtil');
 
 module.exports = {
   register: (program) => {
@@ -15,30 +15,12 @@ module.exports = {
         // Retrieve abi.
         const abi = contractArtifacts.abi;
 
-        // Given an abi item, build the signature string.
-        function abiItemToSigStr(item) {
-          const inputs = [];
-          if(item.inputs && item.inputs.length > 0) {
-            item.inputs.map(input => inputs.push(input.type));
-          }
-          return `${item.name}(${inputs.join(',')})`;
-        }
-
-        // Initialize a dummy web3 object, just to use the utils package.
-        const web3 = new Web3();
-
-        // Given an abi item, calculate the signature hash.
-        function getAbiItemSigHash(item) {
-          const sig = abiItemToSigStr(item);
-          const hash = web3.utils.sha3(sig);
-          return hash.substring(0, 10);
-        }
-
         // Scan the abi and identify function signatures.
         abi.map((item) => {
           if(item.type === 'function') {
-            const hash = item.signature ? item.signature : getAbiItemSigHash(item);
-            process.stdout.write(`${hash} ${abiItemToSigStr(item)}\n`);
+            const signature = item.signature || abiUtil.getAbiItemSignature(item);
+            const hash = abiUtil.getAbiItemSigHash(item);
+            process.stdout.write(`${hash}: ${signature}\n`);
           }
         });
       });
