@@ -10,6 +10,7 @@ module.exports = {
       .description('Provides a list of all the members of the provided contract artifacts.')
       .option(`--inherited`, `list inherited contracts' members as well`)
       .action((contractPath, options) => {
+        chalk.enabled = !program.disableColors;
         
         // Validate input.
         const listInherited = options.inherited;

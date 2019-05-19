@@ -5,6 +5,7 @@ const BN = require('bn.js');
 const getArtifacts = require('../utils/getArtifacts.js');
 const astUtil = require('../utils/astUtil.js');
 const abiUtil = require('../utils/abiUtil.js');
+const chalk = require('chalk');
 
 let slot = 0;
 let rightOffset = 0;
@@ -15,6 +16,7 @@ module.exports = {
       .command('liststorage <networkUrl> <contractPath> <contractAddress>')
       .description(`Query the storage of a contract deployed at a given address. Requires compiled artifacts to traverse the ast and understand how to read the contract's storage.`)
       .action(async (networkUrl, contractPath, contractAddress) => {
+        chalk.enabled = !program.disableColors;
 
         // Connect to network.
         const web3 = await getWeb3(networkUrl);

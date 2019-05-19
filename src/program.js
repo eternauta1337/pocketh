@@ -38,6 +38,7 @@ program
   .name('pocketh')
   .usage('<command> [options]')
   .version(version, '-v, --version')
+  .option('-d, --disable-colors', 'disable colored output')
   .on('command:*', function () {
     console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
     process.exit(1);

@@ -8,7 +8,7 @@
   },
   "scripts": {
     "ganache": "ganache-cli --deterministic",
-    "test": "jest",
+    "test": "jest --verbose",
     "testwatch": "jest --watch",
     "compile": "truffle compile"
   },
@@ -40,5 +40,10 @@
   "devDependencies": {
     "ganache-cli": "^6.4.3",
     "jest": "^24.8.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "./test/setup.js"
+    ]
   }
 }
