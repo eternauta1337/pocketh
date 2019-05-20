@@ -1,10 +1,10 @@
 const cli = require('../utils/cli.js');
 jest.setTimeout(60000);
 
-describe('transaction command', () => {
+describe('info command', () => {
   test('Should properly return info for mainnet', async () => {
     const result = await cli(
-      'network', 
+      'info', 
       'mainnet'
     );
     expect(result.stdout).toContain(`mainnet: {

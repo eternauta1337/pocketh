@@ -17,7 +17,7 @@ const commands = [
   require('./commands/str2hex.js'),
   require('./commands/transaction.js'),
   require('./commands/block.js'),
-  require('./commands/network.js'),
+  require('./commands/info.js'),
   require('./commands/hex2dec.js'),
   require('./commands/dec2hex.js'),
   require('./commands/convert.js'),

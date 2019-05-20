@@ -1,4 +1,5 @@
 const cli = require('../utils/cli.js');
+jest.setTimeout(60000);
 
 describe('storage command', () => {
   test('Should properly retrieve storage for a known contract deployed in ropsten', async () => {
