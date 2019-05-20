@@ -4,7 +4,7 @@ const web3 = new Web3();
 
 const validateUtil = {
 
-  integer: (value) => {
+  positiveInteger: (value) => {
     return value.match(/^\+?[1-9][\d]*$/);
   },
 

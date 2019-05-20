@@ -9,7 +9,7 @@ module.exports = {
       .action(async (networkUrl, blockHashOrNumber) => {
 
         // Input validation.
-        if(!validateUtil.integer(blockHashOrNumber) && !validateUtil.bytes32(blockHashOrNumber))
+        if(!validateUtil.positiveInteger(blockHashOrNumber) && !validateUtil.bytes32(blockHashOrNumber))
           throw new Error(`Invalid blockHashOrNumber: ${blockHashOrNumber}`);
 
         const web3 = await getWeb3(networkUrl);

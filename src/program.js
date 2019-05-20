@@ -19,7 +19,7 @@ const commands = [
   require('./commands/block.js'),
   require('./commands/info.js'),
   require('./commands/hex2dec.js'),
-  require('./commands/dec2hex.js'),
+  require('./commands/uint2hex.js'),
   require('./commands/convert.js'),
   require('./commands/pad.js'),
   require('./commands/compile.js'),
