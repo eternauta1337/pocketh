@@ -7,7 +7,6 @@ describe('info command', () => {
       'info', 
       'mainnet'
     );
-    expect(result.stdout).toContain(`mainnet: {
-  "latestBlock"`);
+    expect(result.stdout).toContain(`latestBlock`);
   });
 });
