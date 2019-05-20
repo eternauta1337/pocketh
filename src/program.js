@@ -18,7 +18,7 @@ const commands = [
   require('./commands/transaction.js'),
   require('./commands/block.js'),
   require('./commands/info.js'),
-  require('./commands/hex2dec.js'),
+  require('./commands/hex2uint.js'),
   require('./commands/uint2hex.js'),
   require('./commands/convert.js'),
   require('./commands/pad.js'),

@@ -5,8 +5,8 @@ const validateUtil = require('../utils/validateUtil');
 module.exports = {
   register: (program) => {
     program
-      .command('hex2dec <hexString>')
-      .description('Converts a hex number to its decimal representation.')
+      .command('hex2uint <hexString>')
+      .description('Converts a hex number to its positive integer base 10 representation.')
       .action((hexString) => {
 
         // Input validation.
