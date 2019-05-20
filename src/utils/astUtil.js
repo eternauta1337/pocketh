@@ -32,7 +32,7 @@ const astUtil = {
   },
 
   getVariableDeclarationBytesSize: (contractDefinition, node) => {
-    if(node.nodeType !== 'VariableDeclaration') throw new Error('Not a VariableDeclaraction node.')
+    if(node.nodeType !== 'VariableDeclaration') throw new Error('Not a VariableDeclaraction node.');
     const type = node.typeDescriptions.typeString;
 
     if(type.startsWith('struct')) {
@@ -96,8 +96,8 @@ const astUtil = {
     switch(node.nodeType) {
       case 'FunctionDefinition':
         if(node.kind) {
-          if(node.kind === 'constructor') str += 'constructor';
-          else if(node.kind === 'function' || node.kind === 'fallback') str += 'function ' + node.name;
+          if(node.kind === 'constructor') str += chalk`{blue constructor}`;
+          else if(node.kind === 'function' || node.kind === 'fallback') str += chalk`{blue function} ` + node.name;
         }
         else str += chalk`{blue function} ` + node.name;
         str += '(';
@@ -141,8 +141,14 @@ const astUtil = {
         });
         str += '  }';
         break;
+      case 'UsingForDirective':
+        str += chalk`{yellow using} `;
+        str += node.libraryName.name;
+        str += ' for ';
+        str += node.typeName.name + ';';
+        break;
       default:
-        throw new Error(`astUtil does not now how to convert node type ${node.nodeType} to string.`);
+        console.log(chalk`{yellow.bold WARNING}: astUtil does not know how to convert node type ${node.nodeType} to string.`);
     }
 
     return str;

@@ -1,5 +1,11 @@
 pragma solidity ^0.5.7;
 
+library Lib {
+  function ret(uint256 value) internal pure returns(uint256) {
+    return value;
+  }
+}
+
 contract GrandParent {
   uint256 public granparent_value;
 }
@@ -13,6 +19,8 @@ contract Parent2 {
 }
 
 contract Test is Parent1, Parent2 {
+  using Lib for uint256;
+
   uint256 public value;
   uint256 public constant CONS = 42;
 
