@@ -8,6 +8,10 @@ const validateUtil = {
     return value.match(/^\+?[1-9][\d]*$/);
   },
 
+  integer: (value) => {
+    return value.match(/^[\+|\-]?[1-9][\d]*$/);
+  },
+
   hex: (value) => {
     return value.match(/^0x[a-fA-F0-9]+$/);
   },

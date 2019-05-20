@@ -10,7 +10,7 @@ module.exports = {
 
         // Input validation.
         if(!validateUtil.positiveInteger(decNumber))
-          throw new Error(`Invalid integer: ${decNumber}`);
+          throw new Error(`Invalid positive integer: ${decNumber}`);
 
         const web3 = new Web3();
         const hexString = web3.utils.numberToHex(decNumber);

@@ -28,6 +28,8 @@ const commands = [
   require('./commands/checksum.js'),
   require('./commands/selector.js'),
   require('./commands/docyul.js'),
+  require('./commands/int2hex.js'),
+  require('./commands/hex2int.js'),
 ];
 
 // Register each command in the program.
