@@ -108,10 +108,27 @@ function displayErrors(errors) {
 }
 
 function resolveImports(sourcepath) {
-  const normpath = path.resolve(sourceDir + '/' + sourcepath);
-  if(!fs.existsSync(normpath)) return { error: `Unable to resolve import: ${normpath}` };
-  const contents = fs.readFileSync(normpath, 'utf8');
-  return { contents };
+
+  const searchPaths = [
+    '/',
+    '/../node_modules/'
+  ];
+
+  for(let i = 0; i < searchPaths.length; i++) {
+    const path = searchPaths[i];
+    const contents = tryToResolveImport(path, sourcepath);
+    if(contents) {
+      return { contents };
+    }
+  }
+
+  throw new Error(`Unable to resolve import ${sourcepath}`);
+}
+
+function tryToResolveImport(basedir, sourcepath) {
+  const normpath = path.resolve(sourceDir + basedir + sourcepath);
+  if(!fs.existsSync(normpath)) return undefined;
+  return fs.readFileSync(normpath, 'utf8');
 }
 
 function compile(filename, source) {
