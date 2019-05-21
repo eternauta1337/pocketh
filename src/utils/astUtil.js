@@ -27,7 +27,9 @@ const astUtil = {
     const nodes = [];
     for(let i = 0; i < contractDefinition.linearizedBaseContracts.length; i++) {
       const baseContractId = contractDefinition.linearizedBaseContracts[i];
-      nodes.unshift(astUtil.findNodeWithId(ast, baseContractId));
+      const baseContractDef = astUtil.findNodeWithId(ast, baseContractId);
+      if(!baseContractDef) throw new Error(`astUtil was unable to find base contract definition with id ${baseContractId}, for ${contractDefinition.name}`);
+      nodes.unshift(baseContractDef);
     }
     return nodes;
   },
@@ -120,8 +122,12 @@ const astUtil = {
         str += ` {...}`;
         break;
       case 'VariableDeclaration':
-        str += `${node.typeDescriptions.typeString.replace('contract ', '')}` + ' ';
-        if(node.visibility) str += `${node.visibility}` + ' ';
+        let varType = node.typeDescriptions.typeString;
+        varType = varType.replace('contract ', ''); // Hide "'contract '<SomeContract>" part of custom types.
+        str += `${varType}` + ' ';
+        let varVisibility = node.visibility;
+        varVisibility = varVisibility.replace('internal', ''); // Hide internal visibility keywords.
+        if(varVisibility) str += `${varVisibility}` + ' ';
         if(node.constant) str += `constant `;
         str += node.name;
         str += ';';
