@@ -1,4 +1,5 @@
 const stringUtil = require('./stringUtil.js');
+const highlightUtil = require('./highlightUtil.js');
 const chalk = require('chalk');
 
 const astUtil = {
@@ -82,78 +83,66 @@ const astUtil = {
 
   parseNodeToString: (node) => {
 
-    // Colored keyword templates.
-    const t = {
-      _using       : ()  => `red using`,
-      _function    : ()  => `blue function`,
-      _modifier    : ()  => `blueBright.italic modifier`,
-      _constructor : ()  => `blue.bold constructor`,
-      _public      : ()  => `yellow.bold public`,
-      _external    : ()  => `yellow.bold public`,
-      _view        : ()  => `italic view`,
-      _pure        : ()  => `italic pure`,
-      _internal    : ()  => `yellow.italic internal`,
-      _payable     : ()  => `yellow.bold payable`,
-      _constant    : ()  => `gray constant`,
-      _event       : ()  => `magenta event`,
-      _struct      : ()  => `green.bold struct`,
-      _implemented : ()  => `gray {...}`,
-      _var         : (t) => `green ${t}`,
-      _dynamic     : (v) => t[`_${v}`](),
-      _            : (v) => `whiteBright.bgRed ${v}`
-    };
-
     function parseParameterList(list) {
       if(list.parameters.length === 0) return '';
       const paramStrings = [];
       list.parameters.map((parameter) => {
         const type = parameter.typeName.name || parameter.typeDescriptions.typeString;
-        paramStrings.push(chalk`{${t._var(type)}}${parameter.name ? ' ' + parameter.name : ''}`);
+        paramStrings.push(`${type}${parameter.name ? ' ' + parameter.name : ''}`);
       });
       return paramStrings.join(', ');
+    }
+
+    function parseEnumMembers(members) {
+      if(members.length === 0) return '';
+      const memberStrings = [];
+      members.map((member) => {
+        memberStrings.push(`    ${member.name}`);
+      });
+      return memberStrings.join(',\n');
     }
 
     let str = '';
     switch(node.nodeType) {
       case 'FunctionDefinition':
         if(node.kind) {
-          if(node.kind === 'constructor') str += chalk`{${t._constructor()}}`;
-          else if(node.kind === 'function' || node.kind === 'fallback') str += chalk`{${t._function()}} ` + node.name;
+          if(node.kind === 'constructor') str += `constructor`;
+          else if(node.kind === 'function' || node.kind === 'fallback') str += `function ` + node.name;
         }
-        else str += chalk`{${t._function()}} ` + node.name;
+        else str += `function ` + node.name;
         str += '(';
         str += parseParameterList(node.parameters);
         str += ')';
         str += ' ';
-        str += chalk`{${t._dynamic(node.visibility)}}`;
-        if(node.stateMutability !== 'nonpayable') str += ' ' + chalk`{${t._dynamic(node.stateMutability)}}`;
+        str += `${node.visibility}`;
+        if(node.stateMutability !== 'nonpayable') str += ' ' + `${node.stateMutability}`;
         if(node.returnParameters.parameters.length > 0) str += ' returns(' + parseParameterList(node.returnParameters) + ')';
-        str += chalk` {${t._implemented()}}`;
+        str += ` {...}`;
         break;
       case 'VariableDeclaration':
-        str += chalk`{green ${node.typeDescriptions.typeString.replace('contract ', '')}}` + ' ';
-        if(node.visibility) str += chalk`{${t._dynamic(node.visibility)}}` + ' ';
-        if(node.constant) str += chalk`{${t._constant()}} `;
+        str += `${node.typeDescriptions.typeString.replace('contract ', '')}` + ' ';
+        if(node.visibility) str += `${node.visibility}` + ' ';
+        if(node.constant) str += `constant `;
         str += node.name;
         str += ';';
         break;
       case 'EventDefinition':
-        str += chalk`{${t._event()}} ` + node.name;
+        str += `event ` + node.name;
         str += '(';
         str += parseParameterList(node.parameters);
         str += ')';
         str += ';';
         break;
       case 'ModifierDefinition':
-        str += chalk`{${t._modifier()}} `;
+        str += `modifier `;
         str += node.name;
         str += '(';
         str += parseParameterList(node.parameters);
         str += ')';
-        str += chalk` {${t._implemented()}}`;
+        str += ` {...}`;
         break;
       case 'StructDefinition':
-        str += chalk`{${t._struct()}} `;
+        str += `struct `;
         if(node.visibility) str += node.visibility + ' ';
         str += node.name;
         str += ' {\n';
@@ -163,16 +152,25 @@ const astUtil = {
         str += '  }';
         break;
       case 'UsingForDirective':
-        str += chalk`{${t._using()}} `;
+        str += `using `;
         str += node.libraryName.name;
         str += ' for ';
         str += node.typeName.name + ';';
         break;
+      case 'EnumDefinition':
+        // console.log(node);
+        str += 'enum ';
+        str += node.name;
+        str += ' {\n';
+        str += parseEnumMembers(node.members);
+        str += '\n  }';
+        break;
       default:
         console.log(chalk`{yellow.bold WARNING}: astUtil does not know how to convert node type ${node.nodeType} to string.`);
+        str += node.name;
     }
 
-    return str;
+    return highlightUtil.syntax(str);
   }
 };
 

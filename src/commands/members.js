@@ -41,7 +41,7 @@ function processAllBaseContractsFromContractDefinition(ast, contractDefinition) 
   // Traverse each base contract in the linearized order, and process their variables.
   for(let i = 0; i < linearizedContractDefs.length; i++) {
     const contractDefinition = linearizedContractDefs[i];
-    processAllNodesInContractDefinition(contractDefinition, true);
+    if(contractDefinition) processAllNodesInContractDefinition(contractDefinition, true);
   }
 }
 
