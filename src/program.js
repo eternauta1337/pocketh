@@ -22,7 +22,7 @@ const commands = [
   require('./commands/uint2hex.js'),
   require('./commands/convert.js'),
   require('./commands/pad.js'),
-  require('./commands/compile.js'),
+  require('./commands/compile/compile.js'),
   require('./commands/storage.js'),
   require('./commands/liststorage.js'),
   require('./commands/checksum.js'),
