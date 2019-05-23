@@ -30,7 +30,7 @@ module.exports = {
         if(output.errors && output.errors.length > 0) displayErrors(output.errors);
 
         // Split the output so that there is one json file per contract.
-        const splitOutput = jsonIO.oneJsonPerContract(output);
+        const splitOutput = jsonIO.oneJsonPerContract(output, filename);
 
         // Write json files to disk.
         if(outputDirectory.charAt(outputDirectory.length - 1) !== '/') throw new Error('outputDirectory must be a directory path.');

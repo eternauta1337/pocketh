@@ -209,7 +209,6 @@ const astUtil = {
         str += node.typeName.name + ';';
         break;
       case 'EnumDefinition':
-        // console.log(node);
         str += 'enum ';
         str += node.name;
         str += ' {\n';
