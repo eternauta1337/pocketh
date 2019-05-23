@@ -111,6 +111,22 @@ const astUtil = {
     throw new Error(`astUtil cannot determine the size of variable of type ${type}`);
   },
 
+  sortNodes: (nodes) => {
+    const nodeOrder = [
+      'UsingForDirective',
+      'EnumDefinition',
+      'StructDefinition',
+      'VariableDeclaration',
+      'EventDefinition',
+      'ModifierDefinition',
+      'FunctionDefinition',
+    ];
+    nodes.sort((node1, node2) => {
+      return nodeOrder.indexOf(node1.nodeType) > nodeOrder.indexOf(node2.nodeType) ? 1 : -1;
+    });
+    return nodes;
+  },
+
   parseNodeToString: (node, highlightTerm) => {
 
     function parseParameterList(list) {

@@ -4,6 +4,7 @@ const astUtil = require('../utils/astUtil.js');
 const chalk = require('chalk');
 
 let highlightTerm;
+let sort;
 
 module.exports = {
   register: (program) => {
@@ -12,12 +13,14 @@ module.exports = {
       .description('Provides a list of all the members of the provided contract artifacts.')
       .option(`--inherited`, `list inherited contracts' members as well`)
       .option(`--highlight <highlightTerm>`, `highlight a specific term in the output`)
+      .option(`--sort`, `sort members by kind (if not set members will be listed as they appear in the AST)`)
       .action((contractPath, options) => {
         chalk.enabled = !program.disableColors;
         
         // Validate input.
         const listInherited = options.inherited;
         if(options.highlight) highlightTerm = options.highlight;
+        sort = options.sort;
 
         // Retrieve contract artifacts.
         const contractArtifacts = getArtifacts(contractPath);
@@ -54,7 +57,7 @@ function processAllBaseContractsFromContractDefinition(ast, contractDefinition, 
 }
 
 function processAllNodesInContractDefinition(contractDefinition) {
-  const nodes = contractDefinition.nodes;
+  const nodes = sort ? astUtil.sortNodes(contractDefinition.nodes) : contractDefinition.nodes;
   console.log(chalk`\n{redBright.bold ¬ ${contractDefinition.name}}`);
   for(let i = 0; i < nodes.length; i++) {
     console.log(`  ${astUtil.parseNodeToString(nodes[i], highlightTerm)}`);
