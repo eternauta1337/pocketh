@@ -2,7 +2,6 @@ const stringUtil = require('./stringUtil');
 const highlightUtil = require('./highlightUtil');
 const getArtifacts = require('./getArtifacts');
 const chalk = require('chalk');
-const fs = require('fs');
 
 const astUtil = {
 
@@ -112,7 +111,7 @@ const astUtil = {
     throw new Error(`astUtil cannot determine the size of variable of type ${type}`);
   },
 
-  parseNodeToString: (node) => {
+  parseNodeToString: (node, highlightTerm) => {
 
     function parseParameterList(list) {
       if(list.parameters.length === 0) return '';
@@ -206,7 +205,7 @@ const astUtil = {
         str += node.name;
     }
 
-    return highlightUtil.syntax(str);
+    return highlightUtil.syntax(str, highlightTerm);
   }
 };
 

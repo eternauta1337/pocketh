@@ -2,7 +2,7 @@ const chalk = require('chalk');
 
 const highlightUtil = {
 
-  syntax: (text) => {
+  syntax: (text, highlightTerm) => {
 
     const substitutions = {
       'public'     : { matcher: /\bpublic\b/g,     output: chalk`{yellow.bold $&}`    },
@@ -26,6 +26,14 @@ const highlightUtil = {
       '{...}'      : { matcher: /\{\.\.\.\}/g,     output: chalk`{gray $&}`           },
       'internal'   : { matcher: /\binternal\b/g,   output: chalk`{yellow $&}`         },
     };
+
+    // Highlight term?
+    if(highlightTerm) {
+      substitutions[highlightTerm] = {
+        matcher: new RegExp(`\\b${highlightTerm}\\b`, 'g'),
+        output: chalk`{bgRed $&}`
+      };
+    }
 
     // Apply all substitutions.
     Object.keys(substitutions).map(key => {
