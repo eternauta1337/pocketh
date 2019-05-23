@@ -21,11 +21,12 @@ module.exports = {
 
         // Retrieve the target contract definition node.
         const rootContractName = path.basename(contractPath).split('.')[0];
+        const basedir = path.dirname(contractPath);
         const rootContractDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', rootContractName);
 
         // Start the inheritance tree structure.
         tree[rootContractName] = {};
-        traverseContractParents(ast, rootContractDefinition, tree[rootContractName]);
+        traverseContractParents(ast, rootContractDefinition, tree[rootContractName], basedir);
 
         // Print tree after all branches
         // have been traversed.
@@ -34,13 +35,22 @@ module.exports = {
   }
 };
 
-function traverseContractParents(ast, contractDefinition, branch) {
+function traverseContractParents(ast, contractDefinition, branch, basedir) {
   const parents = contractDefinition.baseContracts;
   for(let i = 0; i < parents.length; i++) {
     const parent = parents[i];
     const parentName = parent.baseName.name;
     branch[parentName] = {};
-    const parentDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', parentName);
-    traverseContractParents(ast, parentDefinition, branch[parentName]);
+    let parentDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', parentName);
+    if(parentDefinition) traverseContractParents(ast, parentDefinition, branch[parentName], basedir);
+    else { // Target definition may be in another file.
+      const baseContractPath = `${basedir}/${parentName}.json`;
+      const baseContractArtifacts = getArtifacts(baseContractPath);
+      const baseContractAst = baseContractArtifacts.ast;
+      if(!baseContractAst) throw new Error('AST data not found.');
+      parentDefinition = astUtil.findNodeWithTypeAndName(baseContractAst, 'ContractDefinition', parentName);
+      if(parentDefinition) traverseContractParents(ast, parentDefinition, branch[parentName], basedir);
+      else throw new Error(`Parent contract definition not found: ${parentName}`);
+    }
   }
 }

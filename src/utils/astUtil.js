@@ -1,6 +1,8 @@
-const stringUtil = require('./stringUtil.js');
-const highlightUtil = require('./highlightUtil.js');
+const stringUtil = require('./stringUtil');
+const highlightUtil = require('./highlightUtil');
+const getArtifacts = require('./getArtifacts');
 const chalk = require('chalk');
+const fs = require('fs');
 
 const astUtil = {
 
@@ -23,13 +25,40 @@ const astUtil = {
     return astUtil.findNodeWithCondition(ast, node => node.nodeType === type && node.name === name);
   },
 
-  getLinearizedBaseContractNodes: (ast, contractDefinition) => {
-    const nodes = [];
+  getLinearizedBaseContractNodes: (ast, contractDefinition, basedir) => {
+    // A ContractDefinition's linearizedBaseContracts property is an array
+    // of numeric id's that refer to ContractDefinition's, e.g:
+    // [13, 35, 47]
+    // The ContractDefinitions with such id's may or may not be stored in
+    // the ast and may have to be found on another file's ast.
+    let nodes = [];
     for(let i = 0; i < contractDefinition.linearizedBaseContracts.length; i++) {
       const baseContractId = contractDefinition.linearizedBaseContracts[i];
-      const baseContractDef = astUtil.findNodeWithId(ast, baseContractId);
-      if(!baseContractDef) throw new Error(`astUtil was unable to find base contract definition with id ${baseContractId}, for ${contractDefinition.name}`);
-      nodes.unshift(baseContractDef);
+      let baseContractDef = astUtil.findNodeWithId(ast, baseContractId);
+      if(baseContractDef) nodes.push(baseContractDef)
+      else { // Base contract definition is stored in a different file.
+        // Get file name.
+        let baseContractName;
+        for(let i = 0; i < contractDefinition.baseContracts.length; i++) {
+          const baseContract = contractDefinition.baseContracts[i];
+          if(baseContract.baseName.referencedDeclaration === baseContractId) {
+            baseContractName = baseContract.baseName.name;
+            break;
+          }
+        }
+        if(baseContractName) {
+          // Load the file.
+          const baseContractPath = `${basedir}/${baseContractName}.json`;
+          const baseContractArtifacts = getArtifacts(baseContractPath);
+          const baseContractAst = baseContractArtifacts.ast;
+          if(!baseContractAst) throw new Error('AST data not found.');
+          // Look for target definition there.
+          baseContractDef = astUtil.findNodeWithTypeAndName(baseContractAst, 'ContractDefinition', baseContractName);
+          const baseContractNodes = astUtil.getLinearizedBaseContractNodes(baseContractAst, baseContractDef, basedir);
+          // Combine the findings.
+          nodes = [...nodes, ...baseContractNodes];
+        }
+      }
     }
     return nodes;
   },
@@ -119,7 +148,8 @@ const astUtil = {
         str += `${node.visibility}`;
         if(node.stateMutability !== 'nonpayable') str += ' ' + `${node.stateMutability}`;
         if(node.returnParameters.parameters.length > 0) str += ' returns(' + parseParameterList(node.returnParameters) + ')';
-        str += ` {...}`;
+        if(node.implemented) str += ` {...}`;
+        else str += ';';
         break;
       case 'VariableDeclaration':
         let varType = node.typeDescriptions.typeString;

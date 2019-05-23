@@ -27,21 +27,26 @@ module.exports = {
         const rootContractDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', rootContractName);
 
         // Process single contract of all base contracts.
-        if(listInherited) processAllBaseContractsFromContractDefinition(ast, rootContractDefinition);
+        if(listInherited) {
+          const basedir = path.dirname(contractPath);
+          processAllBaseContractsFromContractDefinition(ast, rootContractDefinition, basedir);
+        }
         else processAllNodesInContractDefinition(rootContractDefinition, false);
       });
   }
 };
 
-function processAllBaseContractsFromContractDefinition(ast, contractDefinition) {
+function processAllBaseContractsFromContractDefinition(ast, contractDefinition, basedir) {
 
   // Retrieve the linearized base contract nodes of the contract.
-  const linearizedContractDefs = astUtil.getLinearizedBaseContractNodes(ast, contractDefinition);
+  const linearizedContractDefs = astUtil.getLinearizedBaseContractNodes(ast, contractDefinition, basedir);
 
   // Traverse each base contract in the linearized order, and process their variables.
   for(let i = 0; i < linearizedContractDefs.length; i++) {
     const contractDefinition = linearizedContractDefs[i];
-    processAllNodesInContractDefinition(contractDefinition, true);
+    if(contractDefinition && contractDefinition.nodes)
+      processAllNodesInContractDefinition(contractDefinition, true);
+    else console.log("WARNING: Contract definition not found for a base contract.");
   }
 }
 
