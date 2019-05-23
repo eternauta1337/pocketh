@@ -1,4 +1,4 @@
-const cli = require('../utils/cli.js');
+const cli = require('../../src/utils/cli.js');
 
 describe('convert command', () => {
   test('Should properly convert wei to ether', async () => {

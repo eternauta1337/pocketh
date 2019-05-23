@@ -1,4 +1,4 @@
-const cli = require('../utils/cli.js');
+const cli = require('../../src/utils/cli.js');
 
 describe('hex2uint command', () => {
   test('Should properly convert a small number to hex', async () => {

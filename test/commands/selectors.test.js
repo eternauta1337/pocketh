@@ -1,4 +1,4 @@
-const cli = require('../utils/cli.js');
+const cli = require('../../src/utils/cli.js');
 
 describe('selectors command', () => {
   test('Should produce an expected selector from a know contract', async () => {

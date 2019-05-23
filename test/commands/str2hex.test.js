@@ -1,4 +1,4 @@
-const cli = require('../utils/cli.js');
+const cli = require('../../src/utils/cli.js');
 
 describe('str2hex command', () => {
   test('Should properly translate "Hello" to hex', async () => {

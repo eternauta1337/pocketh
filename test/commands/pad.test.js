@@ -1,4 +1,4 @@
-const cli = require('../utils/cli.js');
+const cli = require('../../src/utils/cli.js');
 
 describe('pad command', () => {
   test('Sould properly pad a small hex', async () => {
