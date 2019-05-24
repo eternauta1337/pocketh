@@ -2,6 +2,7 @@ const cli = require('../../src/utils/cli.js');
 jest.setTimeout(60000);
 
 describe('transaction command', () => {
+  test('Should output help', async () => expect((await cli('block', '--help')).code).toBe(0));
   test('Should properly query a known block in mainnet', async () => {
     const result = await cli(
       'block', 

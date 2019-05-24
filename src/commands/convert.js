@@ -1,10 +1,26 @@
 const Web3 = require('web3');
+const chalk = require('chalk');
+
+const signature = 'convert [value] [sourceDenom] [destDenom]';
+const description = 'Converts between ether denominations.';
+const help = chalk`
+Converts a given Ether denomination into another. If no value is specified, will list all denominations. Default sourceDenom is wei. Default destDenom is ether.
+
+{red Eg:}
+
+{blue > pocketh convert 1000000 wei ether}
+0.000000000001 ether
+
+`;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command('convert [value] [sourceDenom] [destDenom]')
-      .description('Converts a given Ether denomination into another. If no value is specified, will list all denominations. Default sourceDenom is wei. Default destDenom is ether.')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action((value, sourceDenom, destDenom) => {
         const web3 = new Web3();
 
@@ -29,7 +45,7 @@ module.exports = {
         const dest = web3.utils.fromWei(sourceWei, destDenom);
 
         // Output.
-        console.log(`${value} ${sourceDenom} = ${dest} ${destDenom}`);
+        console.log(`${dest} ${destDenom}`);
       });
   }
 };

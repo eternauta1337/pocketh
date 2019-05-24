@@ -3,14 +3,38 @@ const getArtifacts = require('../utils/getArtifacts');
 const astUtil = require('../utils/astUtil.js');
 const chalk = require('chalk');
 
+const signature = 'members <contractPath>';
+const description = 'Lists all members of a contract.';
+const help = chalk`
+Provides a list of all the members of the provided contract artifacts. Uses the provided artifacts to analyze the AST. Can list linearized inherited members and sort each by type. Also accepts a term to highlight in the output, for visually identifying certain things.
+
+{red Eg:}
+
+{blue > pocketh members --inherited --sort test/artifacts/Sample.json}
+
+¬ Sample
+  function testSample() public pure returns(string) \{...\}
+
+¬ SampleDependency
+  function test() public pure returns(string) \{...\}
+    function testSampleDependency() public pure returns(string) \{...\}
+
+¬ SampleAbstract
+  event AnEvent(address addr);
+    function test() public pure returns(string);
+`;
+
 let highlightTerm;
 let sort;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command(`members <contractPath>`)
-      .description('Provides a list of all the members of the provided contract artifacts.')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .option(`--inherited`, `list inherited contracts' members as well`)
       .option(`--highlight <highlightTerm>`, `highlight a specific term in the output`)
       .option(`--sort`, `sort members by kind (if not set members will be listed as they appear in the AST)`)

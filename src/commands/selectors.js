@@ -1,12 +1,32 @@
 const fs = require('fs');
 const getArtifacts = require('../utils/getArtifacts');
 const abiUtil = require('../utils/abiUtil');
+const chalk = require('chalk');
+
+const signature = 'selectors <contractPath>';
+const description = 'Lists all selectors of a contract.';
+const help = chalk`
+List all the function selectors of the provided contract artifacts.
+
+{red Eg:}
+
+{blue > pocketh selectors test/artifacts/Test.json}
+0x29e99f07: test(uint256)
+0x3fa4f245: value()
+0x5dce0fa6: granparent_value()
+0xa6c56d47: parent2_value()
+0xd8175b14: parent1_value()
+0xf0686273: CONS()
+`;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command(`selectors <contractPath>`)
-      .description('List all the function selectors of the provided contract artifacts.')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action((contractPath) => {
         
         // Retrieve contract artifacts and abi.

@@ -2,6 +2,7 @@ const cli = require('../../src/utils/cli.js');
 jest.setTimeout(60000);
 
 describe('txs command', () => {
+  test('Should output help', async () => expect((await cli('txs', '--help')).code).toBe(0));
   test('Should find a know number of transactions from a known contract deployed in mainnet', async () => {
     const result = await cli(
       'txs', 

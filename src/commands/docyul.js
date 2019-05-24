@@ -1,8 +1,39 @@
+const signature = 'docyul [keyword]';
+const description = 'Gets yul documentation.';
+const chalk = require('chalk');
+const help = chalk`
+Gets yul documentation for a given keyword. If no keyword is provided, all available keywords are listed
+
+{red Eg:}
+
+{blue > pocketh docyul sstore}
+sstore(p:u256, v:u256)
+"storage[p] := v"
+
+{blue > pocketh docyul}
+not(x:bool) ‑> z:bool
+and(x:bool, y:bool) ‑> z:bool
+or(x:bool, y:bool) ‑> z:bool
+xor(x:bool, y:bool) ‑> z:bool
+addu256(x:u256, y:u256) ‑> z:u256
+subu256(x:u256, y:u256) ‑> z:u256
+mulu256(x:u256, y:u256) ‑> z:u256
+divu256(x:u256, y:u256) ‑> z:u256
+divs256(x:s256, y:s256) ‑> z:s256
+modu256(x:u256, y:u256) ‑> z:u256
+mods256(x:s256, y:s256) ‑> z:s256
+...
+
+`;
+
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command('docyul [keyword]')
-      .description('Gets yul documentation for a given keyword. If no keyword is provided, all available keywords are listed')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action((keyword) => {
         const keys = Object.keys(docs);
         if(!keyword) {

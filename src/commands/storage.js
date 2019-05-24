@@ -4,15 +4,33 @@ const getWeb3 = require('../utils/getWeb3.js');
 const stringUtil = require('../utils/stringUtil.js');
 const BN = require('bn.js');
 const validateUtil = require('../utils/validateUtil');
+const chalk = require('chalk');
+
+const signature = 'storage <networkUrl> <contractAddress> <storageSlot>';
+const description = 'Reads the storage of a contract.';
+const help = chalk`
+Query the storage of a contract at a given slot.
+
+{red Eg:}
+
+{blue > pocketh storage mainnet 0x960b236A07cf122663c4303350609A66A7B288C0 1}
+slot: 1
+value: 0x417261676f6e204e6574776f726b20546f6b656e000000000000000000000028
+  (dec): 29602427981302164123697046959722460721672829354281340829100810951182126153768
+  (str): Aragon Network Token(
+`;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command('storage <networkUrl> <contractAddress> <storageSlot>')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .option(`-a, --array <index>`, `Specify the index of the dynamic array to query.`)
       .option(`-m, --mapping <key>`, `Specify the key of the dynamic mapping to query.`)
       .option(`-r, --range <range>`, `Specify a range 'start,len' in bytes to read within the slot.`)
-      .description('Query the storage of a contract at a given slot.')
       .action(async (networkUrl, contractAddress, storageSlot, options) => {
         console.log(`slot: ${storageSlot}`);
 

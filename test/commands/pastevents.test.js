@@ -2,6 +2,7 @@ const cli = require('../../src/utils/cli.js');
 jest.setTimeout(60000);
 
 describe('pastevents command', () => {
+  test('Should output help', async () => expect((await cli('pastevents', '--help')).code).toBe(0));
   test.skip('Should retrieve some expected results for a know contract in mainnet', async () => {
     const result = await cli(
       'pastevents', 

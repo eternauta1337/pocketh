@@ -2,14 +2,32 @@ const path = require('path');
 const treeify = require('treeify');
 const getArtifacts = require('../utils/getArtifacts');
 const astUtil = require('../utils/astUtil');
+const chalk = require('chalk');
+
+const signature = 'inheritance <contractPath>';
+const description = 'Displays the inheritance tree of a contract.';
+const help = chalk`
+Displays the inheritance tree of the provided contract artifacts.
+
+{red Eg:}
+
+{blue > pocketh inheritance test/artifacts/Test.json }
+└─ Test
+   ├─ Parent1
+   │  └─ GrandParent
+   └─ Parent2
+`;
 
 const tree = {};
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command(`inheritance <contractPath>`)
-      .description('Displays the inheritance tree of the provided contract artifacts.')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action((contractPath) => {
         
         // Retrieve contract artifacts.

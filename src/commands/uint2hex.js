@@ -1,11 +1,26 @@
 const Web3 = require('web3');
 const validateUtil = require('../utils/validateUtil');
+const chalk = require('chalk');
+
+const signature = 'uint2hex <decNumber>';
+const description = 'Converts uint to hex.';
+const help = chalk`
+Converts a positive integer in base 10 to its hexadecimal representation.
+
+{red Eg:}
+
+{blue > pocketh uint2hex 42}
+0x2a
+`;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command('uint2hex <decNumber>')
-      .description('Converts a positive integer in base 10 to its hexadecimal representation.')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action((decNumber) => {
 
         // Input validation.

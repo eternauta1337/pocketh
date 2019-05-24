@@ -2,6 +2,7 @@ const cli = require('../../src/utils/cli.js');
 require('chalk').enabled = false;
 
 describe('members command', () => {
+  test('Should output help', async () => expect((await cli('members', '--help')).code).toBe(0));
 
   test('Should properly identify the members of Test.sol', async () => {
     const result = await cli('members', './test/artifacts/Test.json', '--disable-colors');

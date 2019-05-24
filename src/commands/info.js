@@ -1,12 +1,30 @@
 const getWeb3 = require('../utils/getWeb3');
 const getEtherscan = require('../utils/getEtherscan');
 const BN = require('bn.js');
+const chalk = require('chalk');
+
+const signature = 'info <networkUrlOrName>';
+const description = 'Retrieves info about a network.';
+const help = chalk`
+Retrieves info about a network using web3 and etherscan.
+
+{red Eg:}
+
+{blue > pocketh info mainnet}
+Collecting network info for mainnet...
+  latestBlock: 7823193
+  ethPrice: 253.35 USD
+  gasPrice: 559.755813888 Gwei
+`;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command('info <networkUrlOrName>')
-      .description('Retrieves info about a network.')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action(async (networkUrlOrName) => {
         console.log(`Collecting network info for ${networkUrlOrName}...`);
 

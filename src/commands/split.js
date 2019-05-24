@@ -1,11 +1,43 @@
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
+
+const signature = 'split <sourcePath>';
+const description = 'Splits Solidity files.';
+const help = chalk`
+Splits a Solidity file containing multiple contracts into multiple files, each with one contract.
+
+{red Eg:}
+
+{blue > pocketh split test/contracts/Kitties.sol}
+Split file test/contracts/Kitties.sol into 16 files:
+  - Ownable.sol
+  - ERC721.sol
+  - GeneScienceInterface.sol
+  - KittyAccessControl.sol
+  - KittyBase.sol
+  - ERC721Metadata.sol
+  - KittyOwnership.sol
+  - KittyBreeding.sol
+  - ClockAuctionBase.sol
+  - Pausable.sol
+  - ClockAuction.sol
+  - SiringClockAuction.sol
+  - SaleClockAuction.sol
+  - KittyAuction.sol
+  - KittyMinting.sol
+  - KittyCore.sol
+(New files written to test/contracts/)
+`;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command('split <sourcePath>')
-      .description('Splits a Solidity file with multiple contracts into multiple files, each with one contract.')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action((sourcePath) => {
 
         // Validate input.

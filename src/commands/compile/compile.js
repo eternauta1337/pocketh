@@ -2,14 +2,35 @@ const fs = require('fs');
 const path = require('path');
 const solcjsResolver = require('./solcjsResolver');
 const jsonIO = require('./jsonIO');
+const chalk = require('chalk');
+
+const signature = 'compile <sourcePath> <outputDirectory> [solcVersion]';
+const description = 'Compiles single Solidity files.';
+const help = chalk`
+Compiles a source file with solcjs. Downloads the appropriate solcjs compiler by looking at the source code. A specific solc version can be indicated with the solcVersion parameter.
+
+The compilation output produces output split into several .json files, comaptible with Truffle's compiler output.
+
+{red Eg:}
+
+{blue > pocketh compile test/contracts/Test.sol test/artifacts/ 0.5.8}
+Downloading compiler soljson-v0.5.8+commit.23d335f2.js...
+Compiler stored in /home/ajs/.soljson/soljson-v0.5.8+commit.23d335f2.js
+Using compiler 0.5.8+commit.23d335f2.Emscripten.clang
+Compiled Test.sol succesfully to test/artifacts/
+
+`;
 
 let sourceDir;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command('compile <sourcePath> <outputDirectory> [solcVersion]')
-      .description('Compiles a source file with solcjs. Downloads the appropriate solcjs compiler by looking at the source code. A specific solc version can be indicated with the solcVersion parameter.')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action(async (sourcePath, outputDirectory, solcVersion) => {
 
         // Retrieve contract source.

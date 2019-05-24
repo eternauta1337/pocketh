@@ -3,6 +3,7 @@
 const program = require('commander');
 const { version } = require('../package.json');
 const chalk = require('chalk');
+const figlet = require('figlet');
 
 // Defined commands.
 const commands = [
@@ -58,8 +59,17 @@ if(process.argv.length === 2) displayHelp();
 
 // Custon main help.
 function displayHelp() {
+
   program.help(() => {
-    console.log(chalk`\n{bgRed.white.bold pocketh version ${version}}`);
+
+    // Title.
+    const str = figlet.textSync(`pocketh`, {font: 'Slant Relief'});
+    console.log(chalk`{redBright ${str}}`);
+
+    // Version.
+    console.log(chalk`\n          {gray version ${version}}`);
+
+    // Commands list with short description.
     console.log(chalk`\n{red.bold Commands:}`);
     commands.forEach(command => {
       if(command.signature) {

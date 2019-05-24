@@ -1,13 +1,28 @@
 const Web3 = require('web3');
 const validateUtil = require('../utils/validateUtil');
 const BN = require('bn.js');
+const chalk = require('chalk');
+
+const signature = 'int2hex <decNumber>';
+const description = 'Converts int to hex.';
+const help = chalk`
+Converts an integer in base 10 to its hexadecimal representation.
+
+{red Eg:}
+
+{blue > pocketh int2hex -n 42}
+0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd6
+`;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command('int2hex <decNumber>')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .option('-n, --negative', 'Negative number.')
-      .description('Converts an integer in base 10 to its hexadecimal representation.')
       .action((decNumber, options) => {
 
         // Input validation.

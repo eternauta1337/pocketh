@@ -1,12 +1,28 @@
 const fs = require('fs');
 const getWeb3 = require('../utils/getWeb3.js');
 const validateUtil = require('../utils/validateUtil');
+const chalk = require('chalk');
+
+const signature = 'blockdate <networkUrl> <blockHashOrNumber>';
+const description = 'Gets the date of a block.';
+const help = chalk`
+Gets the date of a block number in the given network.
+
+{red Eg:}
+
+{blue > pocketh blockdate mainnet 5000000}
+Tue Jan 30 2018 10:41:33 GMT-0300 (Uruguay Standard Time)
+
+`;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command(`blockdate <networkUrl> <blockHashOrNumber>`)
-      .description('Get the date of a block number in the given network.')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action(async (networkUrl, blockHashOrNumber) => {
         
         // Validate input.

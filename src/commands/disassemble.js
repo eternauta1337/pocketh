@@ -2,12 +2,52 @@ const fs = require('fs');
 const path = require('path');
 const getWeb3 = require('../utils/getWeb3.js');
 const getArtifacts = require('../utils/getArtifacts');
+const chalk = require('chalk');
+
+const signature = 'disassemble <contractPath>';
+const description = 'Disassembles bytecode to EVM opcodes.';
+const help = chalk`
+Disassembles the provided contract artifacts (compiled) to EVM opcodes with additional information.
+
+Nomenclature:
+<instructionIdx> \{<hexOpcode>\} [c<creationTimeByteIdx>, r<runtimeByteIdx>] <opcode> <value> (<decimalRepresentation>)
+
+{red Eg:}
+
+{blue > pocketh disassemble test/artifacts/Test.json}
+0 \{0x80\} [c0] DUP1
+1 \{0x60\} [c1] PUSH1 0x40 (dec 64)
+2 \{0x52\} [c3] MSTORE
+3 \{0x34\} [c4] CALLVALUE
+4 \{0x80\} [c5] DUP1
+5 \{0x15\} [c6] ISZERO
+6 \{0x61\} [c7] PUSH2 0x0010 (dec 16)
+7 \{0x57\} [c10] JUMPI
+8 \{0x60\} [c11] PUSH1 0x00 (dec 0)
+9 \{0x80\} [c13] DUP1
+10 \{0xfd\} [c14] REVERT
+...
+74 \{0x80\} [c126, r86] DUP1
+75 \{0x63\} [c127, r87] PUSH4 0xf0686273 (dec 4033372787)
+76 \{0x14\} [c132, r92] EQ
+77 \{0x61\} [c133, r93] PUSH2 0x010d (dec 269)
+78 \{0x57\} [c136, r96] JUMPI
+79 \{0x5b\} [c137, r97] JUMPDEST
+80 \{0x60\} [c138, r98] PUSH1 0x00 (dec 0)
+81 \{0x80\} [c140, r100] DUP1
+82 \{0xfd\} [c141, r101] REVERT
+83 \{0x5b\} [c142, r102] JUMPDEST
+...
+`;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command('disassemble <contractPath>')
-      .description('Disassembles compiled bytecode into readable EVM opcodes.')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action((contractPath) => {
 
         // Retrieve contract artifacts and abi.

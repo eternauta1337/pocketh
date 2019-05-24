@@ -8,14 +8,52 @@ const abiUtil = require('../utils/abiUtil.js');
 const chalk = require('chalk');
 const validateUtil = require('../utils/validateUtil');
 
+const signature = 'liststorage <networkUrl> <contractPath> <contractAddress>';
+const description = 'Reads the storage of a contract.';
+const help = chalk`
+Query the storage of a contract deployed at a given address. Requires compiled artifacts to traverse the ast and understand how to read the contract\'s storage.
+
+{red Eg:}
+
+{blue > pocketh liststorage mainnet ~/tmp/artifacts/ANT.json 0x960b236A07cf122663c4303350609A66A7B288C0}
+mapping(address => struct MiniMeIrrevocableVestedToken.TokenGrant[]) public grants;
+  size: 32 bytes
+  slot: 0
+  word: 000000000000000000000000d39902f046b5885d70e9e66594b65f84d4d1c952
+  subword: 000000000000000000000000d39902f046b5885d70e9e66594b65f84d4d1c952
+  value: dynamic value
+mapping(address => bool) canCreateGrants;
+  size: 32 bytes
+  slot: 1
+  word: 417261676f6e204e6574776f726b20546f6b656e000000000000000000000028
+  subword: 417261676f6e204e6574776f726b20546f6b656e000000000000000000000028
+  value: dynamic value
+address vestingWhitelister;
+  size: 20 bytes
+  slot: 2
+  word: 0000000000000000000000000000000000000000000000000000000000000012
+  subword: 0000000000000000000000000000000000000012
+  value: 0x0000000000000000000000000000000000000012
+string public name;
+  size: 32 bytes
+  slot: 3
+  word: 414e540000000000000000000000000000000000000000000000000000000006
+  subword: 414e5400000000000000000000000000000000000000000000000000000000
+  value: ANT
+...
+`;
+
 let slot = 0;
 let rightOffset = 0;
 
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command('liststorage <networkUrl> <contractPath> <contractAddress>')
-      .description(`Query the storage of a contract deployed at a given address. Requires compiled artifacts to traverse the ast and understand how to read the contract's storage.`)
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action(async (networkUrl, contractPath, contractAddress) => {
         chalk.enabled = !program.disableColors;
 
