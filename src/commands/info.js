@@ -1,12 +1,13 @@
 const getWeb3 = require('../utils/getWeb3');
-const getEtherscan = require('../utils/getEtherscan');
 const BN = require('bn.js');
 const chalk = require('chalk');
+const etherscanApi = require('../utils/etherscanApi');
 
 const signature = 'info <networkUrlOrName>';
 const description = 'Retrieves info about a network.';
 const help = chalk`
-Retrieves info about a network using web3 and etherscan.
+Retrieves info about a network using web3 and Etherscan.
+NOTE: Etherscan info is only available if networkUrlOrName is 'mainnet'.
 
 {red Eg:}
 
@@ -14,7 +15,6 @@ Retrieves info about a network using web3 and etherscan.
 Collecting network info for mainnet...
   latestBlock: 7823193
   ethPrice: 253.35 USD
-  gasPrice: 559.755813888 Gwei
 `;
 
 module.exports = {
@@ -36,14 +36,9 @@ module.exports = {
         info.latestBlock = await web3.eth.getBlockNumber();
 
         // Collect info with etherscan.
-        const etherscan = await getEtherscan(networkUrlOrName);
-        // console.log(etherscan); // Uncomment to see api
-        const ethPrice = await etherscan.stats.ethprice();
-        info.ethPrice = `${ethPrice.result.ethusd} USD`;
-        const gasPrice = await etherscan.proxy.eth_gasPrice();
-        const gasPriceWei = new BN(gasPrice.result, 16).toString(10);
-        const gasPriceGWei = web3.utils.fromWei(gasPriceWei, 'Gwei');
-        info.gasPrice = `${gasPriceGWei} Gwei`;
+        if(networkUrlOrName === 'mainnet') {
+          info.ethPrice = `${await etherscanApi.getEtherPrice()} USD`;
+        }
 
         // Output collected info.
         Object.keys(info).map(key => {
