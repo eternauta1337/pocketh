@@ -1,4 +1,3 @@
-// pragma solidity ^0.4.11;
 pragma solidity >=0.4.11 <0.6.0;
 
 /**

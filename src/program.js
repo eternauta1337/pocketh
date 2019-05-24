@@ -5,6 +5,7 @@ const { version } = require('../package.json');
 
 // Defined commands.
 const commands = [
+  require('./commands/split.js'),
   require('./commands/inheritance.js'),
   require('./commands/members.js'),
   require('./commands/selectors.js'),
