@@ -1,11 +1,20 @@
 const getWeb3 = require('../utils/getWeb3');
 const validateUtil = require('../utils/validateUtil');
 
+const signature = 'block <networkUrl> [blockHashOrNumber]';
+const description = 'Gets info about a block.';
+const help = `
+Gets a block given its block number or hash in the specified network.
+`;
+
 module.exports = {
+  signature,
+  description,
   register: (program) => {
     program
-      .command('block <networkUrl> [blockHashOrNumber]')
-      .description('Gets a block given its number or hash.')
+      .command(signature, {noHelp: true})
+      .description(description)
+      .on('--help', () => console.log(help))
       .action(async (networkUrl, blockHashOrNumber) => {
 
         // Input validation.
@@ -19,4 +28,4 @@ module.exports = {
         console.log(`${blockHashOrNumber} => ${ JSON.stringify(tx, null, 2) }`);
       });
   }
-}
+};

@@ -2,6 +2,7 @@
 
 const program = require('commander');
 const { version } = require('../package.json');
+const chalk = require('chalk');
 
 // Defined commands.
 const commands = [
@@ -42,6 +43,8 @@ program
   .usage('<command> [options]')
   .version(version, '-v, --version')
   .option('-d, --disable-colors', 'disable colored output')
+  .on('--help', displayHelp) // Show custon help with the --help option.
+  // Display an error when an unsupported command is entered.
   .on('command:*', function () {
     console.error('Invalid command: %s\nSee --help for a list of available commands.', program.args.join(' '));
     process.exit(1);
@@ -50,5 +53,20 @@ program
 // Parse program.
 program.parse(process.argv);
 
-// Show help if no command is entered.
-if(process.argv.length === 2) program.help();
+// Show custom help if no command is entered.
+if(process.argv.length === 2) displayHelp();
+
+// Custon main help.
+function displayHelp() {
+  program.help(() => {
+    console.log(chalk`\n{bgRed.white.bold pocketh version ${version}}`);
+    console.log(chalk`\n{red.bold Commands:}`);
+    commands.forEach(command => {
+      if(command.signature) {
+        console.log(chalk`- {blue.bold ${command.signature}} - {gray.italic ${command.description}}`);
+      }
+    });
+    console.log(`\n`);
+    process.exit(0);
+  });
+}
