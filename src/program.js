@@ -7,6 +7,7 @@ const figlet = require('figlet');
 
 // Defined commands.
 const commands = [
+  require('./commands/getcode.js'),
   require('./commands/split.js'),
   require('./commands/inheritance.js'),
   require('./commands/members.js'),
