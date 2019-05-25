@@ -60,17 +60,17 @@ module.exports = {
         // Process single contract of all base contracts.
         if(listInherited) {
           const basedir = path.dirname(contractPath);
-          processAllBaseContractsFromContractDefinition(ast, rootContractDefinition, basedir);
+          await processAllBaseContractsFromContractDefinition(ast, rootContractDefinition, basedir);
         }
         else processAllNodesInContractDefinition(rootContractDefinition, false);
       });
   }
 };
 
-function processAllBaseContractsFromContractDefinition(ast, contractDefinition, basedir) {
+async function processAllBaseContractsFromContractDefinition(ast, contractDefinition, basedir) {
 
   // Retrieve the linearized base contract nodes of the contract.
-  const linearizedContractDefs = astUtil.getLinearizedBaseContractNodes(ast, contractDefinition, basedir);
+  const linearizedContractDefs = await astUtil.getLinearizedBaseContractNodes(ast, contractDefinition, basedir);
 
   // Traverse each base contract in the linearized order, and process their variables.
   for(let i = 0; i < linearizedContractDefs.length; i++) {

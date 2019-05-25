@@ -76,7 +76,7 @@ module.exports = {
         const rootContraContractDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', rootContractName);
 
         // Retrieve the linearized base contract nodes of the contract.
-        const linearizedContractDefs = astUtil.getLinearizedBaseContractNodes(ast, rootContraContractDefinition);
+        const linearizedContractDefs = await astUtil.getLinearizedBaseContractNodes(ast, rootContraContractDefinition);
 
         // Traverse each base contract in the linearized order, and process their variables.
         for(let i = 0; i < linearizedContractDefs.length; i++) {

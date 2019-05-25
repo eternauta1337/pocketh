@@ -1,4 +1,5 @@
 const cli = require('../../src/utils/cli.js');
+jest.setTimeout(60000);
 
 describe('getcode command', () => {
   test('Should output help', async () => expect((await cli('getcode', '--help')).code).toBe(0));

@@ -24,7 +24,7 @@ const astUtil = {
     return astUtil.findNodeWithCondition(ast, node => node.nodeType === type && node.name === name);
   },
 
-  getLinearizedBaseContractNodes: (ast, contractDefinition, basedir) => {
+  getLinearizedBaseContractNodes: async (ast, contractDefinition, basedir) => {
     // A ContractDefinition's linearizedBaseContracts property is an array
     // of numeric id's that refer to ContractDefinition's, e.g:
     // [13, 35, 47]
@@ -48,12 +48,12 @@ const astUtil = {
         if(baseContractName) {
           // Load the file.
           const baseContractPath = `${basedir}/${baseContractName}.json`;
-          const baseContractArtifacts = getArtifacts(baseContractPath);
+          const baseContractArtifacts = await getArtifacts(baseContractPath);
           const baseContractAst = baseContractArtifacts.ast;
-          if(!baseContractAst) throw new Error('AST data not found.');
+          if(!baseContractAst) throw new Error(`AST data not found for ${baseContractPath}`);
           // Look for target definition there.
           baseContractDef = astUtil.findNodeWithTypeAndName(baseContractAst, 'ContractDefinition', baseContractName);
-          const baseContractNodes = astUtil.getLinearizedBaseContractNodes(baseContractAst, baseContractDef, basedir);
+          const baseContractNodes = await astUtil.getLinearizedBaseContractNodes(baseContractAst, baseContractDef, basedir);
           // Combine the findings.
           nodes = [...nodes, ...baseContractNodes];
         }
