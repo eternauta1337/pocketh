@@ -21,7 +21,7 @@ module.exports = {
       .description(description)
       .on('--help', () => console.log(help))
       .action((signature) => {
-        if(signature.includes('returns')) throw new Error('The return type of a function is not part of the signature!');
+        if(signature.includes('returns')) throw new Error('The return type of a function is not part of its signature.');
         console.log(abiUtil.getSelector(signature));
       });
   }
