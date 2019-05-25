@@ -1,8 +1,6 @@
 const cli = require('../../src/utils/cli.js');
 
 describe('calldata command', () => {
-  test('Should output help', async () => expect((await cli('calldata', '--help')).code).toBe(0));
-
   test('Should properly identify selectors', async () => {
     const result = await cli('calldata', '0xffffffff');
     expect(result.stdout).toContain('Selector: 0xffffffff');

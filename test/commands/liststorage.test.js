@@ -1,8 +1,6 @@
 const cli = require('../../src/utils/cli.js');
-jest.setTimeout(60000);
 
 describe('liststorage command', () => {
-  test('Should output help', async () => expect((await cli('liststorage', '--help')).code).toBe(0));
   test('Should properly read storage from a contract deployed in ropsten', async () => {
     const result = await cli(
       'liststorage', 

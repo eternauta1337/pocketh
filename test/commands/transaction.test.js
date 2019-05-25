@@ -1,8 +1,6 @@
 const cli = require('../../src/utils/cli.js');
-jest.setTimeout(60000);
 
 describe('transaction command', () => {
-  test('Should output help', async () => expect((await cli('transaction', '--help')).code).toBe(0));
   test('Should properly retrieve a known transaction from mainnet', async () => {
     const result = await cli(
       'transaction', 

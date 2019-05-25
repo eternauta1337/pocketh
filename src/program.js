@@ -4,37 +4,12 @@ const program = require('commander');
 const { version } = require('../package.json');
 const chalk = require('chalk');
 const figlet = require('figlet');
+const globals = require('./globals');
 
-// Defined commands.
-const commands = [
-  require('./commands/getcode.js'),
-  require('./commands/split.js'),
-  require('./commands/inheritance.js'),
-  require('./commands/members.js'),
-  require('./commands/selectors.js'),
-  require('./commands/calldata.js'),
-  require('./commands/blockdate.js'),
-  require('./commands/txs.js'),
-  require('./commands/pastevents.js'),
-  require('./commands/disassemble.js'),
-  require('./commands/hex2str.js'),
-  require('./commands/str2hex.js'),
-  require('./commands/transaction.js'),
-  require('./commands/block.js'),
-  require('./commands/info.js'),
-  require('./commands/hex2uint.js'),
-  require('./commands/uint2hex.js'),
-  require('./commands/convert.js'),
-  require('./commands/pad.js'),
-  require('./commands/compile/compile.js'),
-  require('./commands/storage.js'),
-  require('./commands/liststorage.js'),
-  require('./commands/checksum.js'),
-  require('./commands/selector.js'),
-  require('./commands/docyul.js'),
-  require('./commands/int2hex.js'),
-  require('./commands/hex2int.js'),
-];
+// Require all commands.
+const commands = globals.commandPaths.map(commandPath => {
+  return require(commandPath);
+});
 
 // Register each command in the program.
 commands.forEach(command => command.register(program));
@@ -60,7 +35,6 @@ if(process.argv.length === 2) displayHelp();
 
 // Custon main help.
 function displayHelp() {
-
   program.help(() => {
 
     // Title.

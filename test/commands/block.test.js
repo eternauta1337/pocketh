@@ -1,11 +1,7 @@
 const cli = require('../../src/utils/cli.js');
 const getWeb3 = require('../../src/utils/getWeb3.js');
 
-jest.setTimeout(60000);
-
 describe('block command', () => {
-
-  test('Should output help', async () => expect((await cli('block', '--help')).code).toBe(0));
 
   let web3;
   let network;

@@ -45,7 +45,7 @@
     "jest": "^24.8.0"
   },
   "jest": {
-    "setupFiles": [
+    "setupFilesAfterEnv": [
       "./test/setup.js"
     ]
   }

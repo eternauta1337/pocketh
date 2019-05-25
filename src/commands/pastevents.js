@@ -74,7 +74,7 @@ module.exports = {
         const { artifacts }= await getArtifacts(contractPath);
 
         // Retrieve contract instance.
-        const instance = await web3.eth.Contract(artifacts.abi, contractAddress);
+        const instance = await new web3.eth.Contract(artifacts.abi, contractAddress);
         
         // Find events in a given block range.
         let count = 0;
