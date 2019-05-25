@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const signature = 'members <contractPath>';
 const description = 'Lists all members of a contract.';
 const help = chalk`
-Provides a list of all the members of the provided contract artifacts. Uses the provided contract (compiled or not) to analyze the AST. Can list linearized inherited members and sort each by type. Also accepts a term to highlight in the output, for visually identifying certain things.
+Provides a list of all the members of the provided contract (compiled or not). Uses the provided contract (compiled or not) to analyze the AST. Can list linearized inherited members and sort each by type. Also accepts a term to highlight in the output, for visually identifying certain things.
 
 {red Eg:}
 
