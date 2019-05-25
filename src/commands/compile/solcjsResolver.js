@@ -8,6 +8,10 @@ const axios = require('axios');
 const SOLJSON_PATH = `${os.homedir()}/.soljson/`;
 let solc = require('solc'); // Can be modified by downloading a new compiler snapshot.
 
+// List of available solcjs versions.
+const SOLC_BIN_URL = `https://solc-bin.ethereum.org/bin/`;
+const SOLC_BIN_LIST_URL = `${SOLC_BIN_URL}list.js`;
+
 module.exports = {
   
   getCompiler: async (source, requiredSemver) => {
@@ -39,11 +43,27 @@ function detectSolcVersionFromSource(source) {
 }
 
 async function getAvailableCompilerVersions() {
-  let scriptSource = (await axios.get('https://solc-bin.ethereum.org/bin/list.js')).data;
-  const script = new vm.Script(scriptSource);
-  const output = {};
-  script.runInNewContext(output);
-  return output.soljsonSources;
+  console.log(`Retrieving list of available solcjs versions...`);
+  return new Promise((resolve, reject) => {
+    axios.get(SOLC_BIN_LIST_URL)
+      .then((result) => {
+        if(result.status === 200) {
+
+          // Retrieved text is a js file.
+          // It needs to be executed to retrieve the list of sources.
+          let scriptSource = result.data;
+          const script = new vm.Script(scriptSource);
+          const output = {};
+          script.runInNewContext(output);
+          const sources = output.soljsonSources;
+
+          resolve(sources);
+        }
+      })
+      .catch((error) => {
+        reject(`Unbable to retrieve available solcjs sources from ${SOLC_BIN_URL}, ${error.message}`);
+      });
+  });
 }
 
 function findVersionFromSemver(targetSemver, availableVersions, useLatestPatch) {
@@ -74,10 +94,24 @@ function requireFromString(src, filename) {
 
 async function downloadAndCacheCompilerSource(version) {
   console.log(`Downloading compiler ${version}...`);
-  const compilerSource = (await axios.get(`https://solc-bin.ethereum.org/bin/${version}`)).data;
-  const path = `${SOLJSON_PATH}${version}`;
-  if(!fs.existsSync(SOLJSON_PATH)) fs.mkdirSync(SOLJSON_PATH);
-  fs.writeFileSync(path, compilerSource);
-  console.log(`Compiler stored in ${path}`);
-  return compilerSource;
+  return new Promise((resolve, reject) => {
+    const url = `${SOLC_BIN_URL}${version}`;
+    axios.get(url)
+      .then((result) => {
+        if(result.status === 200) {
+
+          // Store downloaded compiler source for future usage.
+          const compilerSource = result.data;
+          const path = `${SOLJSON_PATH}${version}`;
+          if(!fs.existsSync(SOLJSON_PATH)) fs.mkdirSync(SOLJSON_PATH);
+          fs.writeFileSync(path, compilerSource);
+          console.log(`Compiler stored in ${path}`);
+
+          resolve(compilerSource);
+        }
+      })
+      .catch((error) => {
+        reject(`Unable to download compiler ${url}, ${error.message}`);
+      });
+  });
 }
