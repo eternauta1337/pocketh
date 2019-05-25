@@ -1,4 +1,4 @@
-const cli = require('../utils/cli.js');
+const cli = require('../../src/utils/cli.js');
 
 describe('selectors command', () => {
   test('Should output help', async () => expect((await cli('selectors', '--help')).code).toBe(0));

@@ -1,4 +1,4 @@
-const cli = require('../utils/cli.js');
+const cli = require('../../src/utils/cli.js');
 jest.setTimeout(60000);
 
 describe('compile command', () => {

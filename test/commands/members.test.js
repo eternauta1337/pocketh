@@ -1,4 +1,4 @@
-const cli = require('../utils/cli.js');
+const cli = require('../../src/utils/cli.js');
 require('chalk').enabled = false;
 
 describe('members command', () => {

@@ -1,4 +1,4 @@
-const cli = require('../utils/cli.js');
+const cli = require('../../src/utils/cli.js');
 
 describe('hex2uint command', () => {
   test('Should output help', async () => expect((await cli('hex2uint', '--help')).code).toBe(0));
