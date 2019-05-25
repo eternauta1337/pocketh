@@ -17,7 +17,8 @@ module.exports = {
   
     // Translate semver to an actual version.
     // E.g. '0.5.8' to 'soljson-v0.5.8+commit.23d335f2.js'.
-    let version = findVersionFromSemver(requiredSemver || sourceSemver, availableVersions);
+    let useLatestPatch = requiredSemver === undefined;
+    const version = findVersionFromSemver(requiredSemver || sourceSemver, availableVersions, useLatestPatch);
 
     // Retrieve compiler source.
     let compilerSource;
@@ -45,11 +46,36 @@ async function getAvailableCompilerVersions() {
   return output.soljsonSources;
 }
 
-function findVersionFromSemver(targetSemver, availableVersions) {
+function findVersionFromSemver(targetSemver, availableVersions, useLatestPatch) {
+  let semver = targetSemver;
 
-  const candidates = availableVersions.filter(v => v.includes(targetSemver));
-  if(candidates.length === 0) throw new Error(`Target compiler version not found: ${targetSemver}`);
+  // If using latest patch, remove the patch from the target semver.
+  if(useLatestPatch) {
+    const comps = semver.split('.');
+    semver = `${comps[0]}.${comps[1]}`;
+  }
+
+  // Filter candidates that contain the target semver.
+  let candidates = availableVersions.filter(v => v.includes(semver));
+  if(candidates.length === 0) throw new Error(`Target compiler version not found: ${semver}`);
   if(candidates.length === 1) return candidates[0];
+
+  // If using latest patch, filter candidates to it.
+  if(useLatestPatch) {
+  
+    // Find the latest patch.
+    let latestPatch = 0;
+    candidates.map(candidate => {
+      const candidateSemver = findVersions(candidate)[0];
+      const patch = parseInt(candidateSemver.split('.')[2], 10);
+      if(patch > latestPatch) latestPatch = patch;
+    });
+
+    // Filter candidates to match the patch.
+    semver = `${semver}.${latestPatch}`;
+    candidates = candidates.filter(v => v.includes(semver));
+    if(candidates.length === 1) return candidates[0];
+  }
 
   // Pick the match with the shortest name.
   let match = candidates[0];
