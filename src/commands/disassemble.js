@@ -51,12 +51,12 @@ module.exports = {
       .action(async (contractPath) => {
 
         // Retrieve contract artifacts and abi.
-        const contractArtifacts = await getArtifacts(contractPath);
+        const { artifacts } = await getArtifacts(contractPath);
         
         // Retrieve bytecode.
         const output = disassemble(
-          contractArtifacts.bytecode,
-          contractArtifacts.deployedBytecode
+          artifacts.bytecode,
+          artifacts.deployedBytecode
         );
         process.stdout.write(output);
       });

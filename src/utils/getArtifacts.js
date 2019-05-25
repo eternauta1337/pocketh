@@ -6,13 +6,17 @@ const cli = require('../utils/cli');
 module.exports = async function(contractPath) {
 
   // Determine file extension.
+  const dirname = path.dirname(contractPath);
   const filename = path.basename(contractPath);
   const comps = filename.split('.');
   const name = comps[0];
   const ext = comps[1];
 
   // If the extension is json, just load the file and return its contents.
-  if(ext === 'json') return retrieveJsonArtifacts(contractPath);
+  if(ext === 'json') return {
+    artifacts: retrieveJsonArtifacts(contractPath),
+    basedir: dirname
+  };
   // If the extension is sol, compile the contract
   // and then return the json artifacts.
   if(ext === 'sol') {
@@ -31,7 +35,10 @@ module.exports = async function(contractPath) {
 
     // Return the compiled artifacts.
     const compiledPath = `${tmpdir.name}/${name}.json`;
-    return retrieveJsonArtifacts(compiledPath);
+    return {
+      artifacts: retrieveJsonArtifacts(compiledPath),
+      basedir: tmpdir.name
+    }
   }
 
   throw new Error(`Unrecognized extension ${ext}`);

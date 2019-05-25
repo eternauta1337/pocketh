@@ -34,7 +34,7 @@ const astUtil = {
     for(let i = 0; i < contractDefinition.linearizedBaseContracts.length; i++) {
       const baseContractId = contractDefinition.linearizedBaseContracts[i];
       let baseContractDef = astUtil.findNodeWithId(ast, baseContractId);
-      if(baseContractDef) nodes.push(baseContractDef)
+      if(baseContractDef) nodes.push(baseContractDef);
       else { // Base contract definition is stored in a different file.
         // Get file name.
         let baseContractName;
@@ -48,8 +48,8 @@ const astUtil = {
         if(baseContractName) {
           // Load the file.
           const baseContractPath = `${basedir}/${baseContractName}.json`;
-          const baseContractArtifacts = await getArtifacts(baseContractPath);
-          const baseContractAst = baseContractArtifacts.ast;
+          const { artifacts } = await getArtifacts(baseContractPath);
+          const baseContractAst = artifacts.ast;
           if(!baseContractAst) throw new Error(`AST data not found for ${baseContractPath}`);
           // Look for target definition there.
           baseContractDef = astUtil.findNodeWithTypeAndName(baseContractAst, 'ContractDefinition', baseContractName);

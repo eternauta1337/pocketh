@@ -47,10 +47,10 @@ module.exports = {
         sort = options.sort;
 
         // Retrieve contract artifacts.
-        const contractArtifacts = await getArtifacts(contractPath);
+        const { artifacts, basedir } = await getArtifacts(contractPath);
 
         // Retrieve the ast.
-        const ast = contractArtifacts.ast;
+        const ast = artifacts.ast;
         if(!ast) throw new Error('AST data not found.');
 
         // Retrieve the target contract definition node.
@@ -59,7 +59,6 @@ module.exports = {
 
         // Process single contract of all base contracts.
         if(listInherited) {
-          const basedir = path.dirname(contractPath);
           await processAllBaseContractsFromContractDefinition(ast, rootContractDefinition, basedir);
         }
         else processAllNodesInContractDefinition(rootContractDefinition, false);

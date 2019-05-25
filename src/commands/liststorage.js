@@ -65,10 +65,10 @@ module.exports = {
         const web3 = await getWeb3(networkUrl);
 
         // Retrieve contract artifacts.
-        const contractArtifacts = await getArtifacts(contractPath);
+        const { artifacts, basedir }= await getArtifacts(contractPath);
 
         // Retrieve the ast.
-        const ast = contractArtifacts.ast;
+        const ast = artifacts.ast;
         if(!ast) throw new Error('AST data not found.');
 
         // Retrieve the target contract definition node.
@@ -76,7 +76,7 @@ module.exports = {
         const rootContraContractDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', rootContractName);
 
         // Retrieve the linearized base contract nodes of the contract.
-        const linearizedContractDefs = await astUtil.getLinearizedBaseContractNodes(ast, rootContraContractDefinition);
+        const linearizedContractDefs = await astUtil.getLinearizedBaseContractNodes(ast, rootContraContractDefinition, basedir);
 
         // Traverse each base contract in the linearized order, and process their variables.
         for(let i = 0; i < linearizedContractDefs.length; i++) {

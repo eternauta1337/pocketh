@@ -30,10 +30,10 @@ module.exports = {
       .action(async (contractPath) => {
         
         // Retrieve contract artifacts and abi.
-        const contractArtifacts = await getArtifacts(contractPath);        
+        const { artifacts } = await getArtifacts(contractPath);        
 
         // Retrieve abi.
-        const abi = contractArtifacts.abi;
+        const abi = artifacts.abi;
 
         // Scan the abi and identify function signatures.
         abi.map((item) => {

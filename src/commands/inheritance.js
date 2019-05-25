@@ -31,10 +31,10 @@ module.exports = {
       .action(async (contractPath) => {
         
         // Retrieve contract artifacts.
-        const contractArtifacts = await getArtifacts(contractPath);
+        const { artifacts } = await getArtifacts(contractPath);
 
         // Retrieve the ast.
-        const ast = contractArtifacts.ast;
+        const ast = artifacts.ast;
         if(!ast) throw new Error('AST data not found.');
 
         // Retrieve the target contract definition node.
@@ -63,8 +63,8 @@ async function traverseContractParents(ast, contractDefinition, branch, basedir)
     if(parentDefinition) traverseContractParents(ast, parentDefinition, branch[parentName], basedir);
     else { // Target definition may be in another file.
       const baseContractPath = `${basedir}/${parentName}.json`;
-      const baseContractArtifacts = await getArtifacts(baseContractPath);
-      const baseContractAst = baseContractArtifacts.ast;
+      const { artifacts }= await getArtifacts(baseContractPath);
+      const baseContractAst = artifacts.ast;
       if(!baseContractAst) throw new Error('AST data not found.');
       parentDefinition = astUtil.findNodeWithTypeAndName(baseContractAst, 'ContractDefinition', parentName);
       if(parentDefinition) traverseContractParents(ast, parentDefinition, branch[parentName], basedir);

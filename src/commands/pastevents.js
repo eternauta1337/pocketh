@@ -71,10 +71,10 @@ module.exports = {
         const web3 = await getWeb3(networkUrl);
 
         // Retrieve contract artifacts.
-        const contractArtifacts = await getArtifacts(contractPath);
+        const { artifacts }= await getArtifacts(contractPath);
 
         // Retrieve contract instance.
-        const instance = await web3.eth.Contract(contractArtifacts.abi, contractAddress);
+        const instance = await web3.eth.Contract(artifacts.abi, contractAddress);
         
         // Find events in a given block range.
         let count = 0;
