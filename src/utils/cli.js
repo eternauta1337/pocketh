@@ -16,7 +16,7 @@ module.exports = function cli(...args) {
       { cwd }, 
       (error, stdout, stderr) => { 
         const err = error || stderr;
-        if(err) console.log(err);
+        // if(err) console.log(err);
         resolve({
           code: err ? 1 : 0,
           error: err,
