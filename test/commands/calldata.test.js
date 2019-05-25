@@ -1,4 +1,4 @@
-const cli = require('../../src/utils/cli.js');
+const cli = require('../utils/cli.js');
 
 describe('calldata command', () => {
   test('Should output help', async () => expect((await cli('calldata', '--help')).code).toBe(0));

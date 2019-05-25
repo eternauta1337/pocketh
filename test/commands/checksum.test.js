@@ -1,4 +1,4 @@
-const cli = require('../../src/utils/cli.js');
+const cli = require('../utils/cli.js');
 
 describe('checksum command', () => {
   test('Should output help', async () => expect((await cli('checksum', '--help')).code).toBe(0));

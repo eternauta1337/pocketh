@@ -1,4 +1,4 @@
-const cli = require('../../src/utils/cli.js');
+const cli = require('../utils/cli.js');
 
 describe('split command', () => {
   test('Should output help', async () => expect((await cli('split', '--help')).code).toBe(0));

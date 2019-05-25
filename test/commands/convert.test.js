@@ -1,4 +1,4 @@
-const cli = require('../../src/utils/cli.js');
+const cli = require('../utils/cli.js');
 
 describe('convert command', () => {
   test('Should output help', async () => expect((await cli('convert', '--help')).code).toBe(0));

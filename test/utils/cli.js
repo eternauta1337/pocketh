@@ -5,7 +5,7 @@ module.exports = function cli(...args) {
   cwd = '.';
   return new Promise(resolve => { 
     exec(
-      `pocketh ${args.join(' ')}`,
+      `node ${path.resolve('./src/program.js')} ${args.join(' ')}`,
       { cwd }, 
       (error, stdout, stderr) => { 
         const err = error || stderr;
