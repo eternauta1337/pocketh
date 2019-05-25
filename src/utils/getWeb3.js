@@ -5,7 +5,7 @@ const defaultNetworks = {
   mainnet: "https://mainnet.infura.io/v3/ac987ae2aa3c436c958e050a82a5c8da",
   ropsten: "https://ropsten.infura.io/v3/ac987ae2aa3c436c958e050a82a5c8da",
   rinkeby: "https://rinkeby.infura.io/v3/ac987ae2aa3c436c958e050a82a5c8da",
-  ganache: "http://localhost:8545"
+  localhost: "http://localhost:8545"
 };
 
 module.exports = async (network) => {

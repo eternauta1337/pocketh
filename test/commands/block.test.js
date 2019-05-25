@@ -1,21 +1,53 @@
 const cli = require('../../src/utils/cli.js');
+const getWeb3 = require('../../src/utils/getWeb3.js');
+
 jest.setTimeout(60000);
 
-describe('transaction command', () => {
+describe('block command', () => {
+
   test('Should output help', async () => expect((await cli('block', '--help')).code).toBe(0));
-  test('Should properly query a known block in mainnet', async () => {
-    const result = await cli(
+
+  test('Should properly query a known block in localhost', async () => {
+
+    // Set up web3.
+    const network = 'http://localhost:8545';
+    const web3 = await getWeb3(network);
+
+    // Send a dummy transaction so that there is at least 1 block.
+    const accounts = await web3.eth.getAccounts();
+    const tx = await web3.eth.sendTransaction({
+      from: accounts[0],
+      to: accounts[1],
+      value: 1,
+      gas: 100000,
+      gasPrice: 1
+    });
+
+    // Get latest block.
+    const latestBlockNumber = await web3.eth.getBlockNumber();
+
+    // Trigger command by block number.
+    let result = await cli(
       'block', 
-      'mainnet',
-      '7743080'
+      network,
+      latestBlockNumber
     );
-    expect(result.stdout).toContain(`"transactions": [
-    "0xac7324486fe934db915d3554281f413b37dc2213ce8592fa971f5c3924963174",
-    "0xb85c9ee82d2f14a04ed35fe2629fc1d9c515e1689b95ba786dfa28e615f52cb5",
-    "0x23409392117be51722e6953d4526032e12c1a2520a4e5534fa4ba184e2b9701e",
-    "0xbb55ad890ddd8b1b6926966a0b48b7035893397b81f54e1bf3b44393ccc1ac75",
-    "0xa754af6c51a642454d6376dd7cbaca0ef9d9c578862cc838be4ff60c13c1f9db",
-    "0x98c3af322b2adb333186bb5e0fd3ebae888095cfed9268d42bee0d333be1e579",
-    "0x6c6d4da7d7dde73d4f842bad768d7c1fffb225fa56228ff71a57db6b456e1584",`);
+    const block = JSON.parse(result.stdout);
+
+    // Verify results.
+    expect(block.number).toBe(latestBlockNumber);
+    expect(block.transactions.length).toBe(1);
+    expect(block.transactions[0]).toBe(tx.transactionHash);
+
+    // Trigger command by block hash.
+    result = await cli(
+      'block', 
+      network,
+      block.hash
+    );
+    const blockA = JSON.parse(result.stdout);
+
+    // Verify results.
+    expect(blockA.hash).toBe(block.hash);
   });
 });

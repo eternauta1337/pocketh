@@ -9,8 +9,7 @@
   "scripts": {
     "ganache": "ganache-cli --deterministic",
     "test": "jest --verbose",
-    "testwatch": "jest --watch",
-    "compile": "truffle compile"
+    "testwatch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -39,7 +38,7 @@
     "solc": "^0.5.8",
     "tmp": "^0.1.0",
     "treeify": "^1.1.0",
-    "web3": "^1.0.0-beta.54"
+    "web3": "1.0.0-beta.37"
   },
   "devDependencies": {
     "ganache-cli": "^6.4.3",
