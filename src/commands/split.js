@@ -9,7 +9,7 @@ Splits a Solidity file containing multiple contracts into multiple files, each w
 
 {red Eg:}
 
-{blue > pocketh split test/contracts/Kitties.sol ~/tmp/}
+{blue > pocketh split test/contracts/Kitties.sol /tmp/}
 Split file test/contracts/Kitties.sol into 16 files:
   - Ownable.sol
   - ERC721.sol
@@ -27,7 +27,7 @@ Split file test/contracts/Kitties.sol into 16 files:
   - KittyAuction.sol
   - KittyMinting.sol
   - KittyCore.sol
-(New files written to test/contracts/)
+(New files written to /tmp/)
 `;
 
 module.exports = {
@@ -114,7 +114,8 @@ module.exports = {
           for(let j = 0; j < names.length; j++) {
             if(i !== j) {
               const otherName = names[j];
-              const otherNameMatches = contracts[i].match(new RegExp(`${otherName}`, 'gm'));
+              const noComments = contracts[i].replace(/\s*\/\/.*/gm, '');
+              const otherNameMatches = noComments.match(new RegExp(`${otherName}`, 'gm'));
               if(otherNameMatches && otherNameMatches.length > 0) {
                 contracts[i] = `import "./${otherName}.sol";\n${contracts[i]}`;
               }
