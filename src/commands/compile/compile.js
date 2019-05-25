@@ -22,12 +22,19 @@ The compilation output produces output split into several .json files, comaptibl
 
 {red Eg:}
 
-{blue > pocketh compile test/contracts/Test.sol test/artifacts/ 0.5.8}
-Downloading compiler soljson-v0.5.8+commit.23d335f2.js...
-Compiler stored in /home/ajs/.soljson/soljson-v0.5.8+commit.23d335f2.js
-Using compiler 0.5.8+commit.23d335f2.Emscripten.clang
-Compiled Test.sol succesfully to test/artifacts/
+{blue > pocketh compile test/contracts/Test.sol test/artifacts/ 0.5.7}
+Retrieving list of available solcjs versions...
+Source version: ^0.5.7
+Target version: 0.5.7
+Using compiler 0.5.7+commit.6da8b019.Emscripten.clang
+Compiled Test.sol succesfully to /tmp/
 
+{blue > pocketh compile ~/tabookey-gasless/contracts/RelayHub.sol /tmp/}
+Retrieving list of available solcjs versions...
+Source version: >=0.4.0 <0.6.0
+Target version: >=0.4.0 <0.6.0
+Using compiler 0.5.8+commit.23d335f2.Emscripten.clang
+Compiled RelayHub.sol succesfully to /tmp/
 `;
 
 let searchPaths = [
