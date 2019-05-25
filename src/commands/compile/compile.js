@@ -21,6 +21,11 @@ Compiled Test.sol succesfully to test/artifacts/
 
 `;
 
+let searchPaths = [
+  '',
+  '../node_modules/'
+];
+
 let sourceDir;
 
 module.exports = {
@@ -30,8 +35,15 @@ module.exports = {
     program
       .command(signature, {noHelp: true})
       .description(description)
+      .option(`--searchPaths <searchPaths>`, `Specify additional search paths for dependencies as a list of comma separated values. Defaults to ./ and ./node_modules/`)
       .on('--help', () => console.log(help))
-      .action(async (sourcePath, outputDirectory, solcVersion) => {
+      .action(async (sourcePath, outputDirectory, solcVersion, options) => {
+
+        // Parse search paths.
+        if(options.searchPaths) {
+          const paths = options.searchPaths.split(',');
+          searchPaths = [...searchPaths, ...paths];
+        }
 
         // Retrieve contract source.
         if(!fs.existsSync(sourcePath)) throw new Error(`Cannot find ${sourcePath}.`);
@@ -69,11 +81,6 @@ module.exports = {
 
 function resolveImports(sourcepath) {
 
-  const searchPaths = [
-    '/',
-    '/../node_modules/'
-  ];
-
   for(let i = 0; i < searchPaths.length; i++) {
     const path = searchPaths[i];
     const contents = tryToResolveImport(path, sourcepath);
@@ -86,7 +93,7 @@ function resolveImports(sourcepath) {
 }
 
 function tryToResolveImport(basedir, sourcepath) {
-  const normpath = path.resolve(sourceDir + basedir + sourcepath);
+  const normpath = path.resolve(sourceDir, basedir, sourcepath);
   if(!fs.existsSync(normpath)) return undefined;
   return fs.readFileSync(normpath, 'utf8');
 }
