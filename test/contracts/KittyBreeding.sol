@@ -1,8 +1,8 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./KittyCore.sol
-import "./KittyOwnership.sol
-import "./GeneScienceInterface.sol
+import "./KittyCore.sol";
+import "./KittyOwnership.sol";
+import "./GeneScienceInterface.sol";
 
 
 
@@ -339,4 +339,3 @@ contract KittyBreeding is KittyOwnership {
         return kittenId;
     }
 }
-""""

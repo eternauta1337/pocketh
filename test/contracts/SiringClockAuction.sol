@@ -1,7 +1,7 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./KittyCore.sol
-import "./ClockAuction.sol
+import "./KittyCore.sol";
+import "./ClockAuction.sol";
 
 
 /// @title Reverse auction modified for siring
@@ -68,4 +68,3 @@ contract SiringClockAuction is ClockAuction {
     }
 
 }
-"""

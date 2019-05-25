@@ -93,5 +93,9 @@ function tryToResolveImport(basedir, sourcepath) {
 
 function displayErrors(errors) {
   console.log(`\nCompilation produced the following warnings/errors:\n`);
-  errors.map(err => console.log(err.formattedMessage));
+  errors.map(err => {
+    const msg = err.formattedMessage;
+    if(msg.includes('Error')) throw new Error(msg);
+    else console.log(msg);
+  });
 }

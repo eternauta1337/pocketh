@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const signature = 'members <contractPath>';
 const description = 'Lists all members of a contract.';
 const help = chalk`
-Provides a list of all the members of the provided contract artifacts. Uses the provided artifacts to analyze the AST. Can list linearized inherited members and sort each by type. Also accepts a term to highlight in the output, for visually identifying certain things.
+Provides a list of all the members of the provided contract artifacts. Uses the provided contract (compiled or not) to analyze the AST. Can list linearized inherited members and sort each by type. Also accepts a term to highlight in the output, for visually identifying certain things.
 
 {red Eg:}
 
@@ -38,7 +38,7 @@ module.exports = {
       .option(`--inherited`, `list inherited contracts' members as well`)
       .option(`--highlight <highlightTerm>`, `highlight a specific term in the output`)
       .option(`--sort`, `sort members by kind (if not set members will be listed as they appear in the AST)`)
-      .action((contractPath, options) => {
+      .action(async (contractPath, options) => {
         chalk.enabled = !program.disableColors;
         
         // Validate input.
@@ -47,7 +47,7 @@ module.exports = {
         sort = options.sort;
 
         // Retrieve contract artifacts.
-        const contractArtifacts = getArtifacts(contractPath);
+        const contractArtifacts = await getArtifacts(contractPath);
 
         // Retrieve the ast.
         const ast = contractArtifacts.ast;

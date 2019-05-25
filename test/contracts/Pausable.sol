@@ -1,6 +1,6 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./Ownable.sol
+import "./Ownable.sol";
 
 
 
@@ -53,4 +53,3 @@ contract Pausable is Ownable {
     return true;
   }
 }
-""

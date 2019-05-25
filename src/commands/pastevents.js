@@ -8,7 +8,7 @@ const chalk = require('chalk');
 const signature = 'pastevents <networkUrl> <contractPath> <contractAddress> <eventName> <fromBlock> [toBlock] [batchSize]';
 const description = 'Finds past events of a contract.';
 const help = chalk`
-Finds past events for a given deployed contract. Requires a network to be specified, a compiled contracPath, a deployed contractAddress, the eventName to query, a block range, and a batchSize that determines how many blocks are queried at a time.
+Finds past events for a given deployed contract. Requires a network to be specified, a contractPath (compiled or not), a deployed contractAddress, the eventName to query, a block range, and a batchSize that determines how many blocks are queried at a time.
 
 {red Eg:}
 
@@ -71,7 +71,7 @@ module.exports = {
         const web3 = await getWeb3(networkUrl);
 
         // Retrieve contract artifacts.
-        const contractArtifacts = getArtifacts(contractPath);
+        const contractArtifacts = await getArtifacts(contractPath);
 
         // Retrieve contract instance.
         const instance = await web3.eth.Contract(contractArtifacts.abi, contractAddress);

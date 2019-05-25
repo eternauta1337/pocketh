@@ -7,7 +7,7 @@ const chalk = require('chalk');
 const signature = 'disassemble <contractPath>';
 const description = 'Disassembles bytecode to EVM opcodes.';
 const help = chalk`
-Disassembles the provided contract artifacts (compiled) to EVM opcodes with additional information.
+Disassembles the provided contract (compiled or not) to EVM opcodes with additional information.
 
 Nomenclature:
 <instructionIdx> \{<hexOpcode>\} [c<creationTimeByteIdx>, r<runtimeByteIdx>] <opcode> <value> (<decimalRepresentation>)
@@ -48,10 +48,10 @@ module.exports = {
       .command(signature, {noHelp: true})
       .description(description)
       .on('--help', () => console.log(help))
-      .action((contractPath) => {
+      .action(async (contractPath) => {
 
         // Retrieve contract artifacts and abi.
-        const contractArtifacts = getArtifacts(contractPath);
+        const contractArtifacts = await getArtifacts(contractPath);
         
         // Retrieve bytecode.
         const output = disassemble(

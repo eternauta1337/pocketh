@@ -1,6 +1,6 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./ERC721.sol
+import "./ERC721.sol";
 
 
 
@@ -27,4 +27,3 @@ contract ERC721Metadata {
         }
     }
 }
-""

@@ -1,11 +1,11 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./KittyCore.sol
-import "./SaleClockAuction.sol
-import "./SiringClockAuction.sol
-import "./ClockAuction.sol
-import "./KittyAccessControl.sol
-import "./ERC721.sol
+import "./KittyCore.sol";
+import "./SaleClockAuction.sol";
+import "./SiringClockAuction.sol";
+import "./ClockAuction.sol";
+import "./KittyAccessControl.sol";
+import "./ERC721.sol";
 
 
 
@@ -229,4 +229,3 @@ contract KittyBase is KittyAccessControl {
         secondsPerBlock = secs;
     }
 }
-"""""""

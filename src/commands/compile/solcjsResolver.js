@@ -57,37 +57,12 @@ function findVersionFromSemver(targetSemver, availableVersions, useLatestPatch) 
 
   // Filter candidates that contain the target semver.
   let candidates = availableVersions.filter(v => v.includes(semver));
+
+  // Filter candidates that are not nightly builds.
+  candidates = candidates.filter(v => !v.includes('nightly'));
+
   if(candidates.length === 0) throw new Error(`Target compiler version not found: ${semver}`);
-  if(candidates.length === 1) return candidates[0];
-
-  // If using latest patch, filter candidates to it.
-  if(useLatestPatch) {
-  
-    // Find the latest patch.
-    let latestPatch = 0;
-    candidates.map(candidate => {
-      const candidateSemver = findVersions(candidate)[0];
-      const patch = parseInt(candidateSemver.split('.')[2], 10);
-      if(patch > latestPatch) latestPatch = patch;
-    });
-
-    // Filter candidates to match the patch.
-    semver = `${semver}.${latestPatch}`;
-    candidates = candidates.filter(v => v.includes(semver));
-    if(candidates.length === 1) return candidates[0];
-  }
-
-  // Pick the match with the shortest name.
-  let match = candidates[0];
-  let shortestVersion = Number.MAX_VALUE;
-  candidates.forEach(candidate => {
-    if(candidate.length < shortestVersion) {
-      match = candidate;
-      shortestVersion = candidate.length;
-    }
-  });
-
-  return match;
+  return candidates[0];
 }
 
 function requireFromString(src, filename) {

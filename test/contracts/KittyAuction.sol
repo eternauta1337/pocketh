@@ -1,12 +1,12 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./KittyCore.sol
-import "./SaleClockAuction.sol
-import "./SiringClockAuction.sol
-import "./ClockAuction.sol
-import "./KittyBreeding.sol
-import "./KittyOwnership.sol
-import "./KittyBase.sol
+import "./KittyCore.sol";
+import "./SaleClockAuction.sol";
+import "./SiringClockAuction.sol";
+import "./ClockAuction.sol";
+import "./KittyBreeding.sol";
+import "./KittyOwnership.sol";
+import "./KittyBase.sol";
 
 
 /// @title Handles creating auctions for sale and siring of kitties.
@@ -137,4 +137,3 @@ contract KittyAuction is KittyBreeding {
         siringAuction.withdrawBalance();
     }
 }
-""""""""

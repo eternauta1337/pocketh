@@ -1,17 +1,43 @@
 const path = require('path');
 const fs = require('fs');
+const tmp = require('tmp');
+const cli = require('../utils/cli');
 
-module.exports = function(contractPath) {
+module.exports = async function(contractPath) {
 
-  // Determine if passed value is .sol or .json.
+  // Determine file extension.
   const filename = path.basename(contractPath);
-  const name = filename.split('.')[0]; 
-  const ext = filename.split('.')[1];
-  if(ext !== 'json') throw new Error('Please provide compiled json artifacts for "contractPath".');
+  const comps = filename.split('.');
+  const name = comps[0];
+  const ext = comps[1];
 
-  // Retrieve contract artifacts.
-  if(!fs.existsSync(contractPath)) throw new Error(`Cannot find ${contractPath}.`);
+  // If the extension is json, just load the file and return its contents.
+  if(ext === 'json') return retrieveJsonArtifacts(contractPath);
+  // If the extension is sol, compile the contract
+  // and then return the json artifacts.
+  if(ext === 'sol') {
+    console.log(`(compiling ${contractPath})`);
+  
+    // Create a temporary directory to store the artifacts in.
+    const tmpdir = tmp.dirSync();
 
-  // Parse json.
-  return JSON.parse(fs.readFileSync(contractPath, 'utf8'));
+    // Compile the file.
+    const result = await cli(
+      'compile', 
+      contractPath, 
+      `${tmpdir.name}/`
+    );
+    if(result.code !== 0) throw new Error(`Unable to compile ${contractPath}: ${result.error}`);
+
+    // Return the compiled artifacts.
+    const compiledPath = `${tmpdir.name}/${name}.json`;
+    return retrieveJsonArtifacts(compiledPath);
+  }
+
+  throw new Error(`Unrecognized extension ${ext}`);
 };
+
+function retrieveJsonArtifacts(path) {
+  if(!fs.existsSync(path)) throw new Error(`Cannot find ${path}`);
+  return JSON.parse(fs.readFileSync(path, 'utf8'));
+}

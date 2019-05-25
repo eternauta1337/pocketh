@@ -1,7 +1,7 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./KittyCore.sol
-import "./Pausable.sol
+import "./KittyCore.sol";
+import "./Pausable.sol";
 
 
 
@@ -122,4 +122,3 @@ contract KittyAccessControl {
         paused = false;
     }
 }
-"""

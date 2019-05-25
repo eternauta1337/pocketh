@@ -1,7 +1,7 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./ClockAuction.sol
-import "./ERC721.sol
+import "./ClockAuction.sol";
+import "./ERC721.sol";
 
 
 
@@ -251,4 +251,3 @@ contract ClockAuctionBase {
     }
 
 }
-"""

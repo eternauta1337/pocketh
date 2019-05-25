@@ -7,7 +7,7 @@ const chalk = require('chalk');
 const signature = 'inheritance <contractPath>';
 const description = 'Displays the inheritance tree of a contract.';
 const help = chalk`
-Displays the inheritance tree of the provided contract artifacts.
+Displays the inheritance tree of the provided contract (compiled or not).
 
 {red Eg:}
 
@@ -28,10 +28,10 @@ module.exports = {
       .command(signature, {noHelp: true})
       .description(description)
       .on('--help', () => console.log(help))
-      .action((contractPath) => {
+      .action(async (contractPath) => {
         
         // Retrieve contract artifacts.
-        const contractArtifacts = getArtifacts(contractPath);
+        const contractArtifacts = await getArtifacts(contractPath);
 
         // Retrieve the ast.
         const ast = contractArtifacts.ast;

@@ -1,6 +1,6 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./ClockAuction.sol
+import "./ClockAuction.sol";
 
 
 
@@ -83,4 +83,3 @@ contract SaleClockAuction is ClockAuction {
     }
 
 }
-""

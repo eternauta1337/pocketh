@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const signature = 'selectors <contractPath>';
 const description = 'Lists all selectors of a contract.';
 const help = chalk`
-List all the function selectors of the provided contract artifacts.
+List all the function selectors of the provided contract (compiled or not).
 
 {red Eg:}
 
@@ -27,10 +27,10 @@ module.exports = {
       .command(signature, {noHelp: true})
       .description(description)
       .on('--help', () => console.log(help))
-      .action((contractPath) => {
+      .action(async (contractPath) => {
         
         // Retrieve contract artifacts and abi.
-        const contractArtifacts = getArtifacts(contractPath);        
+        const contractArtifacts = await getArtifacts(contractPath);        
 
         // Retrieve abi.
         const abi = contractArtifacts.abi;

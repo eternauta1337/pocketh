@@ -24,4 +24,3 @@ contract GeneScienceInterface {
     /// @return the genes that are supposed to be passed down the child
     function mixGenes(uint256 genes1, uint256 genes2, uint256 targetBlock) public returns (uint256);
 }
-"

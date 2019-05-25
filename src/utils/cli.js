@@ -12,7 +12,7 @@ module.exports = function cli(...args) {
         if(err) console.log(err);
         resolve({
           code: err ? 1 : 0,
-          error,
+          error: err,
           stdout,
           stderr 
         });

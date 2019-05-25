@@ -11,7 +11,7 @@ const validateUtil = require('../utils/validateUtil');
 const signature = 'liststorage <networkUrl> <contractPath> <contractAddress>';
 const description = 'Reads the storage of a contract.';
 const help = chalk`
-Query the storage of a contract deployed at a given address. Requires compiled artifacts to traverse the ast and understand how to read the contract\'s storage.
+Query the storage of a contract deployed at a given address.
 
 {red Eg:}
 
@@ -65,7 +65,7 @@ module.exports = {
         const web3 = await getWeb3(networkUrl);
 
         // Retrieve contract artifacts.
-        const contractArtifacts = getArtifacts(contractPath);
+        const contractArtifacts = await getArtifacts(contractPath);
 
         // Retrieve the ast.
         const ast = contractArtifacts.ast;

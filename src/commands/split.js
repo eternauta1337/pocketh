@@ -2,14 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const chalk = require('chalk');
 
-const signature = 'split <sourcePath>';
+const signature = 'split <sourcePath> <outputDirectory>';
 const description = 'Splits Solidity files.';
 const help = chalk`
 Splits a Solidity file containing multiple contracts into multiple files, each with one contract.
 
 {red Eg:}
 
-{blue > pocketh split test/contracts/Kitties.sol}
+{blue > pocketh split test/contracts/Kitties.sol ~/tmp/}
 Split file test/contracts/Kitties.sol into 16 files:
   - Ownable.sol
   - ERC721.sol
@@ -38,14 +38,15 @@ module.exports = {
       .command(signature, {noHelp: true})
       .description(description)
       .on('--help', () => console.log(help))
-      .action((sourcePath) => {
+      .action((sourcePath, outputDirectory) => {
 
         // Validate input.
-        if(!fs.existsSync(sourcePath)) throw new Error(`Cannot find source file: ${sourcePath}`)
+        if(!fs.existsSync(sourcePath)) throw new Error(`Cannot find source file: ${sourcePath}`);
+        if(outputDirectory.charAt(outputDirectory.length - 1) !== '/') throw new Error('outputDirectory must be a directory path.');
+        if(!fs.existsSync(outputDirectory)) throw new Error(`Cannot find ${outputDirectory}.`);
 
         // Get path data.
         const filename = path.basename(sourcePath);
-        const dirpath = path.dirname(sourcePath);
 
         // Read file.
         let source = fs.readFileSync(sourcePath, 'utf8');
@@ -115,7 +116,7 @@ module.exports = {
               const otherName = names[j];
               const otherNameMatches = contracts[i].match(new RegExp(`${otherName}`, 'gm'));
               if(otherNameMatches && otherNameMatches.length > 0) {
-                contracts[i] = `import "./${otherName}.sol\n${contracts[i]}"`;
+                contracts[i] = `import "./${otherName}.sol";\n${contracts[i]}`;
               }
             }
           }
@@ -123,7 +124,7 @@ module.exports = {
 
         // Add pragma statements.
         for(let i = 0; i < contracts.length; i++) {
-          contracts[i] = `${pragmaLine}\n\n${contracts[i]}"`;
+          contracts[i] = `${pragmaLine}\n\n${contracts[i]}`;
         }
 
         // Write each contract into a separate file.
@@ -131,7 +132,7 @@ module.exports = {
           const contract = contracts[i];
 
           // Build target path.
-          const path = `${dirpath}/${names[i]}.sol`;
+          const path = `${outputDirectory}${names[i]}.sol`;
 
           // Write file.
           fs.writeFileSync(path, contract);
@@ -142,7 +143,7 @@ module.exports = {
         names.map(name => {
           console.log(`  - ${name}.sol`);
         });
-        console.log(`(New files written to ${dirpath}/)`);
+        console.log(`(New files written to ${outputDirectory})`);
       });
   }
 };

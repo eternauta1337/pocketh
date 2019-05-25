@@ -1,8 +1,8 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./Pausable.sol
-import "./ClockAuctionBase.sol
-import "./ERC721.sol
+import "./Pausable.sol";
+import "./ClockAuctionBase.sol";
+import "./ERC721.sol";
 
 
 /// @title Clock auction for non-fungible tokens.
@@ -158,4 +158,3 @@ contract ClockAuction is Pausable, ClockAuctionBase {
     }
 
 }
-""""

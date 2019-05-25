@@ -1,6 +1,6 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./KittyAuction.sol
+import "./KittyAuction.sol";
 
 
 /// @title all functions related to creating kittens
@@ -69,4 +69,3 @@ contract KittyMinting is KittyAuction {
         return nextPrice;
     }
 }
-""

@@ -40,4 +40,3 @@ contract Ownable {
   }
 
 }
-"

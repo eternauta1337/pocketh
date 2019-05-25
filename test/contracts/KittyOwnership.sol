@@ -1,9 +1,9 @@
 pragma solidity >=0.4.11 <0.6.0;
 
-import "./KittyCore.sol
-import "./ERC721Metadata.sol
-import "./KittyBase.sol
-import "./ERC721.sol
+import "./KittyCore.sol";
+import "./ERC721Metadata.sol";
+import "./KittyBase.sol";
+import "./ERC721.sol";
 
 
 /// @title The facet of the CryptoKitties core contract that manages ownership, ERC-721 (draft) compliant.
@@ -271,4 +271,3 @@ contract KittyOwnership is KittyBase, ERC721 {
         return _toString(buffer, count);
     }
 }
-"""""
