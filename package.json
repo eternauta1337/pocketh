@@ -35,7 +35,7 @@
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
     "figlet": "^1.2.1",
-    "find-versions": "^3.1.0",
+    "semver": "^6.1.0",
     "solc": "^0.5.8",
     "tmp": "^0.1.0",
     "treeify": "^1.1.0",

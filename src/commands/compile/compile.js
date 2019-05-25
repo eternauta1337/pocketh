@@ -7,7 +7,16 @@ const chalk = require('chalk');
 const signature = 'compile <sourcePath> <outputDirectory> [solcVersion]';
 const description = 'Compiles single Solidity files.';
 const help = chalk`
-Compiles a source file with solcjs. Downloads the appropriate solcjs compiler by looking at the source code. A specific solc version can be indicated with the solcVersion parameter.
+Compiles a source file with solcjs.
+
+The solcVersion parameter can be used to specify a semver version of the compiler to use. This parameter can be any valid semver expression (use quotes for special characters like ^).
+If the parameter is not specified, pocketh will look at the source code and use the semver from the pragma directive.
+Valid version specifiers:
+0.5.8
+^0.5.0
+~0.4.24
+>=0.4.0 <0.6.0
+etc...
 
 The compilation output produces output split into several .json files, comaptible with Truffle's compiler output.
 

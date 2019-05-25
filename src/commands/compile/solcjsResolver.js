@@ -1,8 +1,8 @@
 const vm = require('vm');
 const os = require('os');
 const fs = require('fs');
-const findVersions = require('find-versions');
 const axios = require('axios');
+const semver = require('semver');
 
 // Downloaded compilers will be stored here.
 const SOLJSON_PATH = `${os.homedir()}/.soljson/`;
@@ -18,11 +18,15 @@ module.exports = {
 
     const availableVersions = await getAvailableCompilerVersions();
     const sourceSemver = detectSolcVersionFromSource(source);
+    console.log(`Source version:`, sourceSemver);
   
+    // Use specified semver, or detect it form source.
+    const targetSemver = requiredSemver || sourceSemver;
+    console.log(`Target version:`, targetSemver);
+
     // Translate semver to an actual version.
     // E.g. '0.5.8' to 'soljson-v0.5.8+commit.23d335f2.js'.
-    let useLatestPatch = requiredSemver === undefined;
-    const version = findVersionFromSemver(requiredSemver || sourceSemver, availableVersions, useLatestPatch);
+    const version = findVersionFromSemver(targetSemver, availableVersions);
 
     // Retrieve compiler source.
     let compilerSource;
@@ -37,9 +41,8 @@ module.exports = {
 };
 
 function detectSolcVersionFromSource(source) {
-  const pragmaLine = source.match(/^pragma.*$/gm)[0];
-  const semver = findVersions(pragmaLine)[0];
-  return semver;
+  // Return `pragma solidity <THIS PART>;`
+  return source.match(/(?<=pragma solidity ).*(?=;)/gm)[0];
 }
 
 async function getAvailableCompilerVersions() {
@@ -66,23 +69,24 @@ async function getAvailableCompilerVersions() {
   });
 }
 
-function findVersionFromSemver(targetSemver, availableVersions, useLatestPatch) {
-  let semver = targetSemver;
+function findVersionFromSemver(targetSemver, availableVersions) {
 
-  // If using latest patch, remove the patch from the target semver.
-  if(useLatestPatch) {
-    const comps = semver.split('.');
-    semver = `${comps[0]}.${comps[1]}`;
-  }
+  // Filter out nightly versions.
+  const candidates = availableVersions.filter(v => !v.includes('nightly'));
 
-  // Filter candidates that contain the target semver.
-  let candidates = availableVersions.filter(v => v.includes(semver));
+  // Map the candidates to pure semver.
+  const versions = candidates.map(version => {
+    // Return `soljson-<THIS PART>.js;`
+    return semver.clean(version.match(/(?<=soljson-).*(?=\.js)/)[0]);
+  });
 
-  // Filter candidates that are not nightly builds.
-  candidates = candidates.filter(v => !v.includes('nightly'));
+  // Find best fit.
+  const best = semver.maxSatisfying(versions, targetSemver);
+  const idx = versions.indexOf(best);
+  if(idx >= 0) return candidates[idx];
 
-  if(candidates.length === 0) throw new Error(`Target compiler version not found: ${semver}`);
-  return candidates[0];
+  // Nothing found =(
+  throw new Error(`No available version satisfies the required version ${targetSemver}`);
 }
 
 function requireFromString(src, filename) {
