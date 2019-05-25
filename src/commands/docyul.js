@@ -35,7 +35,9 @@ module.exports = {
       .description(description)
       .on('--help', () => console.log(help))
       .action((keyword) => {
+
         const keys = Object.keys(docs);
+
         if(!keyword) {
           let str = '';
           keys.forEach(key => str += `${key}\n`);
@@ -43,6 +45,9 @@ module.exports = {
         }
         else {
           const matches = keys.filter(key => key.includes(keyword));
+          if(matches.length === 0) {
+            return console.log(`No Yul documentation found for '${keyword}'`);
+          }
           matches.forEach(match => {
             console.log(`${match}\n"${docs[match]}"\n`);
           });
