@@ -44,7 +44,7 @@ module.exports = {
 
         // Start the inheritance tree structure.
         tree[rootContractName] = {};
-        traverseContractParents(ast, rootContractDefinition, tree[rootContractName], basedir);
+        await traverseContractParents(ast, rootContractDefinition, tree[rootContractName], basedir);
 
         // Print tree after all branches
         // have been traversed.
@@ -53,7 +53,7 @@ module.exports = {
   }
 };
 
-function traverseContractParents(ast, contractDefinition, branch, basedir) {
+async function traverseContractParents(ast, contractDefinition, branch, basedir) {
   const parents = contractDefinition.baseContracts;
   for(let i = 0; i < parents.length; i++) {
     const parent = parents[i];
@@ -63,7 +63,7 @@ function traverseContractParents(ast, contractDefinition, branch, basedir) {
     if(parentDefinition) traverseContractParents(ast, parentDefinition, branch[parentName], basedir);
     else { // Target definition may be in another file.
       const baseContractPath = `${basedir}/${parentName}.json`;
-      const baseContractArtifacts = getArtifacts(baseContractPath);
+      const baseContractArtifacts = await getArtifacts(baseContractPath);
       const baseContractAst = baseContractArtifacts.ast;
       if(!baseContractAst) throw new Error('AST data not found.');
       parentDefinition = astUtil.findNodeWithTypeAndName(baseContractAst, 'ContractDefinition', parentName);
