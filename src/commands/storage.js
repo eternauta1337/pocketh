@@ -18,6 +18,17 @@ slot: 1
 value: 0x417261676f6e204e6574776f726b20546f6b656e000000000000000000000028
   (dec): 29602427981302164123697046959722460721672829354281340829100810951182126153768
   (str): Aragon Network Token(
+
+{blue pocketh storage ropsten 0xf1f5896ace3a78c347eb7eab503450bc93bd0c3b 5 --mapping 0xbCcc714d56bc0da0fd33d96d2a87b680dD6D0DF6}
+slot: 5
+value: 0x0000000000000000000000000000000000000000000000000000000000000000
+(dec): 0
+(str): 
+mapping key: 0xbCcc714d56bc0da0fd33d96d2a87b680dD6D0DF6
+mapping slot: 0xafef6be2b419f4d69d56fe34788202bf06650015554457a2470181981bcce7ef
+mapping value: 0x0000000000000000000000000000000000000000000000000000000000000058
+(dec): 88
+(str): X
 `;
 
 module.exports = {
@@ -42,7 +53,8 @@ module.exports = {
         const web3 = await getWeb3(networkUrl);
 
         // Read storage.
-        const value = await web3.eth.getStorageAt(contractAddress, storageSlot);
+        let value = await web3.eth.getStorageAt(contractAddress, storageSlot);
+        value = web3.utils.padLeft(value, 64, '0');
         console.log(`value: ${value}`);
         if(options.range) readRange(value, options.range, web3);
         else interpretHexValue(value, web3);
@@ -58,7 +70,8 @@ module.exports = {
           console.log(`array slot: ${storageSlot}`);
 
           // Read dynamic storage.
-          const value = await web3.eth.getStorageAt(contractAddress, storageSlot);
+          let value = await web3.eth.getStorageAt(contractAddress, storageSlot);
+          value = web3.utils.padLeft(value, 64, '0');
           console.log(`array value: ${value}`);
           if(options.range) readRange(value, options.range, web3);
           else interpretHexValue(value, web3);
@@ -75,7 +88,8 @@ module.exports = {
           console.log(`mapping slot: ${storageSlot}`);
 
           // Read dynamic storage.
-          const value = await web3.eth.getStorageAt(contractAddress, storageSlot);
+          let value = await web3.eth.getStorageAt(contractAddress, storageSlot);
+          value = web3.utils.padLeft(value, 64, '0');
           console.log(`mapping value: ${value}`);
           if(options.range) readRange(value, options.range, web3);
           else interpretHexValue(value, web3);
