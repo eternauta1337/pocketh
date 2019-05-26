@@ -13,6 +13,7 @@ describe('split command', () => {
     // Split the contract.
     let result = await cli('split', 'test/contracts/KittyCore.sol', `${tmpdir.name}/`);
     expect(result.code).toBe(0);
+    expect(result.stdout).toContain(`New files written to ${tmpdir.name}`);
 
     // Number of files should match.
     expect(result.stdout).toContain(`into 16 files`);
