@@ -17,6 +17,11 @@ describe('info command', () => {
       'mainnet'
     );
 
-    expect(result.stdout).toContain(`latestBlock: ${latestBlockNumber}`);
+    // Extract latest block from result.
+    const blockNumber = parseInt(result.stdout.match(/(?<=latestBlock:).*/g));
+
+    // Compare the latest block with a delta, to account for race conditions.
+    const delta = blockNumber - latestBlockNumber;
+    expect(delta).toBeLessThan(2);
   });
 });
