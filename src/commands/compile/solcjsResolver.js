@@ -16,9 +16,16 @@ module.exports = {
   
   getCompiler: async (source, requiredSemver) => {
 
-    const availableVersions = await getAvailableCompilerVersions();
     const sourceSemver = detectSolcVersionFromSource(source);
     console.log(`Source version:`, sourceSemver);
+
+    // If the user specified a required version, validate it against the source.
+    if(requiredSemver) {
+      if(!semverVersionsIntersect(sourceSemver, requiredSemver)) 
+        throw new Error(`Required version ${requiredSemver} is not compatible with the version specified in the source code ${sourceSemver}`);
+    }
+
+    const availableVersions = await getAvailableCompilerVersions();
   
     // Use specified semver, or detect it form source.
     const targetSemver = requiredSemver || sourceSemver;
@@ -39,6 +46,12 @@ module.exports = {
     return solc;
   }
 };
+
+function semverVersionsIntersect(semver1, semver2) {
+  const range1 = semver.Range(semver1).range;
+  const range2 = semver.Range(semver2).range;
+  return semver.intersects(range1, range2);
+}
 
 function detectSolcVersionFromSource(source) {
   // Return `pragma solidity <THIS PART>;`

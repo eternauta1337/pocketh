@@ -39,7 +39,7 @@ Compiled RelayHub.sol succesfully to /tmp/
 
 let searchPaths = [
   '',
-  '../node_modules/'
+  '../node_modules/',
 ];
 
 let sourceDir;
@@ -51,9 +51,21 @@ module.exports = {
     program
       .command(signature, {noHelp: true})
       .description(description)
-      .option(`--searchPaths <searchPaths>`, `Specify additional search paths for dependencies as a list of comma separated values. Defaults to ./ and ./node_modules/`)
+      .option(`--searchPaths <searchPaths>`, `Specify additional search paths for dependencies as a list of comma separated values. Defaults to ./ and ./node_modules/. Note that search paths must be relative to sourcePath.`)
       .on('--help', () => console.log(help))
       .action(async (sourcePath, outputDirectory, solcVersion, options) => {
+
+        // Validate sourcePath.
+        if(path.basename(sourcePath).split('.')[1] !== 'sol')
+          throw new Error(`Invalid source file ${sourcePath}`);
+        if(!fs.existsSync(sourcePath)) 
+          throw new Error(`Cannot find ${sourcePath}.`);
+
+        // Validate output directory.
+        if(outputDirectory.charAt(outputDirectory.length - 1) !== '/') 
+          throw new Error('outputDirectory must be a directory path.');
+        if(!fs.existsSync(outputDirectory)) 
+          throw new Error(`Cannot find ${outputDirectory}.`);
 
         // Parse search paths.
         if(options.searchPaths) {
@@ -82,8 +94,6 @@ module.exports = {
         const splitOutput = jsonIO.oneJsonPerContract(output, filename);
 
         // Write json files to disk.
-        if(outputDirectory.charAt(outputDirectory.length - 1) !== '/') throw new Error('outputDirectory must be a directory path.');
-        if(!fs.existsSync(outputDirectory)) throw new Error(`Cannot find ${outputDirectory}.`);
         splitOutput.forEach(json => {
           const destPath = outputDirectory + json.contractName + '.json';
           fs.writeFileSync(destPath, JSON.stringify(json, null, 2));
@@ -95,23 +105,27 @@ module.exports = {
   }
 };
 
-function resolveImports(sourcepath) {
+function resolveImports(sourcePath) {
 
+  // Resolve imports using each of the search paths.
   for(let i = 0; i < searchPaths.length; i++) {
     const path = searchPaths[i];
-    const contents = tryToResolveImport(path, sourcepath);
-    if(contents) {
-      return { contents };
-    }
+    const contents = tryToResolveImport(path, sourcePath);
+    if(contents) return { contents };
   }
 
-  throw new Error(`Unable to resolve import ${sourcepath}`);
+  throw new Error(`Unable to resolve import ${sourcePath}`);
 }
 
-function tryToResolveImport(basedir, sourcepath) {
-  const normpath = path.resolve(sourceDir, basedir, sourcepath);
-  if(!fs.existsSync(normpath)) return undefined;
-  return fs.readFileSync(normpath, 'utf8');
+function tryToResolveImport(searchPath, sourcePath) {
+
+  // Normalize the path.
+  const normPath = path.resolve(sourceDir, searchPath, sourcePath);
+  // console.log(`Trying to resolve import at: ${normPath}`);
+
+  // Read the file.
+  if(!fs.existsSync(normPath)) return undefined;
+  return fs.readFileSync(normPath, 'utf8');
 }
 
 function displayErrors(errors) {
