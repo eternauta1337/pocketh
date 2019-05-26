@@ -67,9 +67,10 @@ module.exports = {
         let openCurlyBraceCount = 0;
         let closeCurlyBraceCount = 0;
         for(let i = 0; i < lines.length; i++) {
-          const line = lines[i];
+          let line = lines[i];
 
           // Add current line to current contract.
+          line = line.replace(/\r?\n|\r/, ''); // Remove line breaks from line.
           contracts[currentContractIdx] += `${line}\n`;
 
           // Count curly braces.
