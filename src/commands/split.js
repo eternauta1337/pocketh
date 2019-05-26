@@ -45,9 +45,6 @@ module.exports = {
         if(outputDirectory.charAt(outputDirectory.length - 1) !== '/') throw new Error('outputDirectory must be a directory path.');
         if(!fs.existsSync(outputDirectory)) throw new Error(`Cannot find ${outputDirectory}.`);
 
-        // Get path data.
-        const filename = path.basename(sourcePath);
-
         // Read file.
         let source = fs.readFileSync(sourcePath, 'utf8');
 
@@ -110,7 +107,6 @@ module.exports = {
         // Review all contracts, and if any name appears in it,
         // add an import statement.
         for(let i = 0; i < contracts.length; i++) {
-          const name = names[i];
           for(let j = 0; j < names.length; j++) {
             if(i !== j) {
               const otherName = names[j];
