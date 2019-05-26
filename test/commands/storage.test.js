@@ -9,7 +9,7 @@ describe('storage command', () => {
     expect(result.code).toBe(1);
   });
 
-  test.only('Should properly retrieve storage elements from a contract deployed in localhost', async () => {
+  test('Should properly retrieve storage elements from a contract deployed in localhost', async () => {
 
     // Set up web3.
     const web3 = await getWeb3('localhost');
@@ -37,9 +37,13 @@ describe('storage command', () => {
 
     // Trigger the contract's testFunction to set storage of some variables.
     const tx = await instance.methods.testStorage().send(params);
-    console.log(tx);
+    // console.log(tx);
     expect(tx.transactionHash.length).toBe(66);
     expect(tx.gasUsed).toBeGreaterThan(400000);
+
+    // Verify a public storage value set by testStorage();
+    const secret = await instance.methods.secret().call();
+    expect(secret).toBe('42');
 
     // Read and verify storage elements.
     let result;
@@ -57,5 +61,11 @@ describe('storage command', () => {
     expect(result.stdout).toContain(`0x0000000000000000000000000000000000000000000000000000000000000000`);
     result = await cli('storage', 'localhost', address, '5', '--mapping', '0xbCcc714d56bc0da0fd33d96d2a87b680dD6D0DF6');
     expect(result.stdout).toContain(`0x0000000000000000000000000000000000000000000000000000000000000058`);
+    result = await cli('storage', 'localhost', address, '7');
+    expect(result.stdout).toContain(`0x0000000000000000000000000000000000000000000000000000000000000002`);
+    result = await cli('storage', 'localhost', address, '7', '--array', '0');
+    expect(result.stdout).toContain(`0x0000000000000000000000000000000000000000000000000000000000001f40`);
+    result = await cli('storage', 'localhost', address, '7', '--array', '1');
+    expect(result.stdout).toContain(`0x0000000000000000000000000000000000000000000000000000000000002328`);
   });
 });

@@ -9,19 +9,33 @@
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "secret",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[],\"name\":\"testStorage\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"Storage.sol\":\"Storage\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"Storage.sol\":{\"keccak256\":\"0x03ae693ab4abe26e0fe8a19daab89ecba9f3b071fdd1546511fd1d9249e55d91\",\"urls\":[\"bzzr://334d3c3cb6c3a72e50f702abda0a7c14b5b997e714c256c499dfa31a772faeb4\"]}},\"version\":1}",
-  "bytecode": "6080604052600f60005561429f600160006101000a8154816fffffffffffffffffffffffffffffffff02191690836fffffffffffffffffffffffffffffffff16021790555042600160106101000a81548163ffffffff021916908363ffffffff1602179055507f7465737431000000000000000000000000000000000000000000000000000000600260006101000a8154816fffffffffffffffffffffffffffffffff021916908360801c02179055507f74657374313233360000000000000000000000000000000000000000000000006003556040518060400160405280601581526020017f6c65747320737472696e6720736f6d657468696e6700000000000000000000008152506004908051906020019061011e929190610131565b5034801561012b57600080fd5b506101d6565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061017257805160ff19168380011785556101a0565b828001600101855582156101a0579182015b8281111561019f578251825591602001919060010190610184565b5b5090506101ad91906101b1565b5090565b6101d391905b808211156101cf5760008160009055506001016101b7565b5090565b90565b610616806101e56000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c8063a02649f114610030575b600080fd5b61003861003a565b005b600073aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9050600073bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb90506058600560008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055506063600560008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055506100fe610524565b60405180606001604052806040518060400160405280600c81526020017f6465766963654272616e6431000000000000000000000000000000000000000081525081526020016040518060400160405280600b81526020017f646576696365596561723100000000000000000000000000000000000000000081525081526020016040518060400160405280600a81526020017f776561724c6576656c310000000000000000000000000000000000000000000081525081525090506101c2610524565b60405180606001604052806040518060400160405280600c81526020017f6465766963654272616e6432000000000000000000000000000000000000000081525081526020016040518060400160405280600b81526020017f646576696365596561723200000000000000000000000000000000000000000081525081526020016040518060400160405280600a81526020017f776561724c6576656c3200000000000000000000000000000000000000000000815250815250905081600660008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008201518160000190805190602001906102da929190610545565b5060208201518160010190805190602001906102f7929190610545565b506040820151816002019080519060200190610314929190610545565b5090505080600660008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000820151816000019080519060200190610374929190610545565b506020820151816001019080519060200190610391929190610545565b5060408201518160020190805190602001906103ae929190610545565b509050506007611f40908060018154018082558091505090600182039060005260206000200160009091929091909150555060076123289080600181540180825580915050906001820390600052602060002001600090919290919091505550600882908060018154018082558091505090600182039060005260206000209060030201600090919290919091506000820151816000019080519060200190610458929190610545565b506020820151816001019080519060200190610475929190610545565b506040820151816002019080519060200190610492929190610545565b505050506008819080600181540180825580915050906001820390600052602060002090600302016000909192909190915060008201518160000190805190602001906104e0929190610545565b5060208201518160010190805190602001906104fd929190610545565b50604082015181600201908051906020019061051a929190610545565b5050505050505050565b60405180606001604052806060815260200160608152602001606081525090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061058657805160ff19168380011785556105b4565b828001600101855582156105b4579182015b828111156105b3578251825591602001919060010190610598565b5b5090506105c191906105c5565b5090565b6105e791905b808211156105e35760008160009055506001016105cb565b5090565b9056fea165627a7a72305820c892e4756f863449632b17003e1784eb62e9b010d2f1c02c4bc12c7f6540da630029",
-  "deployedBytecode": "608060405234801561001057600080fd5b506004361061002b5760003560e01c8063a02649f114610030575b600080fd5b61003861003a565b005b600073aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9050600073bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb90506058600560008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055506063600560008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055506100fe610524565b60405180606001604052806040518060400160405280600c81526020017f6465766963654272616e6431000000000000000000000000000000000000000081525081526020016040518060400160405280600b81526020017f646576696365596561723100000000000000000000000000000000000000000081525081526020016040518060400160405280600a81526020017f776561724c6576656c310000000000000000000000000000000000000000000081525081525090506101c2610524565b60405180606001604052806040518060400160405280600c81526020017f6465766963654272616e6432000000000000000000000000000000000000000081525081526020016040518060400160405280600b81526020017f646576696365596561723200000000000000000000000000000000000000000081525081526020016040518060400160405280600a81526020017f776561724c6576656c3200000000000000000000000000000000000000000000815250815250905081600660008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008201518160000190805190602001906102da929190610545565b5060208201518160010190805190602001906102f7929190610545565b506040820151816002019080519060200190610314929190610545565b5090505080600660008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206000820151816000019080519060200190610374929190610545565b506020820151816001019080519060200190610391929190610545565b5060408201518160020190805190602001906103ae929190610545565b509050506007611f40908060018154018082558091505090600182039060005260206000200160009091929091909150555060076123289080600181540180825580915050906001820390600052602060002001600090919290919091505550600882908060018154018082558091505090600182039060005260206000209060030201600090919290919091506000820151816000019080519060200190610458929190610545565b506020820151816001019080519060200190610475929190610545565b506040820151816002019080519060200190610492929190610545565b505050506008819080600181540180825580915050906001820390600052602060002090600302016000909192909190915060008201518160000190805190602001906104e0929190610545565b5060208201518160010190805190602001906104fd929190610545565b50604082015181600201908051906020019061051a929190610545565b5050505050505050565b60405180606001604052806060815260200160608152602001606081525090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061058657805160ff19168380011785556105b4565b828001600101855582156105b4579182015b828111156105b3578251825591602001919060010190610598565b5b5090506105c191906105c5565b5090565b6105e791905b808211156105e35760008160009055506001016105cb565b5090565b9056fea165627a7a72305820c892e4756f863449632b17003e1784eb62e9b010d2f1c02c4bc12c7f6540da630029",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[],\"name\":\"testStorage\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"secret\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"Storage.sol\":\"Storage\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"Storage.sol\":{\"keccak256\":\"0xaba8b4e94558c4f652b14c01cd52a46ff43a106658e7f05b634c9294f6146380\",\"urls\":[\"bzzr://23a16abf8cf913924c61c6dba43d4775a50e96af5b1e44e9d83b44ffab445edd\"]}},\"version\":1}",
+  "bytecode": "6080604052600f60005561429f600160006101000a8154816fffffffffffffffffffffffffffffffff02191690836fffffffffffffffffffffffffffffffff16021790555042600160106101000a81548163ffffffff021916908363ffffffff1602179055507f7465737431000000000000000000000000000000000000000000000000000000600260006101000a8154816fffffffffffffffffffffffffffffffff021916908360801c02179055507f74657374313233360000000000000000000000000000000000000000000000006003556040518060400160405280601581526020017f6c65747320737472696e6720736f6d657468696e6700000000000000000000008152506004908051906020019061011e929190610131565b5034801561012b57600080fd5b506101d6565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061017257805160ff19168380011785556101a0565b828001600101855582156101a0579182015b8281111561019f578251825591602001919060010190610184565b5b5090506101ad91906101b1565b5090565b6101d391905b808211156101cf5760008160009055506001016101b7565b5090565b90565b61064d806101e56000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c8063a02649f11461003b578063d1efd30d14610045575b600080fd5b610043610063565b005b61004d610555565b6040518082815260200191505060405180910390f35b602a600981905550600073bccc714d56bc0da0fd33d96d2a87b680dd6d0df69050600073aee905fdd3ed851e48d22059575b9f4245a82b0490506058600560008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055506063600560008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000208190555061012f61055b565b60405180606001604052806040518060400160405280600c81526020017f6465766963654272616e6431000000000000000000000000000000000000000081525081526020016040518060400160405280600b81526020017f646576696365596561723100000000000000000000000000000000000000000081525081526020016040518060400160405280600a81526020017f776561724c6576656c310000000000000000000000000000000000000000000081525081525090506101f361055b565b60405180606001604052806040518060400160405280600c81526020017f6465766963654272616e6432000000000000000000000000000000000000000081525081526020016040518060400160405280600b81526020017f646576696365596561723200000000000000000000000000000000000000000081525081526020016040518060400160405280600a81526020017f776561724c6576656c3200000000000000000000000000000000000000000000815250815250905081600660008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600082015181600001908051906020019061030b92919061057c565b50602082015181600101908051906020019061032892919061057c565b50604082015181600201908051906020019061034592919061057c565b5090505080600660008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008201518160000190805190602001906103a592919061057c565b5060208201518160010190805190602001906103c292919061057c565b5060408201518160020190805190602001906103df92919061057c565b509050506007611f4090806001815401808255809150509060018203906000526020600020016000909192909190915055506007612328908060018154018082558091505090600182039060005260206000200160009091929091909150555060088290806001815401808255809150509060018203906000526020600020906003020160009091929091909150600082015181600001908051906020019061048992919061057c565b5060208201518160010190805190602001906104a692919061057c565b5060408201518160020190805190602001906104c392919061057c565b5050505060088190806001815401808255809150509060018203906000526020600020906003020160009091929091909150600082015181600001908051906020019061051192919061057c565b50602082015181600101908051906020019061052e92919061057c565b50604082015181600201908051906020019061054b92919061057c565b5050505050505050565b60095481565b60405180606001604052806060815260200160608152602001606081525090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106105bd57805160ff19168380011785556105eb565b828001600101855582156105eb579182015b828111156105ea5782518255916020019190600101906105cf565b5b5090506105f891906105fc565b5090565b61061e91905b8082111561061a576000816000905550600101610602565b5090565b9056fea165627a7a72305820a07c7d10c9adf468167c92c10882fcfb39503391d656d306da57a0a32f8b0a400029",
+  "deployedBytecode": "608060405234801561001057600080fd5b50600436106100365760003560e01c8063a02649f11461003b578063d1efd30d14610045575b600080fd5b610043610063565b005b61004d610555565b6040518082815260200191505060405180910390f35b602a600981905550600073bccc714d56bc0da0fd33d96d2a87b680dd6d0df69050600073aee905fdd3ed851e48d22059575b9f4245a82b0490506058600560008473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020819055506063600560008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000208190555061012f61055b565b60405180606001604052806040518060400160405280600c81526020017f6465766963654272616e6431000000000000000000000000000000000000000081525081526020016040518060400160405280600b81526020017f646576696365596561723100000000000000000000000000000000000000000081525081526020016040518060400160405280600a81526020017f776561724c6576656c310000000000000000000000000000000000000000000081525081525090506101f361055b565b60405180606001604052806040518060400160405280600c81526020017f6465766963654272616e6432000000000000000000000000000000000000000081525081526020016040518060400160405280600b81526020017f646576696365596561723200000000000000000000000000000000000000000081525081526020016040518060400160405280600a81526020017f776561724c6576656c3200000000000000000000000000000000000000000000815250815250905081600660008673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001908152602001600020600082015181600001908051906020019061030b92919061057c565b50602082015181600101908051906020019061032892919061057c565b50604082015181600201908051906020019061034592919061057c565b5090505080600660008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008201518160000190805190602001906103a592919061057c565b5060208201518160010190805190602001906103c292919061057c565b5060408201518160020190805190602001906103df92919061057c565b509050506007611f4090806001815401808255809150509060018203906000526020600020016000909192909190915055506007612328908060018154018082558091505090600182039060005260206000200160009091929091909150555060088290806001815401808255809150509060018203906000526020600020906003020160009091929091909150600082015181600001908051906020019061048992919061057c565b5060208201518160010190805190602001906104a692919061057c565b5060408201518160020190805190602001906104c392919061057c565b5050505060088190806001815401808255809150509060018203906000526020600020906003020160009091929091909150600082015181600001908051906020019061051192919061057c565b50602082015181600101908051906020019061052e92919061057c565b50604082015181600201908051906020019061054b92919061057c565b5050505050505050565b60095481565b60405180606001604052806060815260200160608152602001606081525090565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f106105bd57805160ff19168380011785556105eb565b828001600101855582156105eb579182015b828111156105ea5782518255916020019190600101906105cf565b5b5090506105f891906105fc565b5090565b61061e91905b8082111561061a576000816000905550600101610602565b5090565b9056fea165627a7a72305820a07c7d10c9adf468167c92c10882fcfb39503391d656d306da57a0a32f8b0a400029",
   "ast": {
     "absolutePath": "Storage.sol",
     "exportedSymbols": {
       "Storage": [
-        122
+        128
       ]
     },
-    "id": 123,
+    "id": 129,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -41,9 +55,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 122,
+        "id": 128,
         "linearizedBaseContracts": [
-          122
+          128
         ],
         "name": "Storage",
         "nodeType": "ContractDefinition",
@@ -53,7 +67,7 @@
             "id": 4,
             "name": "storeduint1",
             "nodeType": "VariableDeclaration",
-            "scope": 122,
+            "scope": 128,
             "src": "146:21:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -96,7 +110,7 @@
             "id": 7,
             "name": "CONSTUINT",
             "nodeType": "VariableDeclaration",
-            "scope": 122,
+            "scope": 128,
             "src": "171:28:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -139,7 +153,7 @@
             "id": 10,
             "name": "investmentsLimit",
             "nodeType": "VariableDeclaration",
-            "scope": 122,
+            "scope": 128,
             "src": "203:32:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -182,7 +196,7 @@
             "id": 15,
             "name": "investmentsDeadlineTimeStamp",
             "nodeType": "VariableDeclaration",
-            "scope": 122,
+            "scope": 128,
             "src": "239:49:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -209,7 +223,7 @@
                   "name": "now",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 139,
+                  "referencedDeclaration": 145,
                   "src": "284:3:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
@@ -258,7 +272,7 @@
             "id": 18,
             "name": "string1",
             "nodeType": "VariableDeclaration",
-            "scope": 122,
+            "scope": 128,
             "src": "293:25:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -301,7 +315,7 @@
             "id": 21,
             "name": "string2",
             "nodeType": "VariableDeclaration",
-            "scope": 122,
+            "scope": 128,
             "src": "322:28:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -344,7 +358,7 @@
             "id": 24,
             "name": "string3",
             "nodeType": "VariableDeclaration",
-            "scope": 122,
+            "scope": 128,
             "src": "354:40:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -387,7 +401,7 @@
             "id": 28,
             "name": "uints1",
             "nodeType": "VariableDeclaration",
-            "scope": 122,
+            "scope": 128,
             "src": "399:31:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -432,12 +446,12 @@
             "id": 32,
             "name": "structs1",
             "nodeType": "VariableDeclaration",
-            "scope": 122,
+            "scope": 128,
             "src": "434:39:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_DeviceData_$45_storage_$",
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_DeviceData_$47_storage_$",
               "typeString": "mapping(address => struct Storage.DeviceData)"
             },
             "typeName": {
@@ -455,7 +469,7 @@
               "nodeType": "Mapping",
               "src": "434:30:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_DeviceData_$45_storage_$",
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_DeviceData_$47_storage_$",
                 "typeString": "mapping(address => struct Storage.DeviceData)"
               },
               "valueType": {
@@ -463,10 +477,10 @@
                 "id": 30,
                 "name": "DeviceData",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 45,
+                "referencedDeclaration": 47,
                 "src": "453:10:0",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_DeviceData_$45_storage_ptr",
+                  "typeIdentifier": "t_struct$_DeviceData_$47_storage_ptr",
                   "typeString": "struct Storage.DeviceData"
                 }
               }
@@ -479,7 +493,7 @@
             "id": 35,
             "name": "uintarray",
             "nodeType": "VariableDeclaration",
-            "scope": 122,
+            "scope": 128,
             "src": "478:16:0",
             "stateVariable": true,
             "storageLocation": "default",
@@ -515,12 +529,12 @@
             "id": 38,
             "name": "deviceDataArray",
             "nodeType": "VariableDeclaration",
-            "scope": 122,
+            "scope": 128,
             "src": "498:28:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_array$_t_struct$_DeviceData_$45_storage_$dyn_storage",
+              "typeIdentifier": "t_array$_t_struct$_DeviceData_$47_storage_$dyn_storage",
               "typeString": "struct Storage.DeviceData[]"
             },
             "typeName": {
@@ -529,10 +543,10 @@
                 "id": 36,
                 "name": "DeviceData",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 45,
+                "referencedDeclaration": 47,
                 "src": "498:10:0",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_DeviceData_$45_storage_ptr",
+                  "typeIdentifier": "t_struct$_DeviceData_$47_storage_ptr",
                   "typeString": "struct Storage.DeviceData"
                 }
               },
@@ -541,7 +555,7 @@
               "nodeType": "ArrayTypeName",
               "src": "498:12:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_array$_t_struct$_DeviceData_$45_storage_$dyn_storage_ptr",
+                "typeIdentifier": "t_array$_t_struct$_DeviceData_$47_storage_$dyn_storage_ptr",
                 "typeString": "struct Storage.DeviceData[]"
               }
             },
@@ -549,42 +563,42 @@
             "visibility": "internal"
           },
           {
+            "constant": false,
+            "id": 40,
+            "name": "secret",
+            "nodeType": "VariableDeclaration",
+            "scope": 128,
+            "src": "531:18:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 39,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "531:4:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
             "canonicalName": "Storage.DeviceData",
-            "id": 45,
+            "id": 47,
             "members": [
               {
                 "constant": false,
-                "id": 40,
+                "id": 42,
                 "name": "deviceBrand",
                 "nodeType": "VariableDeclaration",
-                "scope": 45,
-                "src": "555:18:0",
-                "stateVariable": false,
-                "storageLocation": "default",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_string_storage_ptr",
-                  "typeString": "string"
-                },
-                "typeName": {
-                  "id": 39,
-                  "name": "string",
-                  "nodeType": "ElementaryTypeName",
-                  "src": "555:6:0",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_string_storage_ptr",
-                    "typeString": "string"
-                  }
-                },
-                "value": null,
-                "visibility": "internal"
-              },
-              {
-                "constant": false,
-                "id": 42,
-                "name": "deviceYear",
-                "nodeType": "VariableDeclaration",
-                "scope": 45,
-                "src": "579:17:0",
+                "scope": 47,
+                "src": "578:18:0",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -595,7 +609,7 @@
                   "id": 41,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "579:6:0",
+                  "src": "578:6:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -607,10 +621,10 @@
               {
                 "constant": false,
                 "id": 44,
-                "name": "batteryWearLevel",
+                "name": "deviceYear",
                 "nodeType": "VariableDeclaration",
-                "scope": 45,
-                "src": "602:23:0",
+                "scope": 47,
+                "src": "602:17:0",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -629,173 +643,62 @@
                 },
                 "value": null,
                 "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 46,
+                "name": "batteryWearLevel",
+                "nodeType": "VariableDeclaration",
+                "scope": 47,
+                "src": "625:23:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 45,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "625:6:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
               }
             ],
             "name": "DeviceData",
             "nodeType": "StructDefinition",
-            "scope": 122,
-            "src": "531:99:0",
+            "scope": 128,
+            "src": "554:99:0",
             "visibility": "public"
           },
           {
             "body": {
-              "id": 120,
+              "id": 126,
               "nodeType": "Block",
-              "src": "664:549:0",
+              "src": "687:567:0",
               "statements": [
-                {
-                  "assignments": [
-                    49
-                  ],
-                  "declarations": [
-                    {
-                      "constant": false,
-                      "id": 49,
-                      "name": "address1",
-                      "nodeType": "VariableDeclaration",
-                      "scope": 120,
-                      "src": "671:16:0",
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      },
-                      "typeName": {
-                        "id": 48,
-                        "name": "address",
-                        "nodeType": "ElementaryTypeName",
-                        "src": "671:7:0",
-                        "stateMutability": "nonpayable",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
-                        }
-                      },
-                      "value": null,
-                      "visibility": "internal"
-                    }
-                  ],
-                  "id": 51,
-                  "initialValue": {
-                    "argumentTypes": null,
-                    "hexValue": "307861416141614161614161416141616141614141414141414141616161416141614161614161614161",
-                    "id": 50,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": true,
-                    "kind": "number",
-                    "lValueRequested": false,
-                    "nodeType": "Literal",
-                    "src": "690:42:0",
-                    "subdenomination": null,
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address_payable",
-                      "typeString": "address payable"
-                    },
-                    "value": "0xaAaAaAaaAaAaAaaAaAAAAAAAAaaaAaAaAaaAaaAa"
-                  },
-                  "nodeType": "VariableDeclarationStatement",
-                  "src": "671:61:0"
-                },
-                {
-                  "assignments": [
-                    53
-                  ],
-                  "declarations": [
-                    {
-                      "constant": false,
-                      "id": 53,
-                      "name": "address2",
-                      "nodeType": "VariableDeclaration",
-                      "scope": 120,
-                      "src": "738:16:0",
-                      "stateVariable": false,
-                      "storageLocation": "default",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_address",
-                        "typeString": "address"
-                      },
-                      "typeName": {
-                        "id": 52,
-                        "name": "address",
-                        "nodeType": "ElementaryTypeName",
-                        "src": "738:7:0",
-                        "stateMutability": "nonpayable",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
-                        }
-                      },
-                      "value": null,
-                      "visibility": "internal"
-                    }
-                  ],
-                  "id": 55,
-                  "initialValue": {
-                    "argumentTypes": null,
-                    "hexValue": "307862426242424242626242424262626242626242626262624242624262626262426242626242426242",
-                    "id": 54,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": true,
-                    "kind": "number",
-                    "lValueRequested": false,
-                    "nodeType": "Literal",
-                    "src": "757:42:0",
-                    "subdenomination": null,
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address_payable",
-                      "typeString": "address payable"
-                    },
-                    "value": "0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB"
-                  },
-                  "nodeType": "VariableDeclarationStatement",
-                  "src": "738:61:0"
-                },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 60,
+                    "id": 52,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "baseExpression": {
-                        "argumentTypes": null,
-                        "id": 56,
-                        "name": "uints1",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 28,
-                        "src": "806:6:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                          "typeString": "mapping(address => uint256)"
-                        }
-                      },
-                      "id": 58,
-                      "indexExpression": {
-                        "argumentTypes": null,
-                        "id": 57,
-                        "name": "address1",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 49,
-                        "src": "813:8:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
-                        }
-                      },
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": true,
-                      "nodeType": "IndexAccess",
-                      "src": "806:16:0",
+                      "id": 50,
+                      "name": "secret",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 40,
+                      "src": "694:6:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -805,31 +708,141 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "hexValue": "3838",
-                      "id": 59,
+                      "hexValue": "3432",
+                      "id": 51,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "825:2:0",
+                      "src": "703:2:0",
                       "subdenomination": null,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_rational_88_by_1",
-                        "typeString": "int_const 88"
+                        "typeIdentifier": "t_rational_42_by_1",
+                        "typeString": "int_const 42"
                       },
-                      "value": "88"
+                      "value": "42"
                     },
-                    "src": "806:21:0",
+                    "src": "694:11:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 61,
+                  "id": 53,
                   "nodeType": "ExpressionStatement",
-                  "src": "806:21:0"
+                  "src": "694:11:0"
+                },
+                {
+                  "assignments": [
+                    55
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 55,
+                      "name": "address1",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 126,
+                      "src": "712:16:0",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      },
+                      "typeName": {
+                        "id": 54,
+                        "name": "address",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "712:7:0",
+                        "stateMutability": "nonpayable",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 57,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "hexValue": "307862436363373134643536626330646130666433336439366432613837623638306444364430444636",
+                    "id": 56,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "731:42:0",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    },
+                    "value": "0xbCcc714d56bc0da0fd33d96d2a87b680dD6D0DF6"
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "712:61:0"
+                },
+                {
+                  "assignments": [
+                    59
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 59,
+                      "name": "address2",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 126,
+                      "src": "779:16:0",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      },
+                      "typeName": {
+                        "id": 58,
+                        "name": "address",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "779:7:0",
+                        "stateMutability": "nonpayable",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 61,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "hexValue": "307861656539303546644433454438353165343864323230353935373562394634323435413832423034",
+                    "id": 60,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "number",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "798:42:0",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    },
+                    "value": "0xaee905FdD3ED851e48d22059575b9F4245A82B04"
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "779:61:0"
                 },
                 {
                   "expression": {
@@ -848,7 +861,7 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 28,
-                        "src": "833:6:0",
+                        "src": "847:6:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                           "typeString": "mapping(address => uint256)"
@@ -858,11 +871,11 @@
                       "indexExpression": {
                         "argumentTypes": null,
                         "id": 63,
-                        "name": "address2",
+                        "name": "address1",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 53,
-                        "src": "840:8:0",
+                        "referencedDeclaration": 55,
+                        "src": "854:8:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -873,7 +886,85 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "833:16:0",
+                      "src": "847:16:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "3838",
+                      "id": 65,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "866:2:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_88_by_1",
+                        "typeString": "int_const 88"
+                      },
+                      "value": "88"
+                    },
+                    "src": "847:21:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 67,
+                  "nodeType": "ExpressionStatement",
+                  "src": "847:21:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 72,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "id": 68,
+                        "name": "uints1",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 28,
+                        "src": "874:6:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                          "typeString": "mapping(address => uint256)"
+                        }
+                      },
+                      "id": 70,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 69,
+                        "name": "address2",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 59,
+                        "src": "881:8:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "874:16:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
@@ -884,14 +975,14 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "3939",
-                      "id": 65,
+                      "id": 71,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "kind": "number",
                       "lValueRequested": false,
                       "nodeType": "Literal",
-                      "src": "852:2:0",
+                      "src": "893:2:0",
                       "subdenomination": null,
                       "typeDescriptions": {
                         "typeIdentifier": "t_rational_99_by_1",
@@ -899,43 +990,43 @@
                       },
                       "value": "99"
                     },
-                    "src": "833:21:0",
+                    "src": "874:21:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 67,
+                  "id": 73,
                   "nodeType": "ExpressionStatement",
-                  "src": "833:21:0"
+                  "src": "874:21:0"
                 },
                 {
                   "assignments": [
-                    69
+                    75
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 69,
+                      "id": 75,
                       "name": "dev1",
                       "nodeType": "VariableDeclaration",
-                      "scope": 120,
-                      "src": "861:22:0",
+                      "scope": 126,
+                      "src": "902:22:0",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DeviceData_$45_memory_ptr",
+                        "typeIdentifier": "t_struct$_DeviceData_$47_memory_ptr",
                         "typeString": "struct Storage.DeviceData"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 68,
+                        "id": 74,
                         "name": "DeviceData",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 45,
-                        "src": "861:10:0",
+                        "referencedDeclaration": 47,
+                        "src": "902:10:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DeviceData_$45_storage_ptr",
+                          "typeIdentifier": "t_struct$_DeviceData_$47_storage_ptr",
                           "typeString": "struct Storage.DeviceData"
                         }
                       },
@@ -943,21 +1034,21 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 75,
+                  "id": 81,
                   "initialValue": {
                     "argumentTypes": null,
                     "arguments": [
                       {
                         "argumentTypes": null,
                         "hexValue": "6465766963654272616e6431",
-                        "id": 71,
+                        "id": 77,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "897:14:0",
+                        "src": "938:14:0",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_3e0d81e125f6cd3689221589b543df69bac57a0fd1c3ff7518fb998e2f9d9240",
@@ -968,14 +1059,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "6465766963655965617231",
-                        "id": 72,
+                        "id": 78,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "913:13:0",
+                        "src": "954:13:0",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_f7d91f8efaa390b4ef94e7d4118b1f383fdcbde37e7b847a0631608eb3610e1d",
@@ -986,14 +1077,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "776561724c6576656c31",
-                        "id": 73,
+                        "id": 79,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "928:12:0",
+                        "src": "969:12:0",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_da93e027d55205f00243fbb79c818352e88591ff08726816a3fd083b239a537a",
@@ -1017,18 +1108,18 @@
                           "typeString": "literal_string \"wearLevel1\""
                         }
                       ],
-                      "id": 70,
+                      "id": 76,
                       "name": "DeviceData",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 45,
-                      "src": "886:10:0",
+                      "referencedDeclaration": 47,
+                      "src": "927:10:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_struct$_DeviceData_$45_storage_ptr_$",
+                        "typeIdentifier": "t_type$_t_struct$_DeviceData_$47_storage_ptr_$",
                         "typeString": "type(struct Storage.DeviceData storage pointer)"
                       }
                     },
-                    "id": 74,
+                    "id": 80,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -1036,42 +1127,42 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "886:55:0",
+                    "src": "927:55:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_DeviceData_$45_memory",
+                      "typeIdentifier": "t_struct$_DeviceData_$47_memory",
                       "typeString": "struct Storage.DeviceData memory"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "861:80:0"
+                  "src": "902:80:0"
                 },
                 {
                   "assignments": [
-                    77
+                    83
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 77,
+                      "id": 83,
                       "name": "dev2",
                       "nodeType": "VariableDeclaration",
-                      "scope": 120,
-                      "src": "947:22:0",
+                      "scope": 126,
+                      "src": "988:22:0",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DeviceData_$45_memory_ptr",
+                        "typeIdentifier": "t_struct$_DeviceData_$47_memory_ptr",
                         "typeString": "struct Storage.DeviceData"
                       },
                       "typeName": {
                         "contractScope": null,
-                        "id": 76,
+                        "id": 82,
                         "name": "DeviceData",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 45,
-                        "src": "947:10:0",
+                        "referencedDeclaration": 47,
+                        "src": "988:10:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DeviceData_$45_storage_ptr",
+                          "typeIdentifier": "t_struct$_DeviceData_$47_storage_ptr",
                           "typeString": "struct Storage.DeviceData"
                         }
                       },
@@ -1079,21 +1170,21 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 83,
+                  "id": 89,
                   "initialValue": {
                     "argumentTypes": null,
                     "arguments": [
                       {
                         "argumentTypes": null,
                         "hexValue": "6465766963654272616e6432",
-                        "id": 79,
+                        "id": 85,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "983:14:0",
+                        "src": "1024:14:0",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_08da4e55b3e3f747cebe4e42ac9688d2f9055c55715f7e3b5d4a769cbc387f00",
@@ -1104,14 +1195,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "6465766963655965617232",
-                        "id": 80,
+                        "id": 86,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "999:13:0",
+                        "src": "1040:13:0",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_007e0f9f42fc687669d8ab9e812acef8fe2482ee85a6333a4a5a8b65e054a3d1",
@@ -1122,14 +1213,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "776561724c6576656c32",
-                        "id": 81,
+                        "id": 87,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "1014:12:0",
+                        "src": "1055:12:0",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_f42e13b584cacb47a3c79864fe4fbfb1496a81abc254a89069e5c8393ef9ac79",
@@ -1153,18 +1244,18 @@
                           "typeString": "literal_string \"wearLevel2\""
                         }
                       ],
-                      "id": 78,
+                      "id": 84,
                       "name": "DeviceData",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 45,
-                      "src": "972:10:0",
+                      "referencedDeclaration": 47,
+                      "src": "1013:10:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_struct$_DeviceData_$45_storage_ptr_$",
+                        "typeIdentifier": "t_type$_t_struct$_DeviceData_$47_storage_ptr_$",
                         "typeString": "type(struct Storage.DeviceData storage pointer)"
                       }
                     },
-                    "id": 82,
+                    "id": 88,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -1172,87 +1263,14 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "972:55:0",
+                    "src": "1013:55:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_DeviceData_$45_memory",
+                      "typeIdentifier": "t_struct$_DeviceData_$47_memory",
                       "typeString": "struct Storage.DeviceData memory"
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "947:80:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "id": 88,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftHandSide": {
-                      "argumentTypes": null,
-                      "baseExpression": {
-                        "argumentTypes": null,
-                        "id": 84,
-                        "name": "structs1",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 32,
-                        "src": "1034:8:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_DeviceData_$45_storage_$",
-                          "typeString": "mapping(address => struct Storage.DeviceData storage ref)"
-                        }
-                      },
-                      "id": 86,
-                      "indexExpression": {
-                        "argumentTypes": null,
-                        "id": 85,
-                        "name": "address1",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 49,
-                        "src": "1043:8:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_address",
-                          "typeString": "address"
-                        }
-                      },
-                      "isConstant": false,
-                      "isLValue": true,
-                      "isPure": false,
-                      "lValueRequested": true,
-                      "nodeType": "IndexAccess",
-                      "src": "1034:18:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DeviceData_$45_storage",
-                        "typeString": "struct Storage.DeviceData storage ref"
-                      }
-                    },
-                    "nodeType": "Assignment",
-                    "operator": "=",
-                    "rightHandSide": {
-                      "argumentTypes": null,
-                      "id": 87,
-                      "name": "dev1",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 69,
-                      "src": "1055:4:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DeviceData_$45_memory_ptr",
-                        "typeString": "struct Storage.DeviceData memory"
-                      }
-                    },
-                    "src": "1034:25:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_DeviceData_$45_storage",
-                      "typeString": "struct Storage.DeviceData storage ref"
-                    }
-                  },
-                  "id": 89,
-                  "nodeType": "ExpressionStatement",
-                  "src": "1034:25:0"
+                  "src": "988:80:0"
                 },
                 {
                   "expression": {
@@ -1271,9 +1289,9 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 32,
-                        "src": "1065:8:0",
+                        "src": "1075:8:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_DeviceData_$45_storage_$",
+                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_DeviceData_$47_storage_$",
                           "typeString": "mapping(address => struct Storage.DeviceData storage ref)"
                         }
                       },
@@ -1281,11 +1299,11 @@
                       "indexExpression": {
                         "argumentTypes": null,
                         "id": 91,
-                        "name": "address2",
+                        "name": "address1",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 53,
-                        "src": "1074:8:0",
+                        "referencedDeclaration": 55,
+                        "src": "1084:8:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -1296,9 +1314,9 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "1065:18:0",
+                      "src": "1075:18:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DeviceData_$45_storage",
+                        "typeIdentifier": "t_struct$_DeviceData_$47_storage",
                         "typeString": "struct Storage.DeviceData storage ref"
                       }
                     },
@@ -1307,25 +1325,98 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "id": 93,
-                      "name": "dev2",
+                      "name": "dev1",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 77,
-                      "src": "1086:4:0",
+                      "referencedDeclaration": 75,
+                      "src": "1096:4:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DeviceData_$45_memory_ptr",
+                        "typeIdentifier": "t_struct$_DeviceData_$47_memory_ptr",
                         "typeString": "struct Storage.DeviceData memory"
                       }
                     },
-                    "src": "1065:25:0",
+                    "src": "1075:25:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_DeviceData_$45_storage",
+                      "typeIdentifier": "t_struct$_DeviceData_$47_storage",
                       "typeString": "struct Storage.DeviceData storage ref"
                     }
                   },
                   "id": 95,
                   "nodeType": "ExpressionStatement",
-                  "src": "1065:25:0"
+                  "src": "1075:25:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 100,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "id": 96,
+                        "name": "structs1",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 32,
+                        "src": "1106:8:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_DeviceData_$47_storage_$",
+                          "typeString": "mapping(address => struct Storage.DeviceData storage ref)"
+                        }
+                      },
+                      "id": 98,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 97,
+                        "name": "address2",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 59,
+                        "src": "1115:8:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "1106:18:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_DeviceData_$47_storage",
+                        "typeString": "struct Storage.DeviceData storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 99,
+                      "name": "dev2",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 83,
+                      "src": "1127:4:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_DeviceData_$47_memory_ptr",
+                        "typeString": "struct Storage.DeviceData memory"
+                      }
+                    },
+                    "src": "1106:25:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_DeviceData_$47_storage",
+                      "typeString": "struct Storage.DeviceData storage ref"
+                    }
+                  },
+                  "id": 101,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1106:25:0"
                 },
                 {
                   "expression": {
@@ -1334,14 +1425,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "38303030",
-                        "id": 99,
+                        "id": 105,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "1112:4:0",
+                        "src": "1153:4:0",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_8000_by_1",
@@ -1359,18 +1450,18 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 96,
+                        "id": 102,
                         "name": "uintarray",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 35,
-                        "src": "1097:9:0",
+                        "src": "1138:9:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
                         }
                       },
-                      "id": 98,
+                      "id": 104,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1378,13 +1469,13 @@
                       "memberName": "push",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "1097:14:0",
+                      "src": "1138:14:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_arraypush_nonpayable$_t_uint256_$returns$_t_uint256_$",
                         "typeString": "function (uint256) returns (uint256)"
                       }
                     },
-                    "id": 100,
+                    "id": 106,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1392,15 +1483,15 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1097:20:0",
+                    "src": "1138:20:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     }
                   },
-                  "id": 101,
+                  "id": 107,
                   "nodeType": "ExpressionStatement",
-                  "src": "1097:20:0"
+                  "src": "1138:20:0"
                 },
                 {
                   "expression": {
@@ -1409,14 +1500,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "39303030",
-                        "id": 105,
+                        "id": 111,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "1138:4:0",
+                        "src": "1179:4:0",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_9000_by_1",
@@ -1434,85 +1525,15 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 102,
+                        "id": 108,
                         "name": "uintarray",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 35,
-                        "src": "1123:9:0",
+                        "src": "1164:9:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_storage",
                           "typeString": "uint256[] storage ref"
-                        }
-                      },
-                      "id": 104,
-                      "isConstant": false,
-                      "isLValue": false,
-                      "isPure": false,
-                      "lValueRequested": false,
-                      "memberName": "push",
-                      "nodeType": "MemberAccess",
-                      "referencedDeclaration": null,
-                      "src": "1123:14:0",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_uint256_$returns$_t_uint256_$",
-                        "typeString": "function (uint256) returns (uint256)"
-                      }
-                    },
-                    "id": 106,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "kind": "functionCall",
-                    "lValueRequested": false,
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "1123:20:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "id": 107,
-                  "nodeType": "ExpressionStatement",
-                  "src": "1123:20:0"
-                },
-                {
-                  "expression": {
-                    "argumentTypes": null,
-                    "arguments": [
-                      {
-                        "argumentTypes": null,
-                        "id": 111,
-                        "name": "dev1",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 69,
-                        "src": "1171:4:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DeviceData_$45_memory_ptr",
-                          "typeString": "struct Storage.DeviceData memory"
-                        }
-                      }
-                    ],
-                    "expression": {
-                      "argumentTypes": [
-                        {
-                          "typeIdentifier": "t_struct$_DeviceData_$45_memory_ptr",
-                          "typeString": "struct Storage.DeviceData memory"
-                        }
-                      ],
-                      "expression": {
-                        "argumentTypes": null,
-                        "id": 108,
-                        "name": "deviceDataArray",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 38,
-                        "src": "1150:15:0",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_DeviceData_$45_storage_$dyn_storage",
-                          "typeString": "struct Storage.DeviceData storage ref[] storage ref"
                         }
                       },
                       "id": 110,
@@ -1523,10 +1544,10 @@
                       "memberName": "push",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "1150:20:0",
+                      "src": "1164:14:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_struct$_DeviceData_$45_storage_$returns$_t_uint256_$",
-                        "typeString": "function (struct Storage.DeviceData storage ref) returns (uint256)"
+                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_uint256_$returns$_t_uint256_$",
+                        "typeString": "function (uint256) returns (uint256)"
                       }
                     },
                     "id": 112,
@@ -1537,7 +1558,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1150:26:0",
+                    "src": "1164:20:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1545,7 +1566,7 @@
                   },
                   "id": 113,
                   "nodeType": "ExpressionStatement",
-                  "src": "1150:26:0"
+                  "src": "1164:20:0"
                 },
                 {
                   "expression": {
@@ -1554,13 +1575,13 @@
                       {
                         "argumentTypes": null,
                         "id": 117,
-                        "name": "dev2",
+                        "name": "dev1",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 77,
-                        "src": "1203:4:0",
+                        "referencedDeclaration": 75,
+                        "src": "1212:4:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DeviceData_$45_memory_ptr",
+                          "typeIdentifier": "t_struct$_DeviceData_$47_memory_ptr",
                           "typeString": "struct Storage.DeviceData memory"
                         }
                       }
@@ -1568,7 +1589,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_DeviceData_$45_memory_ptr",
+                          "typeIdentifier": "t_struct$_DeviceData_$47_memory_ptr",
                           "typeString": "struct Storage.DeviceData memory"
                         }
                       ],
@@ -1579,9 +1600,9 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 38,
-                        "src": "1182:15:0",
+                        "src": "1191:15:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_array$_t_struct$_DeviceData_$45_storage_$dyn_storage",
+                          "typeIdentifier": "t_array$_t_struct$_DeviceData_$47_storage_$dyn_storage",
                           "typeString": "struct Storage.DeviceData storage ref[] storage ref"
                         }
                       },
@@ -1593,9 +1614,9 @@
                       "memberName": "push",
                       "nodeType": "MemberAccess",
                       "referencedDeclaration": null,
-                      "src": "1182:20:0",
+                      "src": "1191:20:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_struct$_DeviceData_$45_storage_$returns$_t_uint256_$",
+                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_struct$_DeviceData_$47_storage_$returns$_t_uint256_$",
                         "typeString": "function (struct Storage.DeviceData storage ref) returns (uint256)"
                       }
                     },
@@ -1607,7 +1628,7 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1182:26:0",
+                    "src": "1191:26:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1615,40 +1636,110 @@
                   },
                   "id": 119,
                   "nodeType": "ExpressionStatement",
-                  "src": "1182:26:0"
+                  "src": "1191:26:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 123,
+                        "name": "dev2",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 83,
+                        "src": "1244:4:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_DeviceData_$47_memory_ptr",
+                          "typeString": "struct Storage.DeviceData memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_struct$_DeviceData_$47_memory_ptr",
+                          "typeString": "struct Storage.DeviceData memory"
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 120,
+                        "name": "deviceDataArray",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 38,
+                        "src": "1223:15:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_array$_t_struct$_DeviceData_$47_storage_$dyn_storage",
+                          "typeString": "struct Storage.DeviceData storage ref[] storage ref"
+                        }
+                      },
+                      "id": 122,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "push",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "1223:20:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_arraypush_nonpayable$_t_struct$_DeviceData_$47_storage_$returns$_t_uint256_$",
+                        "typeString": "function (struct Storage.DeviceData storage ref) returns (uint256)"
+                      }
+                    },
+                    "id": 124,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1223:26:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 125,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1223:26:0"
                 }
               ]
             },
             "documentation": null,
-            "id": 121,
+            "id": 127,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "testStorage",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 46,
+              "id": 48,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "654:2:0"
+              "src": "677:2:0"
             },
             "returnParameters": {
-              "id": 47,
+              "id": 49,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "664:0:0"
+              "src": "687:0:0"
             },
-            "scope": 122,
-            "src": "634:579:0",
+            "scope": 128,
+            "src": "657:597:0",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 123,
-        "src": "124:1091:0"
+        "scope": 129,
+        "src": "124:1132:0"
       }
     ],
-    "src": "0:1216:0"
+    "src": "0:1257:0"
   }
 }

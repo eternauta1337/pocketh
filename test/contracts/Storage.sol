@@ -19,6 +19,8 @@ contract Storage {
   uint[] uintarray;
   DeviceData[] deviceDataArray;
 
+  uint public secret;
+
   struct DeviceData {
     string deviceBrand;
     string deviceYear;
@@ -26,6 +28,8 @@ contract Storage {
   }
 
   function testStorage() public {
+
+    secret = 42;
 
     address address1 = 0xbCcc714d56bc0da0fd33d96d2a87b680dD6D0DF6;
     address address2 = 0xaee905FdD3ED851e48d22059575b9F4245A82B04;
