@@ -67,4 +67,9 @@ describe('txs command', () => {
     );
     expect(result.stdout).toContain(`Found 27 transactions`);
   });
+
+  // test('Should complain when an invalid contract address is provided', async () => {
+  //   const result = await cli('txs', 'localhost', '0x123', );
+  //   expect(result.code).toBe(1);
+  // });
 });
