@@ -1,7 +1,7 @@
 const cli = require('../../src/utils/cli.js');
 
 describe('txs command', () => {
-  test('Should find a know number of transactions from a known contract deployed in mainnet', async () => {
+  test('Should find a known number of transactions from a known contract deployed in mainnet', async () => {
     const result = await cli(
       'txs', 
       'mainnet',
