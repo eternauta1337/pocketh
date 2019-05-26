@@ -1,5 +1,6 @@
 .env
 node_modules/*
+!test/node_modules/
 config.json
 soljson*
 log
