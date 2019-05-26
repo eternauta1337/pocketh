@@ -33,5 +33,16 @@ describe('split command', () => {
     // Compilation output should exist and have content.
     expect(fs.existsSync(`${tmpdir.name}/KittyCore.json`));
     expect(fs.readFileSync(`${tmpdir.name}/KittyCore.json`, 'utf8').length).toBeGreaterThan(0);
+
+    // Compilation output should have the right inheritance tree.
+    result = await cli('inheritance', './test/artifacts/KittyCore.json');
+    expect(result.stdout).toContain(`└─ KittyCore
+   └─ KittyMinting
+      └─ KittyAuction
+         └─ KittyBreeding
+            └─ KittyOwnership
+               ├─ KittyBase
+               │  └─ KittyAccessControl
+               └─ ERC721`);
   });
 });
