@@ -100,7 +100,7 @@ module.exports = {
           const contract = contracts[i];
 
           // Get contract name.
-          const nameMatches = contract.match(/(?<=^contract )\b\w+\b/gm);
+          const nameMatches = contract.match(/(?<=contract )\b\w+\b/gm);
           if(!nameMatches || nameMatches.length === 0) throw new Error(`Unable to find name in contract: ${contract}`);
           const name = nameMatches[0];
 
