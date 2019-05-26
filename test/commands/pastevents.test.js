@@ -72,4 +72,10 @@ describe('pastevents command', () => {
     // Should find the transaction hash that produced the event.
     expect(result.stdout).toContain(`0x451e3b1baa371c9add7ce87e6a4da12add346b52a3b31d468790557a72512553`);
   });
+
+  test('Should complain when an invalid contract address is provided', async () => {
+    const result = await cli('pastevents', 'localhost', 'test/artifacts/KittyAuction.json', '0x123', 'f', 'f', 'f');
+    expect(result.code).toBe(1);
+    expect(result.stderr).toContain('Invalid contract address');
+  });
 });

@@ -158,5 +158,10 @@ If you can think of something useful that could be added to the tool, pls don’
 
 Even better, if you want to throw a PR, you’re more than welcome! Just make sure that tests pass before submitting your pull request with `npm test`.
 
+**Running tets**
+Make sure that you run `npm run ganache` before starting tests.
+To Start tests run `npm test`.
+_Note: Unfortunately, pocketh currently requires an active internet connection for some of its tests, since some commands interact with public networks like mainnet and ropsten, and use public apis like Etherscan's api._ 
+
 **Architecture**:
 Architecture-wise, each command/script should be self contained, so there is no complex architecture going on. **pocketh** is basically just a collection of scripts.

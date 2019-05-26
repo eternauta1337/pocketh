@@ -68,8 +68,15 @@ describe('txs command', () => {
     expect(result.stdout).toContain(`Found 27 transactions`);
   });
 
-  // test('Should complain when an invalid contract address is provided', async () => {
-  //   const result = await cli('txs', 'localhost', '0x123', );
-  //   expect(result.code).toBe(1);
-  // });
+  test('Should complain when an invalid contract address is provided', async () => {
+    const result = await cli('txs', 'localhost', '0x123', 'f', 'f', 'f');
+    expect(result.code).toBe(1);
+    expect(result.stderr).toContain('Invalid contractAddress');
+  });
+
+  test('Should complain when an invalid function selector is provided', async () => {
+    const result = await cli('txs', 'localhost', '0x06012c8cf97bead5deae237070f9587f8e7a266d', '0xcqf', 'f', 'f');
+    expect(result.code).toBe(1);
+    expect(result.stderr).toContain('Invalid functionSelector');
+  });
 });
