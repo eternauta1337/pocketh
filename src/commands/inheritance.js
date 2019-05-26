@@ -31,7 +31,7 @@ module.exports = {
       .action(async (contractPath) => {
         
         // Retrieve contract artifacts.
-        const { artifacts } = await getArtifacts(contractPath);
+        const { artifacts, basedir } = await getArtifacts(contractPath);
 
         // Retrieve the ast.
         const ast = artifacts.ast;
@@ -39,7 +39,6 @@ module.exports = {
 
         // Retrieve the target contract definition node.
         const rootContractName = path.basename(contractPath).split('.')[0];
-        const basedir = path.dirname(contractPath);
         const rootContractDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', rootContractName);
 
         // Start the inheritance tree structure.
