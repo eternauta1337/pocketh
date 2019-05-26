@@ -1,7 +1,6 @@
 const globals = require('../../src/globals.js');
 const cli = require('../../src/utils/cli.js');
 const path = require('path');
-jest.setTimeout(60000);
 
 describe('help', () => {
 
