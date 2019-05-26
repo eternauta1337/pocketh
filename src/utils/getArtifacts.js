@@ -38,7 +38,7 @@ module.exports = async function(contractPath) {
     return {
       artifacts: retrieveJsonArtifacts(compiledPath),
       basedir: tmpdir.name
-    }
+    };
   }
 
   throw new Error(`Unrecognized extension ${ext}`);
