@@ -62,10 +62,10 @@ module.exports = {
           throw new Error(`Cannot find ${sourcePath}.`);
 
         // Validate output directory.
-        if(outputDirectory.charAt(outputDirectory.length - 1) !== '/') 
-          throw new Error('outputDirectory must be a directory path.');
         if(!fs.existsSync(outputDirectory)) 
           throw new Error(`Cannot find ${outputDirectory}.`);
+        if(!fs.lstatSync(outputDirectory).isDirectory())
+          throw new Error('outputDirectory must be a directory path.');
 
         // Parse search paths.
         if(options.searchPaths) {
@@ -95,7 +95,7 @@ module.exports = {
 
         // Write json files to disk.
         splitOutput.forEach(json => {
-          const destPath = outputDirectory + json.contractName + '.json';
+          const destPath = path.resolve(outputDirectory, json.contractName + '.json');
           fs.writeFileSync(destPath, JSON.stringify(json, null, 2));
         });
 

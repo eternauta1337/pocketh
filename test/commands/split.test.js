@@ -11,7 +11,7 @@ describe('split command', () => {
     console.log(`Test directory: ${tmpdir.name}`);
 
     // Split the contract.
-    let result = await cli('split', 'test/contracts/KittyCore.sol', `${tmpdir.name}/`);
+    let result = await cli('split', 'test/contracts/KittyCore.sol', tmpdir.name);
     expect(result.code).toBe(0);
     expect(result.stdout).toContain(`New files written to ${tmpdir.name}`);
 

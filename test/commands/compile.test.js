@@ -25,7 +25,7 @@ describe('compile command', () => {
   });
   
   test('Should not compile when the specified output directory is not a valid directory', async () => {
-    const result = await cli('compile', 'test/contracts/Test.sol', '/spongi', '0.4.24');
+    const result = await cli('compile', 'test/contracts/Test.sol', 'test/setup.js', '0.4.24');
     expect(result.code).toBe(1);
     expect(result.stderr).toContain('must be a directory path');
   });

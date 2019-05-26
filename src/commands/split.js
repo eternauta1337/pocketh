@@ -41,9 +41,12 @@ module.exports = {
       .action((sourcePath, outputDirectory) => {
 
         // Validate input.
-        if(!fs.existsSync(sourcePath)) throw new Error(`Cannot find source file: ${sourcePath}`);
-        if(outputDirectory.charAt(outputDirectory.length - 1) !== '/') throw new Error('outputDirectory must be a directory path.');
-        if(!fs.existsSync(outputDirectory)) throw new Error(`Cannot find ${outputDirectory}.`);
+        if(!fs.existsSync(sourcePath)) 
+          throw new Error(`Cannot find source file: ${sourcePath}`);
+        if(!fs.existsSync(outputDirectory)) 
+          throw new Error(`Cannot find ${outputDirectory}.`);
+        if(!fs.lstatSync(outputDirectory).isDirectory())
+          throw new Error('outputDirectory must be a directory path.');
 
         // Read file.
         let source = fs.readFileSync(sourcePath, 'utf8');
@@ -129,10 +132,11 @@ module.exports = {
           const contract = contracts[i];
 
           // Build target path.
-          const path = `${outputDirectory}${names[i]}.sol`;
+          const outPath = path.resolve(outputDirectory, `${names[i]}.sol`);
+          // console.log(`outPath: ${outPath}`);
 
           // Write file.
-          fs.writeFileSync(path, contract);
+          fs.writeFileSync(outPath, contract);
         }
 
         // Report.
