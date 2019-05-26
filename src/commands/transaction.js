@@ -44,7 +44,7 @@ module.exports = {
 
         const web3 = await getWeb3(networkUrl);
         const tx = await web3.eth.getTransaction(txHash);
-        console.log(`${txHash} => ${ JSON.stringify(tx, null, 2) }`);
+        console.log(JSON.stringify(tx, null, 2));
       });
   }
 };

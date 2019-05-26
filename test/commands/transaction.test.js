@@ -1,27 +1,44 @@
 const cli = require('../../src/utils/cli.js');
+const getWeb3 = require('../../src/utils/getWeb3.js');
 
 describe('transaction command', () => {
-  test('Should properly retrieve a known transaction from mainnet', async () => {
+
+  test('Should complain when an invalid tx hash is provided', async () => {
     const result = await cli(
       'transaction', 
-      'mainnet',
-      '0x95ecb5317de43d2c682e93350f160c10d3a816002ad43f2b67fb631062c1484b'
+      'localhost',
+      '0x95ecb5317de43d2c682e93'
     );
-    expect(result.stdout).toContain(`0x95ecb5317de43d2c682e93350f160c10d3a816002ad43f2b67fb631062c1484b => {
-  "blockHash": "0xcabafc45ffe90a54faac651195a5100029d398c08ef81d7b556e412d03f16002",
-  "blockNumber": 7729790,
-  "from": "0x992E68379eFC08A1c7B8C1E3bD335E87BF9A4b7B",
-  "gas": 104068,
-  "gasPrice": "1100000000",
-  "hash": "0x95ecb5317de43d2c682e93350f160c10d3a816002ad43f2b67fb631062c1484b",
-  "input": "0xa9059cbb000000000000000000000000eeff3793df0685d54805b8807d1fd63cc66f9c2f000000000000000000000000000000000000000000000000000000000015011d",
-  "nonce": 1664,
-  "r": "0xf924c5771646d973657a7cdf3dd58a41eb6956c8a855fc32362d37490070244a",
-  "s": "0x6b0d1df736e24e16b52763e95fdd1d0f64571d172b426888202bb6cb09440b20",
-  "to": "0x06012c8cf97BEaD5deAe237070F9587f8E7A266d",
-  "transactionIndex": 8,
-  "v": "0x26",
-  "value": "0"
-}`);
+    expect(result.code).toBe(1);
+  });
+
+  test('Should retrieve a known transaction from localhost', async () => {
+    
+    // Set up web3.
+    const web3 = await getWeb3('localhost');
+
+    // Send a dummy transaction so that there is at least 1 block.
+    const accounts = await web3.eth.getAccounts();
+    const txReceipt = await web3.eth.sendTransaction({
+      from: accounts[0],
+      to: accounts[1],
+      value: 1,
+      gas: 100000,
+      gasPrice: 1
+    });
+
+    // Trigger command by block number.
+    const result = await cli(
+      'transaction', 
+      'localhost',
+      txReceipt.transactionHash
+    );
+    const tx = JSON.parse(result.stdout);
+
+    // Verify results.
+    expect(txReceipt.transactionHash).toBe(tx.hash);
+    expect(txReceipt.blockHash).toBe(tx.blockHash);
+    expect(txReceipt.from).toBe(tx.from.toLowerCase());
+    expect(txReceipt.to).toBe(tx.to.toLowerCase());
   });
 });
