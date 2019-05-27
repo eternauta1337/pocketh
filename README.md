@@ -70,7 +70,7 @@ pocketh <command> --help
 ```
 
 ### Contributing:
-If you can think of something useful that could be added to the tool, please don't hesitate to create a new issue with your feature request. Keep in mind that the tool is intended to only read the blockchain, i.e. it is not intended to send txs.
+If you think of something useful that could be added to the tool, please don't hesitate to create a new issue with your feature request.
 
 #### Running tests
 Make sure that you run `npm run ganache` before starting tests. Then run `npm test`.
