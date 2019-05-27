@@ -70,7 +70,7 @@ pocketh <command> --help
 ```
 
 ### Contributing:
-If you think of something useful that could be added to the tool, please don't hesitate to create a new issue with your feature request.
+If you think of something useful that could be added to the tool, or have an idea, please don't hesitate to create a new issue with your feature request. Or, even better, go ahead and create a PR! Pocketh's architecture is intended to be as simple as possible so that it's super easy to add new scripts. Every command is pretty much a standalone script, with the exception of a few convenient tools that are shared between some of the commands.
 
 #### Running tests
 Make sure that you run `npm run ganache` before starting tests. Then run `npm test`.
