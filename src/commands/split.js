@@ -100,9 +100,9 @@ module.exports = {
           const contract = contracts[i];
 
           // Get contract name.
-          const nameMatches = contract.match(/(?<=contract )\b\w+\b/gm);
-          if(!nameMatches || nameMatches.length === 0) throw new Error(`Unable to find name in contract: ${contract}`);
-          const name = nameMatches[0];
+          const contractDefs = contract.match(/^\s*contract.*/gm);
+          if(!contractDefs || contractDefs.length === 0) throw new Error(`Unable to find contract definition in ${contract}`);
+          const name = contractDefs[0].match(/(?<=contract )\b\w+\b/);
 
           names.push(name);
         }
@@ -114,7 +114,7 @@ module.exports = {
           for(let j = 0; j < names.length; j++) {
             if(i !== j) {
               const otherName = names[j];
-              const noComments = contracts[i].replace(/\s*\/\/.*/gm, '');
+              const noComments = contracts[i].replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, '');
               const otherNameMatches = noComments.match(new RegExp(`${otherName}`, 'gm'));
               if(otherNameMatches && otherNameMatches.length > 0) {
                 contracts[i] = `import "./${otherName}.sol";\n${contracts[i]}`;
