@@ -28,7 +28,7 @@
       "type": "event"
     }
   ],
-  "metadata": "",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"test\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"AnEvent\",\"type\":\"event\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"SampleAbstract.sol\":\"SampleAbstract\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"SampleAbstract.sol\":{\"keccak256\":\"0x5bea0368db7d1e12909ddef38a1df8eb6751f889687fdca1993bde4bc5a531ed\",\"urls\":[\"bzzr://2b5af4acf10f440faf2fe67c31002d9ef1ab752e974bde1b7508cdf7fcc5ce1f\"]}},\"version\":1}",
   "bytecode": "",
   "deployedBytecode": "",
   "ast": {

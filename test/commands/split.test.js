@@ -8,10 +8,21 @@ describe('split command', () => {
 
     // Set up a temp directory to hold the output.
     const tmpdir = tmp.dirSync();
+    const filepath = `${tmpdir.name}/Kitties.sol`;
     console.log(`Test directory: ${tmpdir.name}`);
 
+    // Retrieve the code.
+    let result = await cli(
+      'getcode', 
+      '0x06012c8cf97bead5deae237070f9587f8e7a266d',
+      filepath
+    );
+
+    // Verify command output.
+    expect(result.stdout).toContain(`Source code written to ${filepath}`);
+
     // Split the contract.
-    let result = await cli('split', 'test/contracts/KittyCore.sol', tmpdir.name);
+    result = await cli('split', filepath, tmpdir.name);
     expect(result.code).toBe(0);
     expect(result.stdout).toContain(`New files written to ${tmpdir.name}`);
 
@@ -35,7 +46,7 @@ describe('split command', () => {
     expect(fs.readFileSync(`${tmpdir.name}/KittyCore.json`, 'utf8').length).toBeGreaterThan(0);
 
     // Compilation output should have the right inheritance tree.
-    result = await cli('inheritance', './test/artifacts/KittyCore.json');
+    result = await cli('inheritance', `${tmpdir.name}/KittyCore.json`);
     expect(result.stdout).toContain(`└─ KittyCore
    └─ KittyMinting
       └─ KittyAuction

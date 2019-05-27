@@ -63,14 +63,4 @@ describe('compile command', () => {
     result = await cli('compile', 'test/contracts/subdir/subsubdir/NodeModules.sol', '/tmp/');
     expect(result.code).toBe(0);
   });
-  
-  test('Should be able to compile a file with multiple contracts on the same file', async () => {
-    const result = await cli('compile', 'test/contracts/Kitties.sol', '/tmp/');
-    expect(result.code).toBe(0);
-  });
-  
-  test('Should be able to compile a contract with dependencies on multiple files', async () => {
-    const result = await cli('compile', 'test/contracts/KittyCore.sol', '/tmp/');
-    expect(result.code).toBe(0);
-  });
 });

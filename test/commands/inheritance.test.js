@@ -31,28 +31,4 @@ describe('inheritance command', () => {
    └─ SampleDependency
       └─ SampleAbstract`);
   });
-
-  test('Should properly list the inheritance of KittyCore.json', async () => {
-    const result = await cli('inheritance', './test/artifacts/KittyCore.json');
-    expect(result.stdout).toContain(`└─ KittyCore
-   └─ KittyMinting
-      └─ KittyAuction
-         └─ KittyBreeding
-            └─ KittyOwnership
-               ├─ KittyBase
-               │  └─ KittyAccessControl
-               └─ ERC721`);
-  });
-
-  test('Should properly list the inheritance of KittyCore.sol', async () => {
-    const result = await cli('inheritance', './test/contracts/KittyCore.sol');
-    expect(result.stdout).toContain(`└─ KittyCore
-   └─ KittyMinting
-      └─ KittyAuction
-         └─ KittyBreeding
-            └─ KittyOwnership
-               ├─ KittyBase
-               │  └─ KittyAccessControl
-               └─ ERC721`);
-  });
 });
