@@ -3,6 +3,7 @@ const path = require('path');
 const solcjsResolver = require('./solcjsResolver');
 const jsonIO = require('./jsonIO');
 const chalk = require('chalk');
+const findNodeModules = require('find-node-modules');
 
 const signature = 'compile <sourcePath> <outputDirectory> [solcVersion]';
 const description = 'Compiles single Solidity files.';
@@ -38,8 +39,7 @@ Compiled RelayHub.sol succesfully to /tmp/
 `;
 
 let searchPaths = [
-  '',
-  '../node_modules/',
+  ''
 ];
 
 let sourceDir;
@@ -51,7 +51,7 @@ module.exports = {
     program
       .command(signature, {noHelp: true})
       .description(description)
-      .option(`--searchPaths <searchPaths>`, `Specify additional search paths for dependencies as a list of comma separated values. Defaults to ./ and ./node_modules/. Note that search paths must be relative to sourcePath.`)
+      .option(`--searchPaths <searchPaths>`, `Specify additional search paths for dependencies as a list of comma separated values. Note that search paths must be relative to sourcePath.`)
       .on('--help', () => console.log(help))
       .action(async (sourcePath, outputDirectory, solcVersion, options) => {
 
@@ -110,6 +110,14 @@ function resolveImports(sourcePath) {
   // Resolve imports using each of the search paths.
   for(let i = 0; i < searchPaths.length; i++) {
     const path = searchPaths[i];
+    const contents = tryToResolveImport(path, sourcePath);
+    if(contents) return { contents };
+  }
+
+  // Try to resolve the imports using node_modules.
+  const modules = findNodeModules({ cwd: sourceDir });
+  for(let i = 0; i < modules.length; i++) {
+    const path = modules[i];
     const contents = tryToResolveImport(path, sourcePath);
     if(contents) return { contents };
   }

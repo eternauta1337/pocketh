@@ -4,3 +4,4 @@ node_modules/*
 config.json
 soljson*
 log
+notes

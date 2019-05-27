@@ -58,7 +58,9 @@ describe('compile command', () => {
   });
 
   test('Should be able to resolve dependencies in node_modules', async () => {
-    const result = await cli('compile', 'test/contracts/NodeModules.sol', '/tmp/');
+    let result = await cli('compile', 'test/contracts/NodeModules.sol', '/tmp/');
+    expect(result.code).toBe(0);
+    result = await cli('compile', 'test/contracts/subdir/subsubdir/NodeModules.sol', '/tmp/');
     expect(result.code).toBe(0);
   });
   
