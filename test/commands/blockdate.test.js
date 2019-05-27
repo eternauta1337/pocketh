@@ -40,7 +40,7 @@ describe('blockdate command', () => {
     const date = new Date(result.stdout).getTime();
     const now = new Date().getTime();
     const deltaMilli = now - date;
-    expect(deltaMilli).toBeLessThan(5000);
+    expect(deltaMilli).toBeLessThan(7000);
   });
 
   test('Should complain when the block identifier is invalid', async () => {

@@ -22,6 +22,6 @@ describe('info command', () => {
 
     // Compare the latest block with a delta, to account for race conditions.
     const delta = blockNumber - latestBlockNumber;
-    expect(delta).toBeLessThan(2);
+    expect(delta).toBeLessThan(3);
   });
 });
