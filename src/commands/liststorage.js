@@ -80,7 +80,7 @@ module.exports = {
 
         // Traverse each base contract in the linearized order, and process their variables.
         for(let i = 0; i < linearizedContractDefs.length; i++) {
-          const contractDefinition = linearizedContractDefs[i];
+          const contractDefinition = linearizedContractDefs[linearizedContractDefs.length - i - 1];
           await processAllVariableDeclarationsInContractDefinition(
             contractDefinition, 
             contractAddress, 
