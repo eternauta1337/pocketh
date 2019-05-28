@@ -16,22 +16,26 @@ describe('split command', () => {
     expect(result.stdout).toContain(`New files written to ${tmpdir.name}`);
     
     // Number of files should match.
-    expect(result.stdout).toContain(`into 3 files`);
+    expect(result.stdout).toContain(`into 4 files`);
 
     // All expected files should exist.
+    expect(fs.existsSync(`${tmpdir.name}/SplitTheLibrary.sol`));
     expect(fs.existsSync(`${tmpdir.name}/SplitMe1.sol`));
     expect(fs.existsSync(`${tmpdir.name}/SplitMe2.sol`));
     expect(fs.existsSync(`${tmpdir.name}/SplitMe3.sol`));
 
     // Files should have the expected contract definitions.
+    const content0 = fs.readFileSync(`${tmpdir.name}/SplitTheLibrary.sol`, 'utf8');
     const content1 = fs.readFileSync(`${tmpdir.name}/SplitMe1.sol`, 'utf8');
     const content2 = fs.readFileSync(`${tmpdir.name}/SplitMe2.sol`, 'utf8');
     const content3 = fs.readFileSync(`${tmpdir.name}/SplitMe3.sol`, 'utf8');
+    expect(content0).toContain('library SplitTheLibrary');
     expect(content1).toContain('contract SplitMe1');
     expect(content2).toContain('contract SplitMe2');
     expect(content3).toContain('contract SplitMe3');
 
     // Files should have the expected imports.
+    expect(content0.includes('import')).toBe(false);
     expect(content1.includes('import')).toBe(false);
     expect(content2.includes('import "./SplitMe1.sol";')).toBe(true);
     expect(content2.includes('import "./SplitMe2.sol";')).toBe(false);
