@@ -100,9 +100,9 @@ module.exports = {
           const contract = contracts[i];
 
           // Get contract name.
-          const contractDefs = contract.match(/^\s*contract.*/gm);
+          const contractDefs = contract.match(/^\s*[contract|library].*/gm);
           if(!contractDefs || contractDefs.length === 0) throw new Error(`Unable to find contract definition in ${contract}`);
-          const name = contractDefs[0].match(/(?<=contract )\b\w+\b/);
+          const name = contractDefs[0].match(/(?<=[contract |library ])\b\w+\b/);
 
           names.push(name);
         }
