@@ -28,7 +28,7 @@ describe('Cryptokitties flow', () => {
     expect(result.stdout).toContain(`New files written to ${tmpdir.name}`);
 
     // Number of files should match.
-    expect(result.stdout).toContain(`into 16 files`);
+    expect(result.stdout).toContain(`into ${NUM_FILES} files`);
 
     // Expected files should exist.
     expect(fs.existsSync(`${tmpdir.name}/KittyAccessControl.sol`));
