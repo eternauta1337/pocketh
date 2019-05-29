@@ -65,10 +65,10 @@ describe('REP flow', () => {
     expect(result.stdout).toContain(`function allowance(address _owner, address _spender) public view returns(uint256 remaining) {...}`);
     expect(result.stdout).toContain(`function Ownable() public {...}`);
     expect(result.stdout).toContain(`modifier whenNotPaused() {...}`);
-    expect(result.stdout).toContain(`function transferFrom(address _from, address _to, uint _value) public returns(bool) {...}`);
+    expect(result.stdout).toContain(`function transferFrom(address _from, address _to, uint _value) public whenNotPaused returns(bool) {...}`);
     expect(result.stdout).toContain(`function RepToken(address _legacyRepContract, uint256 _amountUsedToFreeze, address _accountToSendFrozenRepTo) public {...}`);
     expect(result.stdout).toContain(`ERC20Basic public legacyRepContract;`);
-    expect(result.stdout).toContain(`function endInitialization() internal returns(bool) {...}`);
+    expect(result.stdout).toContain(`function endInitialization() internal beforeInitialized returns(bool) {...}`);
     
     // Should read the right storage.
     result = await cli('liststorage', 'mainnet', `${tmpdir.name}/${CONTRACT_NAME}.json`, REP_MAINNET, '--disable-colors');

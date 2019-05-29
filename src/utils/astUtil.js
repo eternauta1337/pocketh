@@ -156,7 +156,7 @@ const astUtil = {
           modifierStrings.push(`${modifier.modifierName.name}(${modifier.arguments.map(arg => arg.value).join(', ')})`);
         } else modifierStrings.push(modifier.modifierName.name);
       });
-      return modifierStrings.join(',\n');
+      return modifierStrings.join(' ');
     }
 
     let str = '';

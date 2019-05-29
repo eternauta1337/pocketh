@@ -66,7 +66,7 @@ describe('Cryptokitties flow', () => {
     expect(result.stdout).toContain(`bytes4 constant InterfaceSignature_ERC165;`);
     expect(result.stdout).toContain(`bytes4 constant InterfaceSignature_ERC721;`);
     expect(result.stdout).toContain(`function supportsInterface(bytes4 _interfaceID) external view returns(bool) {...}`);
-    expect(result.stdout).toContain(`function setMetadataAddress(address _contractAddress) public {...}`);
+    expect(result.stdout).toContain(`function setMetadataAddress(address _contractAddress) public onlyCEO {...}`);
     expect(result.stdout).toContain(`function _owns(address _claimant, uint256 _tokenId) internal view returns(bool) {...}`);
     
     // Should read the right storage.

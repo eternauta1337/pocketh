@@ -7,7 +7,7 @@ describe('members command', () => {
     expect(result.stdout).toContain(`uint256 public value`);
     expect(result.stdout).toContain(`uint256 public constant CONS`);
     expect(result.stdout).toContain(`constructor() public {...}`);
-    expect(result.stdout).toContain(`function test(uint256 newValue) public {...`);
+    expect(result.stdout).toContain(`function test(uint256 newValue) public aModifier anotherModifier(42) {...}`);
   });
 
   test('Should properly identify the members of Test.sol and its ancestors', async () => {
@@ -18,6 +18,6 @@ describe('members command', () => {
     expect(result.stdout).toContain(`uint256 public value`);
     expect(result.stdout).toContain(`uint256 public constant CONS`);
     expect(result.stdout).toContain(`constructor() public {...}`);
-    expect(result.stdout).toContain(`function test(uint256 newValue) public aModifier {...}`);
+    expect(result.stdout).toContain(`function test(uint256 newValue) public aModifier anotherModifier(42) {...}`);
   });
 });
