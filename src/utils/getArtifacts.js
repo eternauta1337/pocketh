@@ -20,10 +20,10 @@ module.exports = async function(contractPath) {
   // If the extension is sol, compile the contract
   // and then return the json artifacts.
   if(ext === 'sol') {
-    console.log(`(compiling ${contractPath})`);
   
     // Create a temporary directory to store the artifacts in.
     const tmpdir = tmp.dirSync();
+    console.log(`Auto compiling ${contractPath} to ${tmpdir.name}/`);
 
     // Compile the file.
     const result = await cli(
@@ -31,7 +31,10 @@ module.exports = async function(contractPath) {
       contractPath, 
       `${tmpdir.name}/`
     );
-    if(result.code !== 0) throw new Error(`Unable to compile ${contractPath}: ${result.error}`);
+    
+    // If errors occur ignore them and try to continue anyway.
+    // Sometimes solcjs reports false errors, and the output is usable anyway.
+    // if(result.code !== 0) throw new Error(`Unable to compile ${contractPath}: ${result.error}`);
 
     // Return the compiled artifacts.
     const compiledPath = `${tmpdir.name}/${name}.json`;
