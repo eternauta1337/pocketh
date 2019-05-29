@@ -148,6 +148,17 @@ const astUtil = {
       return memberStrings.join(',\n');
     }
 
+    function parseModifierInvocations(modifiers) {
+      if(modifiers.length === 0) return '';
+      const modifierStrings = [];
+      modifiers.map((modifier) => {
+        if(modifier.arguments) {
+          modifierStrings.push(`${modifier.modifierName.name}(${modifier.arguments.map(arg => arg.value).join(', ')})`);
+        } else modifierStrings.push(modifier.modifierName.name);
+      });
+      return modifierStrings.join(',\n');
+    }
+
     let str = '';
     switch(node.nodeType) {
       case 'FunctionDefinition':
@@ -162,6 +173,7 @@ const astUtil = {
         str += ' ';
         str += `${node.visibility}`;
         if(node.stateMutability !== 'nonpayable') str += ' ' + `${node.stateMutability}`;
+        if(node.modifiers && node.modifiers.length > 0) str += ` ${parseModifierInvocations(node.modifiers)}`;
         if(node.returnParameters.parameters.length > 0) str += ' returns(' + parseParameterList(node.returnParameters) + ')';
         if(node.implemented) str += ` {...}`;
         else str += ';';

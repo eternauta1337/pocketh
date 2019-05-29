@@ -24,11 +24,19 @@ contract Test is Parent1, Parent2 {
   uint256 public value;
   uint256 public constant CONS = 42;
 
+  modifier aModifier {
+    _;
+  }
+
+  modifier anotherModifier(uint256) {
+    _;
+  }
+
   constructor() public {
     value = 5;
   }
 
-  function test(uint256 newValue) public {
+  function test(uint256 newValue) public aModifier anotherModifier(42) {
     value = newValue;
   }
 }
