@@ -28,8 +28,8 @@ module.exports = {
     const availableVersions = await getAvailableCompilerVersions();
   
     // Use specified semver, or detect it form source.
+    if(requiredSemver) console.log(`Version required by the user:`, requiredSemver);
     const targetSemver = requiredSemver || sourceSemver;
-    console.log(`Version required by the user:`, targetSemver);
 
     // Translate semver to an actual version.
     // E.g. '0.5.8' to 'soljson-v0.5.8+commit.23d335f2.js'.
