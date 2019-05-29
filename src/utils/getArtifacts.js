@@ -26,22 +26,28 @@ module.exports = async function(contractPath) {
     console.log(`Auto compiling ${contractPath} to ${tmpdir.name}/`);
 
     // Compile the file.
-    const result = await cli(
-      'compile', 
-      contractPath, 
-      `${tmpdir.name}/`
-    );
-    
-    // If errors occur ignore them and try to continue anyway.
-    // Sometimes solcjs reports false errors, and the output is usable anyway.
-    // if(result.code !== 0) throw new Error(`Unable to compile ${contractPath}: ${result.error}`);
-
-    // Return the compiled artifacts.
-    const compiledPath = `${tmpdir.name}/${name}.json`;
-    return {
-      artifacts: retrieveJsonArtifacts(compiledPath),
-      basedir: tmpdir.name
-    };
+    // Wrap it in a try/catch to avoid cancelling the auto compilation
+    // for trivial errors that solcjs sometimes throws.
+    let result;
+    try {
+      result = await cli(
+        'compile', 
+        contractPath, 
+        `${tmpdir.name}/`
+      );
+      
+      // Return the compiled artifacts.
+      const compiledPath = `${tmpdir.name}/${name}.json`;
+      return {
+        artifacts: retrieveJsonArtifacts(compiledPath),
+        basedir: tmpdir.name
+      };
+    }
+    catch(error) {
+      // If the error has to do with the json file, then something
+      // really did go wrong. In that case, do report the compilation error.
+      if(error.message.includes('Cannot find')) throw new Error(`Unable to auto compile ${contractPath}: ${result.error}`);
+    }
   }
 
   throw new Error(`Unrecognized extension ${ext}`);
