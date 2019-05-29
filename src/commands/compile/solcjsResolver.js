@@ -17,7 +17,7 @@ module.exports = {
   getCompiler: async (source, requiredSemver) => {
 
     const sourceSemver = detectSolcVersionFromSource(source);
-    console.log(`Source version:`, sourceSemver);
+    console.log(`Version found in sources:`, sourceSemver);
 
     // If the user specified a required version, validate it against the source.
     if(requiredSemver) {
@@ -29,7 +29,7 @@ module.exports = {
   
     // Use specified semver, or detect it form source.
     const targetSemver = requiredSemver || sourceSemver;
-    console.log(`Target version:`, targetSemver);
+    console.log(`Version required by the user:`, targetSemver);
 
     // Translate semver to an actual version.
     // E.g. '0.5.8' to 'soljson-v0.5.8+commit.23d335f2.js'.
