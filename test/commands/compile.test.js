@@ -76,6 +76,15 @@ describe('compile command', () => {
     expect(result.code).toBe(0);
   });
 
-  test.todo('Should cache and reuse downloaded compilers');
-  test.todo('Should retrieve a list of available compiler versions');
+  test('Should cache and reuse downloaded compilers', async () => {
+  
+    // Do a normal compilation to make sure at least one compiler is cached.
+    let result = await cli('compile', 'test/contracts/Test.sol', '/tmp/', '0.5.8');
+    expect(result.code).toBe(0);
+
+    // Now, compile again with an invalid url.
+    result = await cli('compile', 'test/contracts/Test.sol', '/tmp/', '0.5.8');
+    expect(result.stdout.includes('Downloading')).toBe(false);
+    expect(result.code).toBe(0);
+  });
 });
