@@ -10,6 +10,14 @@ describe('inheritance command', () => {
    └─ Parent2`);
   });
 
+  test('Should properly list the inheritance of Test.json with linearized option', async () => {
+    const result = await cli('inheritance', './test/artifacts/Test.json', '--linearized');
+    expect(result.stdout).toContain(`├─ Test
+├─ Parent2
+├─ Parent1
+└─ GrandParent`);
+  });
+
   test('Should properly list inheritance of Test.sol', async () => {
     const result = await cli('inheritance', './test/contracts/Test.sol');
     expect(result.stdout).toContain(`└─ Test

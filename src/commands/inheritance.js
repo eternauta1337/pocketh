@@ -28,7 +28,8 @@ module.exports = {
       .command(signature, {noHelp: true})
       .description(description)
       .on('--help', () => console.log(help))
-      .action(async (contractPath) => {
+      .option(`--linearized`, `linearize inheritance tree`)
+      .action(async (contractPath, options) => {
         
         // Retrieve contract artifacts.
         const { artifacts, basedir } = await getArtifacts(contractPath);
@@ -43,7 +44,8 @@ module.exports = {
 
         // Start the inheritance tree structure.
         tree[rootContractName] = {};
-        await traverseContractParents(ast, rootContractDefinition, tree[rootContractName], basedir);
+        if(options.linearized) await processAllBaseContractsFromContractDefinition(ast, rootContractDefinition, basedir);
+        else await traverseContractParents(ast, rootContractDefinition, tree[rootContractName], basedir);
 
         // Print tree after all branches
         // have been traversed.
@@ -51,6 +53,21 @@ module.exports = {
       });
   }
 };
+
+async function processAllBaseContractsFromContractDefinition(ast, contractDefinition, basedir) {
+
+  // Retrieve the linearized base contract nodes of the contract.
+  const linearizedContractDefs = await astUtil.getLinearizedBaseContractNodes(ast, contractDefinition, basedir);
+
+  // Traverse each base contract in the linearized order, and process their variables.
+  for(let i = 1; i < linearizedContractDefs.length; i++) {
+    const contractDefinition = linearizedContractDefs[i];
+    if(contractDefinition) {
+      tree[contractDefinition.name] = {};
+    }
+    else console.log("WARNING: Contract definition not found for a base contract.");
+  }
+}
 
 async function traverseContractParents(ast, contractDefinition, branch, basedir) {
   const parents = contractDefinition.baseContracts;

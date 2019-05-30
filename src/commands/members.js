@@ -58,9 +58,7 @@ module.exports = {
         const rootContractDefinition = astUtil.findNodeWithTypeAndName(ast, 'ContractDefinition', rootContractName);
 
         // Process single contract of all base contracts.
-        if(listInherited) {
-          await processAllBaseContractsFromContractDefinition(ast, rootContractDefinition, basedir);
-        }
+        if(listInherited) await processAllBaseContractsFromContractDefinition(ast, rootContractDefinition, basedir);
         else processAllNodesInContractDefinition(rootContractDefinition, false);
       });
   }
