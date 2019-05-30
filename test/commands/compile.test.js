@@ -63,4 +63,8 @@ describe('compile command', () => {
     result = await cli('compile', 'test/contracts/subdir/subsubdir/NodeModules.sol', '/tmp/');
     expect(result.code).toBe(0);
   });
+
+  test.todo('Should cache and reuse downloaded compilers');
+  test.todo('Should retrieve a list of available compiler versions');
+  test.todo('Should be able to use a list of already downloaded compilers if one cannot be retrieved from solcjs/bin');
 });

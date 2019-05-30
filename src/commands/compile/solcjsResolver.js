@@ -61,6 +61,20 @@ function detectSolcVersionFromSource(source) {
 async function getAvailableCompilerVersions() {
   console.log(`Retrieving list of available solcjs versions...`);
   return new Promise((resolve, reject) => {
+    // Try to get list online...
+    getAvailableVersionsFromSolcjsBin()
+      .then(versions => resolve(versions))
+      .catch(error => { // Otherwise try to form a list from already downloaded versions...
+        console.log(error);
+        console.log(`Using one of the already downloaded solcjs versions...`);
+        if(!fs.existsSync(SOLJSON_PATH)) reject('Unable to find any solcjs versions.');
+        else resolve(fs.readdirSync(SOLJSON_PATH));
+      });
+  });
+}
+
+async function getAvailableVersionsFromSolcjsBin() {
+  return new Promise((resolve, reject) => {
     axios.get(SOLC_BIN_LIST_URL)
       .then((result) => {
         if(result.status === 200) {
@@ -77,7 +91,7 @@ async function getAvailableCompilerVersions() {
         }
       })
       .catch((error) => {
-        reject(`Unbable to retrieve available solcjs sources from ${SOLC_BIN_URL}, ${error.message}`);
+        reject(`Unable to retrieve available solcjs sources from ${SOLC_BIN_URL}, ${error.message}`);
       });
   });
 }
