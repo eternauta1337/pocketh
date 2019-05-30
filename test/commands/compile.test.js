@@ -64,7 +64,18 @@ describe('compile command', () => {
     expect(result.code).toBe(0);
   });
 
+  test('Should be able to use a list of already downloaded compilers if one cannot be retrieved from solcjs/bin', async () => {
+
+    // Do a normal compilation to make sure at least one compiler is cached.
+    let result = await cli('compile', 'test/contracts/Test.sol', '/tmp/', '0.5.8');
+    expect(result.code).toBe(0);
+
+    // Now, compile again with an invalid url.
+    result = await cli('compile', 'test/contracts/Test.sol', '/tmp/', '--solcbin', 'http://www.google.com');
+    expect(result.stdout).toContain('Using one of the already downloaded');
+    expect(result.code).toBe(0);
+  });
+
   test.todo('Should cache and reuse downloaded compilers');
   test.todo('Should retrieve a list of available compiler versions');
-  test.todo('Should be able to use a list of already downloaded compilers if one cannot be retrieved from solcjs/bin');
 });

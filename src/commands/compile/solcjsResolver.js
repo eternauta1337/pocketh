@@ -9,12 +9,16 @@ const SOLJSON_PATH = `${os.homedir()}/.soljson/`;
 let solc = require('solc'); // Can be modified by downloading a new compiler snapshot.
 
 // List of available solcjs versions.
-const SOLC_BIN_URL = `https://solc-bin.ethereum.org/bin/`;
-const SOLC_BIN_LIST_URL = `${SOLC_BIN_URL}list.js`;
+let SOLC_BIN_URL = `https://solc-bin.ethereum.org/bin/`;
+let SOLC_BIN_LIST_URL;
 
 module.exports = {
   
-  getCompiler: async (source, requiredSemver) => {
+  getCompiler: async (source, requiredSemver, solcbin) => {
+
+    // User specified solcbin url to fetch compiler?
+    if(solcbin) SOLC_BIN_URL = solcbin;
+    SOLC_BIN_LIST_URL = `${SOLC_BIN_URL}list.js`;
 
     const sourceSemver = detectSolcVersionFromSource(source);
     console.log(`Version found in sources:`, sourceSemver);
