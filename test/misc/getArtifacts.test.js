@@ -10,6 +10,7 @@ describe('compile command', () => {
     const web3 = new Web3();
 
     // Make sure cacheed files are deleted.
+    // TODO: Consider deleting it instead of removing it.
     const source = fs.readFileSync('test/contracts/Test.sol', 'utf8');
     const dir = `/tmp/${web3.utils.sha3(source).substring(2, 14)}`;
     console.log(`Temporary directory: `, dir);

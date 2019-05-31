@@ -1,0 +1,99 @@
+¬ ANT
+  function ANT(address _tokenFactory) public MiniMeIrrevocableVestedToken(, 0x0, 0, Aragon Network Token, 18, ANT, true) {...}
+
+¬ MiniMeIrrevocableVestedToken
+  struct public TokenGrant {
+    address granter;
+    uint256 value;
+    uint64 cliff;
+    uint64 vesting;
+    uint64 start;
+  }
+  event NewTokenGrant(address from, address to, uint256 value, uint64 start, uint64 cliff, uint64 vesting);
+  mapping(address => struct MiniMeIrrevocableVestedToken.TokenGrant[]) public grants;
+  mapping(address => bool) canCreateGrants;
+  address vestingWhitelister;
+  modifier canTransfer(address _sender, uint _value) {...}
+  modifier onlyVestingWhitelister() {...}
+  function MiniMeIrrevocableVestedToken(address _tokenFactory, address _parentToken, uint _parentSnapShotBlock, string _tokenName, uint8 _decimalUnits, string _tokenSymbol, bool _transfersEnabled) public MiniMeToken(, , , , , , ) {...}
+  function transfer(address _to, uint _value) public canTransfer(, ) returns(bool success) {...}
+  function transferFrom(address _from, address _to, uint _value) public canTransfer(, ) returns(bool success) {...}
+  function spendableBalanceOf(address _holder) public view returns(uint) {...}
+  function grantVestedTokens(address _to, uint256 _value, uint64 _start, uint64 _cliff, uint64 _vesting) public {...}
+  function setCanCreateGrants(address _addr, bool _allowed) public onlyVestingWhitelister {...}
+  function doSetCanCreateGrants(address _addr, bool _allowed) internal {...}
+  function changeVestingWhitelister(address _newWhitelister) public onlyVestingWhitelister {...}
+  function revokeTokenGrant(address _holder, uint _grantId) public {...}
+  function tokenGrantsCount(address _holder) public view returns(uint index) {...}
+  function tokenGrant(address _holder, uint _grantId) public view returns(address granter, uint256 value, uint256 vested, uint64 start, uint64 cliff, uint64 vesting) {...}
+  function vestedTokens(TokenGrant grant, uint64 time) internal view returns(uint256) {...}
+  function calculateVestedTokens(uint256 tokens, uint256 time, uint256 start, uint256 cliff, uint256 vesting) internal view returns(uint256) {...}
+  function nonVestedTokens(TokenGrant grant, uint64 time) internal view returns(uint256) {...}
+  function lastTokenIsTransferableDate(address holder) public view returns(uint64 date) {...}
+  function transferableTokens(address holder, uint64 time) public view returns(uint256) {...}
+
+¬ SafeMath
+  function safeMul(uint a, uint b) internal returns(uint) {...}
+  function safeDiv(uint a, uint b) internal returns(uint) {...}
+  function safeSub(uint a, uint b) internal returns(uint) {...}
+  function safeAdd(uint a, uint b) internal returns(uint) {...}
+  function max64(uint64 a, uint64 b) internal view returns(uint64) {...}
+  function min64(uint64 a, uint64 b) internal view returns(uint64) {...}
+  function max256(uint256 a, uint256 b) internal view returns(uint256) {...}
+  function min256(uint256 a, uint256 b) internal view returns(uint256) {...}
+  function assert(bool assertion) internal {...}
+
+¬ MiniMeToken
+  string public name;
+  uint8 public decimals;
+  string public symbol;
+  string public version;
+  struct public Checkpoint {
+    uint128 fromBlock;
+    uint128 value;
+  }
+  MiniMeToken public parentToken;
+  uint256 public parentSnapShotBlock;
+  uint256 public creationBlock;
+  mapping(address => struct MiniMeToken.Checkpoint[]) balances;
+  mapping(address => mapping(address => uint256)) allowed;
+  struct MiniMeToken.Checkpoint[] totalSupplyHistory;
+  bool public transfersEnabled;
+  MiniMeTokenFactory public tokenFactory;
+  function MiniMeToken(address _tokenFactory, address _parentToken, uint _parentSnapShotBlock, string _tokenName, uint8 _decimalUnits, string _tokenSymbol, bool _transfersEnabled) public {...}
+  function transfer(address _to, uint256 _amount) public returns(bool success) {...}
+  function transferFrom(address _from, address _to, uint256 _amount) public returns(bool success) {...}
+  function doTransfer(address _from, address _to, uint _amount) internal returns(bool) {...}
+  function balanceOf(address _owner) public view returns(uint256 balance) {...}
+  function approve(address _spender, uint256 _amount) public returns(bool success) {...}
+  function allowance(address _owner, address _spender) public view returns(uint256 remaining) {...}
+  function approveAndCall(address _spender, uint256 _amount, bytes _extraData) public returns(bool success) {...}
+  function totalSupply() public view returns(uint) {...}
+  function balanceOfAt(address _owner, uint _blockNumber) public view returns(uint) {...}
+  function totalSupplyAt(uint _blockNumber) public view returns(uint) {...}
+  function min(uint a, uint b) internal returns(uint) {...}
+  function createCloneToken(string _cloneTokenName, uint8 _cloneDecimalUnits, string _cloneTokenSymbol, uint _snapshotBlock, bool _transfersEnabled) public returns(address) {...}
+  function generateTokens(address _owner, uint _amount) public onlyController returns(bool) {...}
+  function destroyTokens(address _owner, uint _amount) public onlyController returns(bool) {...}
+  function enableTransfers(bool _transfersEnabled) public onlyController {...}
+  function getValueAt(struct MiniMeToken.Checkpoint[] checkpoints, uint _block) internal view returns(uint) {...}
+  function updateValueAtNow(struct MiniMeToken.Checkpoint[] checkpoints, uint _value) internal {...}
+  function isContract(address _addr) internal view returns(bool) {...}
+  function () public payable {...}
+  event NewCloneToken(address _cloneToken, uint _snapshotBlock);
+
+¬ Controlled
+  modifier onlyController() {...}
+  address public controller;
+  function Controlled() public {...}
+  function changeController(address _newController) public onlyController {...}
+
+¬ ERC20
+  function totalSupply() public view returns(uint);
+  function balanceOf(address who) public view returns(uint);
+  function allowance(address owner, address spender) public view returns(uint);
+  function transfer(address to, uint value) public returns(bool ok);
+  function transferFrom(address from, address to, uint value) public returns(bool ok);
+  function approve(address spender, uint value) public returns(bool ok);
+  event Transfer(address from, address to, uint value);
+  event Approval(address owner, address spender, uint value);

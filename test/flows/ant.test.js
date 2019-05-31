@@ -57,22 +57,25 @@ describe('ANT flow', () => {
 
     // Should have the right members.
     result = await cli('members', `${tmpdir.name}/${CONTRACT_NAME}.json`, '--inherited', '--disable-colors');
-    expect(result.stdout).toContain(`function max256(uint256 a, uint256 b) internal view returns(uint256) {...}`);
-    expect(result.stdout).toContain(`function min256(uint256 a, uint256 b) internal view returns(uint256) {...}`);
-    expect(result.stdout).toContain(`function assert(bool assertion) internal {...}`);
-    expect(result.stdout).toContain(`¬ MiniMeToken`);
-    expect(result.stdout).toContain(`string public name;`);
-    expect(result.stdout).toContain(`uint8 public decimals;`);
-    expect(result.stdout).toContain(`string public symbol;`);
-    expect(result.stdout).toContain(`string public version;`);
-    expect(result.stdout).toContain(`struct public Checkpoint {`);
-    expect(result.stdout).toContain(`uint128 fromBlock;`);
-    expect(result.stdout).toContain(`uint128 value;`);
-    expect(result.stdout).toContain(`MiniMeToken public parentToken;`);
-    expect(result.stdout).toContain(`uint256 public parentSnapShotBlock;`);
-    expect(result.stdout).toContain(`uint256 public creationBlock;`);
-    expect(result.stdout).toContain(`mapping(address => struct MiniMeToken.Checkpoint[]) balances;`);
-    expect(result.stdout).toContain(`mapping(address => mapping(address => uint256)) allowed;`);
+    // TODO: Verify that reading the file works
+    const expectedStdout = fs.readFileSync('test/output/ant.members.output', 'utf8');
+    expect(result.stdout).toBe(expectedStdout);
+    // expect(result.stdout).toContain(`function max256(uint256 a, uint256 b) internal view returns(uint256) {...}`);
+    // expect(result.stdout).toContain(`function min256(uint256 a, uint256 b) internal view returns(uint256) {...}`);
+    // expect(result.stdout).toContain(`function assert(bool assertion) internal {...}`);
+    // expect(result.stdout).toContain(`¬ MiniMeToken`);
+    // expect(result.stdout).toContain(`string public name;`);
+    // expect(result.stdout).toContain(`uint8 public decimals;`);
+    // expect(result.stdout).toContain(`string public symbol;`);
+    // expect(result.stdout).toContain(`string public version;`);
+    // expect(result.stdout).toContain(`struct public Checkpoint {`);
+    // expect(result.stdout).toContain(`uint128 fromBlock;`);
+    // expect(result.stdout).toContain(`uint128 value;`);
+    // expect(result.stdout).toContain(`MiniMeToken public parentToken;`);
+    // expect(result.stdout).toContain(`uint256 public parentSnapShotBlock;`);
+    // expect(result.stdout).toContain(`uint256 public creationBlock;`);
+    // expect(result.stdout).toContain(`mapping(address => struct MiniMeToken.Checkpoint[]) balances;`);
+    // expect(result.stdout).toContain(`mapping(address => mapping(address => uint256)) allowed;`);
     
     // Should read the right storage.
     result = await cli('liststorage', 'mainnet', `${tmpdir.name}/${CONTRACT_NAME}.json`, ANT_MAINNET, '--disable-colors');

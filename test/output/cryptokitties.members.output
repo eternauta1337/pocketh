@@ -1,0 +1,125 @@
+¬ KittyCore
+  address public newContractAddress;
+  function KittyCore() public {...}
+  function setNewAddress(address _v2Address) external onlyCEO whenPaused {...}
+  function () external payable {...}
+  function getKitty(uint256 _id) external view returns(bool isGestating, bool isReady, uint256 cooldownIndex, uint256 nextActionAt, uint256 siringWithId, uint256 birthTime, uint256 matronId, uint256 sireId, uint256 generation, uint256 genes) {...}
+  function unpause() public onlyCEO whenPaused {...}
+  function withdrawBalance() external onlyCFO {...}
+
+¬ KittyMinting
+  uint256 public constant PROMO_CREATION_LIMIT;
+  uint256 public constant GEN0_CREATION_LIMIT;
+  uint256 public constant GEN0_STARTING_PRICE;
+  uint256 public constant GEN0_AUCTION_DURATION;
+  uint256 public promoCreatedCount;
+  uint256 public gen0CreatedCount;
+  function createPromoKitty(uint256 _genes, address _owner) external onlyCOO {...}
+  function createGen0Auction(uint256 _genes) external onlyCOO {...}
+  function _computeNextGen0Price() internal view returns(uint256) {...}
+
+¬ KittyAuction
+  function setSaleAuctionAddress(address _address) external onlyCEO {...}
+  function setSiringAuctionAddress(address _address) external onlyCEO {...}
+  function createSaleAuction(uint256 _kittyId, uint256 _startingPrice, uint256 _endingPrice, uint256 _duration) external whenNotPaused {...}
+  function createSiringAuction(uint256 _kittyId, uint256 _startingPrice, uint256 _endingPrice, uint256 _duration) external whenNotPaused {...}
+  function bidOnSiringAuction(uint256 _sireId, uint256 _matronId) external payable whenNotPaused {...}
+  function withdrawAuctionBalances() external onlyCLevel {...}
+
+¬ KittyBreeding
+  event Pregnant(address owner, uint256 matronId, uint256 sireId, uint256 cooldownEndBlock);
+  uint256 public autoBirthFee;
+  uint256 public pregnantKitties;
+  GeneScienceInterface public geneScience;
+  function setGeneScienceAddress(address _address) external onlyCEO {...}
+  function _isReadyToBreed(Kitty _kit) internal view returns(bool) {...}
+  function _isSiringPermitted(uint256 _sireId, uint256 _matronId) internal view returns(bool) {...}
+  function _triggerCooldown(Kitty _kitten) internal {...}
+  function approveSiring(address _addr, uint256 _sireId) external whenNotPaused {...}
+  function setAutoBirthFee(uint256 val) external onlyCOO {...}
+  function _isReadyToGiveBirth(Kitty _matron) private view returns(bool) {...}
+  function isReadyToBreed(uint256 _kittyId) public view returns(bool) {...}
+  function isPregnant(uint256 _kittyId) public view returns(bool) {...}
+  function _isValidMatingPair(Kitty _matron, uint256 _matronId, Kitty _sire, uint256 _sireId) private view returns(bool) {...}
+  function _canBreedWithViaAuction(uint256 _matronId, uint256 _sireId) internal view returns(bool) {...}
+  function canBreedWith(uint256 _matronId, uint256 _sireId) external view returns(bool) {...}
+  function _breedWith(uint256 _matronId, uint256 _sireId) internal {...}
+  function breedWithAuto(uint256 _matronId, uint256 _sireId) external payable whenNotPaused {...}
+  function giveBirth(uint256 _matronId) external whenNotPaused returns(uint256) {...}
+
+¬ KittyOwnership
+  string public constant name;
+  string public constant symbol;
+  ERC721Metadata public erc721Metadata;
+  bytes4 constant InterfaceSignature_ERC165;
+  bytes4 constant InterfaceSignature_ERC721;
+  function supportsInterface(bytes4 _interfaceID) external view returns(bool) {...}
+  function setMetadataAddress(address _contractAddress) public onlyCEO {...}
+  function _owns(address _claimant, uint256 _tokenId) internal view returns(bool) {...}
+  function _approvedFor(address _claimant, uint256 _tokenId) internal view returns(bool) {...}
+  function _approve(uint256 _tokenId, address _approved) internal {...}
+  function balanceOf(address _owner) public view returns(uint256 count) {...}
+  function transfer(address _to, uint256 _tokenId) external whenNotPaused {...}
+  function approve(address _to, uint256 _tokenId) external whenNotPaused {...}
+  function transferFrom(address _from, address _to, uint256 _tokenId) external whenNotPaused {...}
+  function totalSupply() public view returns(uint) {...}
+  function ownerOf(uint256 _tokenId) external view returns(address owner) {...}
+  function tokensOfOwner(address _owner) external view returns(uint256[] ownerTokens) {...}
+  function _memcpy(uint _dest, uint _src, uint _len) private view {...}
+  function _toString(bytes32[4] _rawBytes, uint256 _stringLength) private view returns(string) {...}
+  function tokenMetadata(uint256 _tokenId, string _preferredTransport) external view returns(string infoUrl) {...}
+
+¬ ERC721
+  function totalSupply() public view returns(uint256 total);
+  function balanceOf(address _owner) public view returns(uint256 balance);
+  function ownerOf(uint256 _tokenId) external view returns(address owner);
+  function approve(address _to, uint256 _tokenId) external;
+  function transfer(address _to, uint256 _tokenId) external;
+  function transferFrom(address _from, address _to, uint256 _tokenId) external;
+  event Transfer(address from, address to, uint256 tokenId);
+  event Approval(address owner, address approved, uint256 tokenId);
+  function supportsInterface(bytes4 _interfaceID) external view returns(bool);
+
+¬ KittyBase
+  event Birth(address owner, uint256 kittyId, uint256 matronId, uint256 sireId, uint256 genes);
+  event Transfer(address from, address to, uint256 tokenId);
+  struct public Kitty {
+    uint256 genes;
+    uint64 birthTime;
+    uint64 cooldownEndBlock;
+    uint32 matronId;
+    uint32 sireId;
+    uint32 siringWithId;
+    uint16 cooldownIndex;
+    uint16 generation;
+  }
+  uint32[14] public cooldowns;
+  uint256 public secondsPerBlock;
+  struct KittyBase.Kitty[] kitties;
+  mapping(uint256 => address) public kittyIndexToOwner;
+  mapping(address => uint256) ownershipTokenCount;
+  mapping(uint256 => address) public kittyIndexToApproved;
+  mapping(uint256 => address) public sireAllowedToAddress;
+  SaleClockAuction public saleAuction;
+  SiringClockAuction public siringAuction;
+  function _transfer(address _from, address _to, uint256 _tokenId) internal {...}
+  function _createKitty(uint256 _matronId, uint256 _sireId, uint256 _generation, uint256 _genes, address _owner) internal returns(uint) {...}
+  function setSecondsPerBlock(uint256 secs) external onlyCLevel {...}
+
+¬ KittyAccessControl
+  event ContractUpgrade(address newContract);
+  address public ceoAddress;
+  address public cfoAddress;
+  address public cooAddress;
+  bool public paused;
+  modifier onlyCEO() {...}
+  modifier onlyCFO() {...}
+  modifier onlyCOO() {...}
+  modifier onlyCLevel() {...}
+  function setCEO(address _newCEO) external onlyCEO {...}
+  function setCFO(address _newCFO) external onlyCEO {...}
+  function setCOO(address _newCOO) external onlyCEO {...}
+  modifier whenNotPaused() {...}
+  modifier whenPaused() {...}
+  function pause() external onlyCLevel whenNotPaused {...}
+  function unpause() public onlyCEO whenPaused {...}

@@ -1,0 +1,60 @@
+¬ RepToken
+  ERC20Basic public legacyRepContract;
+  uint256 public targetSupply;
+  string public constant name;
+  string public constant symbol;
+  uint256 public constant decimals;
+  event Migrated(address holder, uint256 amount);
+  function RepToken(address _legacyRepContract, uint256 _amountUsedToFreeze, address _accountToSendFrozenRepTo) public {...}
+  function migrateBalances(address[] _holders) public onlyOwner beforeInitialized returns(bool) {...}
+  function migrateBalance(address _holder) public onlyOwner beforeInitialized returns(bool) {...}
+  function unpause() public onlyOwner whenPaused afterInitialized returns(bool) {...}
+
+¬ PausableToken
+  function transfer(address _to, uint _value) public whenNotPaused returns(bool) {...}
+  function transferFrom(address _from, address _to, uint _value) public whenNotPaused returns(bool) {...}
+
+¬ Pausable
+  event Pause();
+  event Unpause();
+  bool public paused;
+  modifier whenNotPaused() {...}
+  modifier whenPaused() {...}
+  function pause() public onlyOwner whenNotPaused returns(bool) {...}
+  function unpause() public onlyOwner whenPaused returns(bool) {...}
+
+¬ Ownable
+  address public owner;
+  function Ownable() public {...}
+  modifier onlyOwner() {...}
+  function transferOwnership(address newOwner) public onlyOwner {...}
+
+¬ StandardToken
+  mapping(address => mapping(address => uint256)) allowed;
+  function transferFrom(address _from, address _to, uint256 _value) public returns(bool) {...}
+  function approve(address _spender, uint256 _value) public returns(bool) {...}
+  function allowance(address _owner, address _spender) public view returns(uint256 remaining) {...}
+
+¬ BasicToken
+  using SafeMath for uint256;
+  mapping(address => uint256) balances;
+  function transfer(address _to, uint256 _value) public returns(bool) {...}
+  function balanceOf(address _owner) public view returns(uint256 balance) {...}
+
+¬ ERC20
+  function allowance(address owner, address spender) public view returns(uint256);
+  function transferFrom(address from, address to, uint256 value) public returns(bool);
+  function approve(address spender, uint256 value) public returns(bool);
+  event Approval(address owner, address spender, uint256 value);
+
+¬ ERC20Basic
+  uint256 public totalSupply;
+  function balanceOf(address who) public view returns(uint256);
+  function transfer(address to, uint256 value) public returns(bool);
+  event Transfer(address from, address to, uint256 value);
+
+¬ Initializable
+  bool public initialized;
+  modifier afterInitialized() {...}
+  modifier beforeInitialized() {...}
+  function endInitialization() internal beforeInitialized returns(bool) {...}
