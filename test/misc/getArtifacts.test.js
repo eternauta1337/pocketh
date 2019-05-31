@@ -13,7 +13,7 @@ describe('compile command', () => {
     const source = fs.readFileSync('test/contracts/Test.sol', 'utf8');
     const dir = `/tmp/${web3.utils.sha3(source).substring(2, 14)}`;
     console.log(`Temporary directory: `, dir);
-    fs.unlinkSync(dir);
+    fs.renameSync(dir, `${dir}_bkp`);
 
     // Call inheritance on a .sol file.
     let result = await cli('inheritance', 'test/contracts/Test.sol');
