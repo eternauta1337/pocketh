@@ -14,7 +14,7 @@ let SOLC_BIN_LIST_URL;
 
 module.exports = {
   
-  getCompiler: async (source, requiredSemver, solcbin) => {
+  getCompiler: async (source, requiredSemver, solcbin, getall) => {
 
     // User specified solcbin url to fetch compiler?
     if(solcbin) SOLC_BIN_URL = solcbin;
@@ -30,6 +30,7 @@ module.exports = {
     }
 
     const availableVersions = await getAvailableCompilerVersions();
+    if(getall) await downloadAndCacheAllVerions(availableVersions);
   
     // Use specified semver, or detect it form source.
     if(requiredSemver) console.log(`Version required by the user:`, requiredSemver);
@@ -50,6 +51,27 @@ module.exports = {
     return solc;
   }
 };
+
+async function downloadAndCacheAllVerions(versions) {
+  console.log(`Downloading all available compiler versions...`);
+    
+  // Filter out versions that are already downloaded.
+  let versionsToDownload = versions.filter((version) => {
+    return !fs.existsSync(`${SOLJSON_PATH}${version}`);
+  });
+
+  // Filter out nightly versions.
+  versionsToDownload = versionsToDownload.filter((version) => {
+    return !version.includes('nightly');
+  });
+
+  // Resolve promises sequentially.
+  console.log(`Versions to download:`, versionsToDownload);
+  versionsToDownload.reduce( async (previousPromise, nextVersion) => {
+    await previousPromise;
+    return downloadAndCacheCompilerSource(nextVersion);
+  }, Promise.resolve());
+}
 
 function semverVersionsIntersect(semver1, semver2) {
   const range1 = semver.Range(semver1).range;

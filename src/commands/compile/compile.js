@@ -53,6 +53,7 @@ module.exports = {
       .description(description)
       .option(`--searchPaths <searchPaths>`, `Specify additional search paths for dependencies as a list of comma separated values. Note that search paths must be relative to sourcePath.`)
       .option(`--solcbin <url>`, `Specify the url to use to fetch solcjs compiler versions.`)
+      .option(`--getall`, `Download and cache all available compiler versions.`)
       .on('--help', () => console.log(help))
       .action(async (sourcePath, outputDirectory, solcVersion, options) => {
 
@@ -81,7 +82,7 @@ module.exports = {
         const source = fs.readFileSync(sourcePath, 'utf8');
 
         // Retrieve the appropriate solcjs compiler.
-        const solc = await solcjsResolver.getCompiler(source, solcVersion, options.solcbin);
+        const solc = await solcjsResolver.getCompiler(source, solcVersion, options.solcbin, options.getall);
         console.log(`Using compiler ${solc.version()}`);
 
         // Prepare the json standard input for the compiler.
