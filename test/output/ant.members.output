@@ -1,3 +1,4 @@
+
 ¬ ANT
   function ANT(address _tokenFactory) public MiniMeIrrevocableVestedToken(, 0x0, 0, Aragon Network Token, 18, ANT, true) {...}
 

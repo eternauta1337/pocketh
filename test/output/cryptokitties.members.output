@@ -1,3 +1,4 @@
+
 ¬ KittyCore
   address public newContractAddress;
   function KittyCore() public {...}

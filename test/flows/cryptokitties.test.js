@@ -59,15 +59,8 @@ describe('Cryptokitties flow', () => {
 
     // Should have the right members.
     result = await cli('members', `${tmpdir.name}/${CONTRACT_NAME}.json`, '--inherited', '--disable-colors');
-    expect(result.stdout).toContain(`¬ KittyOwnership`);
-    expect(result.stdout).toContain(`string public constant name;`);
-    expect(result.stdout).toContain(`string public constant symbol;`);
-    expect(result.stdout).toContain(`ERC721Metadata public erc721Metadata;`);
-    expect(result.stdout).toContain(`bytes4 constant InterfaceSignature_ERC165;`);
-    expect(result.stdout).toContain(`bytes4 constant InterfaceSignature_ERC721;`);
-    expect(result.stdout).toContain(`function supportsInterface(bytes4 _interfaceID) external view returns(bool) {...}`);
-    expect(result.stdout).toContain(`function setMetadataAddress(address _contractAddress) public onlyCEO {...}`);
-    expect(result.stdout).toContain(`function _owns(address _claimant, uint256 _tokenId) internal view returns(bool) {...}`);
+    let expectedStdout = fs.readFileSync('test/output/cryptokitties.members.output', 'utf8');
+    expect(result.stdout).toBe(expectedStdout);
     
     // Should read the right storage.
     result = await cli('liststorage', 'mainnet', `${tmpdir.name}/${CONTRACT_NAME}.json`, CRYPTOKITTIES_MAINNET, '--disable-colors');
