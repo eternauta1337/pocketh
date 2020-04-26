@@ -28,6 +28,30 @@ module.exports = {
     });
     return response.data.result[0].SourceCode;
   },
+
+  getSourceCodeFull: async (address) => {
+    const response = await axios.get(ETHERSCAN_API, {
+      params: {
+        module: 'contract',
+        action: 'getsourcecode',
+        address,
+        apikey
+      }
+    });
+    return response.data.result;
+  },
+
+  getAbi: async (address) => {
+    const response = await axios.get(ETHERSCAN_API, {
+      params: {
+        module: 'contract',
+        action: 'getabi',
+        address,
+        apikey
+      }
+    });
+    return JSON.parse(response.data.result)
+  },
 };
 
 function trace(response) {
