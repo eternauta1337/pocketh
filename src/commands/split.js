@@ -72,6 +72,9 @@ module.exports = {
           // Add current line to current contract.
           line = line.replace(/\r?\n|\r/, ''); // Remove line breaks from line.
           contracts[currentContractIdx] += `${line}\n`;
+          
+          // Skip commented curlies
+          if(['*','/*','//'].some(reg => line.trim().startsWith(reg))) continue
 
           // Count curly braces.
           const openCurlies = line.match(/{/g);
