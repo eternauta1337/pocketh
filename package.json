@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/ajsantander/awesome-eth-tools#readme",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "bn.js": "^4.11.8",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
